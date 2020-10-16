@@ -51,19 +51,19 @@ mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS
 plot(mix_model_G)
 ```
 
-![](Community-Size-Analyses_files/figure-gfm/checking%20distribution-1.png)<!-- -->
+![](Community-Size-Analyses_files/figure-gfm/checking_distribution-1.png)<!-- -->
 
 ``` r
 plot(mix_model_P)
 ```
 
-![](Community-Size-Analyses_files/figure-gfm/checking%20distribution-2.png)<!-- -->
+![](Community-Size-Analyses_files/figure-gfm/checking_distribution-2.png)<!-- -->
 
 ``` r
 plot(mix_model_NB)
 ```
 
-![](Community-Size-Analyses_files/figure-gfm/checking%20distribution-3.png)<!-- -->
+![](Community-Size-Analyses_files/figure-gfm/checking_distribution-3.png)<!-- -->
 
 ``` r
 AIC(mix_model_G,mix_model_P,mix_model_NB)
@@ -249,7 +249,7 @@ boxplot(com_SS2_SS3_abundance~isolation_SS, add = T, col = "transparent", outlin
 box(lwd = 2.5)
 ```
 
-![](Community-Size-Analyses_files/figure-gfm/plotting%20ab-1.png)<!-- -->
+![](Community-Size-Analyses_files/figure-gfm/plotting_ab-1.png)<!-- -->
 
 ### Only Predatory Insects Community
 
@@ -380,7 +380,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Size-Analyses_files/figure-gfm/Plotting%20ab%20pr-1.png)<!-- -->
+![](Community-Size-Analyses_files/figure-gfm/Plotting_ab_pr-1.png)<!-- -->
 
 ### Only Non-Predatory Insects (Herbivores and Detritivores) Community
 
@@ -491,4 +491,4 @@ boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, add = T, col = "transp
 box(lwd = 2.5)
 ```
 
-![](Community-Size-Analyses_files/figure-gfm/Plotting%20ab%20non%20pr-1.png)<!-- -->
+![](Community-Size-Analyses_files/figure-gfm/Plot_ab_non_pr-1.png)<!-- -->
