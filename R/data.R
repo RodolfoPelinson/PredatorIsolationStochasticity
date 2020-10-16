@@ -67,8 +67,43 @@
 
 #' Taxa abundances for the second and third surveys
 #'
-#' A dataset containing the abundances of the taxa that were present in more than three observations in the second and third surveys.
+#' A dataset containing the abundances of the taxa that were present in the second and third surveys.
 #'
 #' @format A data frame with 44 rows or 'observations' and 24 variables or 'taxa':
 #' @source {Experimental Data}
 "com_SS2_SS3"
+
+
+#' Taxa abundances for predatory insects at the second and third surveys
+#'
+#' A dataset containing the abundances of the predatory insects that were present in the second and third surveys.
+#'
+#' @format A data frame with 44 rows or 'observations' and 8 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS2_SS3_predators"
+
+
+#' Taxa abundances for non-predatory insects at the second and third surveys
+#'
+#' A dataset containing the abundances of the non predatory insects (herbivores and detritivores) that were present in the second and third surveys.
+#'
+#' @format A data frame with 44 rows or 'observations' and 16 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS2_SS3_non_predators"
+
+
+#' Abundances for predatory insects at the second and third surveys
+#'
+#'
+#' @format Numerical vector w/ with 44 observations
+#' @source {Experimental Data}
+"com_SS2_SS3_predators_abundance "
+
+
+#' Abundances for non-predatory insects (herbivores and detritivores) at the second and third surveys
+#'
+#'
+#' @format Numerical vector w/ with 44 observations
+#' @source {Experimental Data}
+"com_SS2_SS3_non_predators_abundance "
+
