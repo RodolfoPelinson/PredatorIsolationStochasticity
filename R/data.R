@@ -97,7 +97,7 @@
 #'
 #' @format Numerical vector w/ with 44 observations
 #' @source {Experimental Data}
-"com_SS2_SS3_predators_abundance "
+"com_SS2_SS3_predators_abundance"
 
 
 #' Abundances for non-predatory insects (herbivores and detritivores) at the second and third surveys
@@ -105,5 +105,5 @@
 #'
 #' @format Numerical vector w/ with 44 observations
 #' @source {Experimental Data}
-"com_SS2_SS3_non_predators_abundance "
+"com_SS2_SS3_non_predators_abundance"
 

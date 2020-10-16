@@ -14,6 +14,6 @@ A data frame with 44 rows or 'observations' and 24 variables or 'taxa':
 com_SS2_SS3
 }
 \description{
-A dataset containing the abundances of the taxa that were present in more than three observations in the second and third surveys.
+A dataset containing the abundances of the taxa that were present in the second and third surveys.
 }
 \keyword{datasets}
