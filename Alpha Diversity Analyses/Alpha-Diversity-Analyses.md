@@ -73,11 +73,6 @@ Analysing the data:
 
 ``` r
 mix_model_richness_NB <- lmer(com_SS2_SS3_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
-```
-
-    ## boundary (singular) fit: see ?isSingular
-
-``` r
 Anova(mix_model_richness_NB, test.statistic = "Chisq")
 ```
 
@@ -288,7 +283,7 @@ box(lwd = 2.5)
 
 ![](Alpha-Diversity-Analyses_files/figure-gfm/Plotting_rch_pr-1.png)<!-- -->
 
-### Only Predatory Insects Community
+### Only Non-Predatory Insects Community
 
 First, lets load the necessary data:
 
@@ -300,11 +295,6 @@ Analysing the data:
 
 ``` r
 mix_model_non_predators <- lmer(com_SS2_SS3_non_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
-```
-
-    ## boundary (singular) fit: see ?isSingular
-
-``` r
 Anova(mix_model_non_predators, test.statistic = "Chisq")
 ```
 

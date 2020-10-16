@@ -57,7 +57,7 @@ AIC(mix_model_G,mix_model_P,mix_model_NB)
 
 
 Analysing the data:
-```{r running_rch, cache=T}
+```{r running_rch, cache=T, message=FALSE, warning=FALSE}
 mix_model_richness_NB <- lmer(com_SS2_SS3_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
 Anova(mix_model_richness_NB, test.statistic = "Chisq")
 ```
@@ -98,7 +98,7 @@ data(com_SS2_SS3_predators_richness)
 ```
 
 Analysing the data:
-```{r running_rch_pr, cache=T}
+```{r running_rch_pr, cache=T, message=FALSE, warning=FALSE}
 mix_model_predators_NB <- lmer(com_SS2_SS3_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
 Anova(mix_model_predators_NB, test.statistic = "Chisq")
 ```
@@ -146,14 +146,14 @@ box(lwd = 2.5)
 
 
 
-### Only Predatory Insects Community
+### Only Non-Predatory Insects Community
 First, lets load the necessary data:
 ```{r loading_data_non_pr}
 data(com_SS2_SS3_non_predators_richness)
 ```
 
 Analysing the data:
-```{r running_rch_non_pr, cache=T}
+```{r running_rch_non_pr, cache=T, message=FALSE, warning=FALSE}
 mix_model_non_predators <- lmer(com_SS2_SS3_non_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
 Anova(mix_model_non_predators, test.statistic = "Chisq")
 ```
