@@ -110,7 +110,7 @@ box(lwd = 2.5)
 
 ### Only Predatory Insects Community
 First, lets load the necessary data:
-```{r loading data predators}
+```{r loading data pr}
 data(com_SS2_SS3_predators_abundance)
 ```
 
@@ -121,14 +121,14 @@ Anova(mix_model_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw abundances predators, cache = T}
+```{r  pw ab pr, cache = T}
 emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 It seems that when we only consider predatory insects, community size is affected by time (survey) presence of fish (which have a stronger effect in the third survey) and isolation.
 
 Lets plot it:
-```{r Plotting ab predators, dpi = 150, fig.height=5, fig.width=5}
+```{r Plotting ab pr, dpi = 150, fig.height=5, fig.width=5}
 boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, ylim = c(0,170), col = "transparent", xaxt="n", main = "Predators")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(com_SS2_SS3_predators_abundance)
@@ -156,24 +156,24 @@ box(lwd = 2.5)
 
 ### Only Non-Predatory Insects (Herbivores and Detritivores) Community
 First, lets load the necessary data:
-```{r loading data non predators}
+```{r loading data non pr}
 data(com_SS2_SS3_non_predators_abundance)
 ```
 
 Analysing the data:
-```{r running predators abundance, cache=T}
+```{r running predators ab, cache=T}
 mix_model_non_predators_NB <- glmer.nb(com_SS2_SS3_non_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
 Anova(mix_model_non_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw_abundances_non_predators, cache = T}
+```{r  pw_abundances non pr, cache = T}
 emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 It seems that we have similar patterns to when we consider the whole community.
 
 Lets plot it:
-```{r Plotting ab non predators, dpi = 150, fig.height=5, fig.width=5}
+```{r Plotting ab non pr, dpi = 150, fig.height=5, fig.width=5}
 boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent", xaxt="n", main = "Non-Predators")
 mylevels <- levels(new_All)
 levelProportions <- summary(new_All)/length(com_SS2_SS3_non_predators_abundance)
