@@ -57,7 +57,7 @@ AIC(mix_model_G,mix_model_P,mix_model_NB)
 
 
 Analysing the data:
-```{r running_pr_rch, cache=T}
+```{r running_rch, cache=T}
 mix_model_richness_NB <- lmer(com_SS2_SS3_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
 Anova(mix_model_richness_NB, test.statistic = "Chisq")
 ```
@@ -93,18 +93,18 @@ box(lwd = 2.5)
 
 ### Only Predatory Insects Community
 First, lets load the necessary data:
-```{r loading_data pr}
+```{r loading_data_pr}
 data(com_SS2_SS3_predators_richness)
 ```
 
 Analysing the data:
-```{r running_ab_pr, cache=T}
+```{r running_rch_pr, cache=T}
 mix_model_predators_NB <- lmer(com_SS2_SS3_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
 Anova(mix_model_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw_ab_pr, cache = T}
+```{r  pw_rch_pr, cache = T}
 emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
@@ -112,7 +112,7 @@ It seems like there is an effect of fish and isolation on predatory insect richn
 
 
 Lets plot it:
-```{r Plotting_ab_pr, dpi = 150, fig.height=5, fig.width=10}
+```{r Plotting_rch_pr, dpi = 150, fig.height=5, fig.width=10}
 boxplot(com_SS2_SS3_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3, outline = F, ylab = "Richness", xlab = "", lwd = 1.5, ylim = c(0,8), col = "transparent", main = "Predators", at = c(1,2,4,5,7,8,10,11,13,14,16,17), xaxt="n")
 
 All2 <- factor(All, levels = c("2 030 absent","2 030 present","2 120 absent","2 120 present","2 480 absent","2 480 present",
@@ -153,15 +153,39 @@ data(com_SS2_SS3_non_predators_richness)
 ```
 
 Analysing the data:
-```{r running_ab_pr, cache=T}
-mix_model_non_predators_NB <- lmer(com_SS2_SS3_non_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
-Anova(mix_model_non_predators_NB, test.statistic = "Chisq")
+```{r running_rch_non_pr, cache=T}
+mix_model_non_predators <- lmer(com_SS2_SS3_non_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
+Anova(mix_model_non_predators, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw_ab_pr, cache = T}
-emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
-emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+```{r  pw_rch_non_pr, cache = T}
+emmeans(mix_model_non_predators, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
-It seems like there is an effect of fish and isolation on predatory insect richness. Also, the effect of fish stronger in low isolation treatments in the second survey, and stronger in high isolation treatments in the third survey.
+It seems like there is an increase in richness from the low to intermediate isolation, but not to high isolation. However, it only happened in the last survey.
 
+
+Lets plot it:
+```{r Plot_rch_non_pr, dpi = 150, fig.height=5, fig.width=5}
+boxplot(com_SS2_SS3_non_predators_richness~isolation_SS2_SS3*SS_SS2_SS3, outline = F, ylab = "Richness", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, col = "transparent", xaxt="n", main = "Non Predators")
+mylevels <- levels(All)
+levelProportions <- summary(All)/length(com_SS2_SS3_non_predators_richness)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3), rep("grey70",6))
+bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(15,16,17,15,16,17,22,21,24,22,21,24)
+for(i in 1:length(mylevels)){
+  
+  x<- c(1,2,3,1,2,3,5,6,7,5,6,7)[i]
+  thislevel <- mylevels[i]
+  thisvalues <- com_SS2_SS3_non_predators_richness[All==thislevel]
+  
+  # take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.3)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3) 
+  
+}
+boxplot(com_SS2_SS3_non_predators_richness~isolation_SS2_SS3*SS_SS2_SS3, add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7), lwd = 1.5,  xaxt="n") 
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8, at =c(1,2,3,5,6,7))
+axis(1,labels = c("Second","Third"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+box(lwd = 2.5)
+```
