@@ -9,12 +9,12 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r instaling package, eval = FALSE}
+```{r instaling_package, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-```{r loading the package}
+```{r loading_the_package}
 library(Pelinson.et.al.2020B)
 ```
 
@@ -22,7 +22,7 @@ library(Pelinson.et.al.2020B)
 ## Analysis of Community Size
 
 Lets load the necessary packages:
-```{r loading packages, warning = F, message = F}
+```{r loading_packages, warning = F, message = F}
 library(lme4)
 library(emmeans)
 library(car)
@@ -30,7 +30,7 @@ library(car)
 
 ### Whole Community
 First, lets load the necessary data:
-```{r loading data}
+```{r loading_data}
 data(com_SS2_SS3_abundance,
      isolation_SS2_SS3,
      fish_SS2_SS3,
@@ -41,7 +41,7 @@ data(com_SS2_SS3_abundance,
 
 
 Now, lets check what probability distribution should we choose using the most complex model we have:
-```{r checking distribution, dpi=150, fig.height=3, fig.width=3}
+```{r checking_distribution, dpi=150, fig.height=3, fig.width=3}
 mix_model_G <- lmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
 mix_model_P <- glmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), family = "poisson")
 mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
@@ -55,13 +55,13 @@ AIC(mix_model_G,mix_model_P,mix_model_NB)
 Looking at AIC values and the spread of residuals, it seems like negative binomial is the best option here.
 
 So we can go further analysing the data:
-```{r running ab, cache=T}
+```{r running_ab, cache=T}
 mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 Anova(mix_model_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw ab, cache = T}
+```{r  pw_ab, cache = T}
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
@@ -69,7 +69,7 @@ emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "s
 It seems that community size grows with time. But it grows larger in fishless ponds, and in higher isolation treatments.
 
 Lets plot it:
-```{r plotting ab, dpi = 150, fig.height=5, fig.width=5}
+```{r plotting_ab, dpi = 150, fig.height=5, fig.width=5}
 isolation_SS <-rep(NA, length(All))
 for(i in 1:length(All)){
   if(SS_SS2_SS3[i] == "2" & isolation_SS2_SS3[i] == "30"){isolation_SS[i] <- "2 030"}
@@ -110,25 +110,25 @@ box(lwd = 2.5)
 
 ### Only Predatory Insects Community
 First, lets load the necessary data:
-```{r loading data pr}
+```{r loading_data pr}
 data(com_SS2_SS3_predators_abundance)
 ```
 
 Analysing the data:
-```{r running ab predators, cache=T}
+```{r running_ab_pr, cache=T}
 mix_model_predators_NB <- glmer.nb(com_SS2_SS3_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
 Anova(mix_model_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw ab pr, cache = T}
+```{r  pw_ab_pr, cache = T}
 emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 It seems that when we only consider predatory insects, community size is affected by time (survey) presence of fish (which have a stronger effect in the third survey) and isolation.
 
 Lets plot it:
-```{r Plotting ab pr, dpi = 150, fig.height=5, fig.width=5}
+```{r Plotting_ab_pr, dpi = 150, fig.height=5, fig.width=5}
 boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, ylim = c(0,170), col = "transparent", xaxt="n", main = "Predators")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(com_SS2_SS3_predators_abundance)
@@ -156,24 +156,24 @@ box(lwd = 2.5)
 
 ### Only Non-Predatory Insects (Herbivores and Detritivores) Community
 First, lets load the necessary data:
-```{r loading data non pr}
+```{r loading_data_non_pr}
 data(com_SS2_SS3_non_predators_abundance)
 ```
 
 Analysing the data:
-```{r running predators ab, cache=T}
+```{r running_pr_ab, cache=T}
 mix_model_non_predators_NB <- glmer.nb(com_SS2_SS3_non_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
 Anova(mix_model_non_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r  pw_abundances non pr, cache = T}
+```{r  pw_ab_non_pr, cache = T}
 emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 It seems that we have similar patterns to when we consider the whole community.
 
 Lets plot it:
-```{r Plotting ab non pr, dpi = 150, fig.height=5, fig.width=5}
+```{r Plot_ab_non_pr, dpi = 150, fig.height=5, fig.width=5}
 boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent", xaxt="n", main = "Non-Predators")
 mylevels <- levels(new_All)
 levelProportions <- summary(new_All)/length(com_SS2_SS3_non_predators_abundance)
