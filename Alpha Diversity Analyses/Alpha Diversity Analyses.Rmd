@@ -1,0 +1,40 @@
+---
+title: "Alpha Diversity Analyses"
+author: "Rodolfo Pelinson"
+date: "16/10/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r instaling package, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
+```
+
+```{r loading the package}
+library(Pelinson.et.al.2020B)
+```
+
+
+## Analysis of Alpha Diversity
+
+Lets load the necessary packages:
+```{r loading packages, warning = F, message = F}
+library(lme4)
+library(emmeans)
+library(car)
+library(iNEXT)
+```
+
+
+```{r}
+iRich <- iNEXT(t(com_SS2_SS3), datatype = "abundance", q = 0,  knots = 100,se = T, conf = 0.95,nboot =100)
+
+rarefied_richness <- iRich$AsyEst[which(iRich$AsyEst[,2] == "Species richness"),][,4]
+richness <- iRich$AsyEst[which(iRich$AsyEst[,2] == "Species richness"),][,3]
+```
+

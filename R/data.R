@@ -107,3 +107,26 @@
 #' @source {Experimental Data}
 "com_SS2_SS3_non_predators_abundance"
 
+
+
+#' Richness for the second and third surveys
+#'
+#'
+#' @format Numerical vector w/ with 44 observations
+#' @source {Experimental Data}
+"com_SS2_SS3_richness"
+
+#' Richness for predatory insects at the second and third surveys
+#'
+#'
+#' @format Numerical vector w/ with 44 observations
+#' @source {Experimental Data}
+"com_SS2_SS3_predators_richness"
+
+
+#' Richness for non-predatory insects (herbivores and detritivores) at the second and third surveys
+#'
+#'
+#' @format Numerical vector w/ with 44 observations
+#' @source {Experimental Data}
+"com_SS2_SS3_non_predators_richness"
