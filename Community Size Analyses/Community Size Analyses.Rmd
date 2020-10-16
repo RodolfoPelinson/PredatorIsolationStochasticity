@@ -13,7 +13,6 @@ knitr::opts_chunk$set(echo = TRUE)
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-
 ```{r loading the package}
 library(Pelinson.et.al.2020B)
 ```
@@ -21,15 +20,17 @@ library(Pelinson.et.al.2020B)
 
 ## Analysis of Community Size
 
-First, lets load the necessary packages:
-```{r loading packages}
+### Analysis of Community Size
+
+Lets load the necessary packages:
+```{r loading packages, warning = F, message = F}
 library(lme4)
 library(emmeans)
 library(car)
 ```
 
-
-Now, lets load the necessary data:
+### Whole Community
+First, lets load the necessary data:
 ```{r loading data}
 data(com_SS2_SS3_abundance,
      isolation_SS2_SS3,
@@ -106,5 +107,16 @@ axis(1,labels = c("30 m","120 m", "480 m"), cex.axis = 1, at =c(1.5,4.5,7.5), li
 boxplot(com_SS2_SS3_abundance~isolation_SS, add = T, col = "transparent", outline = F,at = c(1,2,4,5,7,8), lwd = 1.5, xaxt="n")
 box(lwd = 2.5)
 
+```
+
+### Only Predatory Insects Community
+First, lets load the necessary data:
+```{r loading data}
+data(com_SS2_SS3_abundance,
+     isolation_SS2_SS3,
+     fish_SS2_SS3,
+     SS_SS2_SS3,
+     ID_SS2_SS3,
+     All)
 ```
 
