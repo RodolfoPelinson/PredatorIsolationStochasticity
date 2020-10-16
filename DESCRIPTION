@@ -1,0 +1,15 @@
+Package: Pelinson.et.al.2020B
+Title: Data Analyses for Pelinson et al 2020B
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Rodolfo",
+           family = "Pelinson",
+           role = c("aut", "cre"),
+           email = "rodolfopelinson@gmail.com",
+           comment = c(ORCID = "0000-0002-8894-588X"))
+Description: This package is to reproduce the analyses found in Pelinson et al 2020B.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
