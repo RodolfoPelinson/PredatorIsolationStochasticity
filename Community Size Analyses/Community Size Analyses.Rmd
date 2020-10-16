@@ -55,13 +55,13 @@ AIC(mix_model_G,mix_model_P,mix_model_NB)
 Looking at AIC values and the spread of residuals, it seems like negative binomial is the best option here.
 
 So we can go further analysing the data:
-```{r running models for abundance, cache=T}
+```{r running ab, cache=T}
 mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 Anova(mix_model_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r pairwise abundances, cache = T}
+```{r  pw ab, cache = T}
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
@@ -69,7 +69,7 @@ emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "s
 It seems that community size grows with time. But it grows larger in fishless ponds, and in higher isolation treatments.
 
 Lets plot it:
-```{r Plotting effect of abundance, dpi = 150, fig.height=5, fig.width=5}
+```{r plotting ab, dpi = 150, fig.height=5, fig.width=5}
 isolation_SS <-rep(NA, length(All))
 for(i in 1:length(All)){
   if(SS_SS2_SS3[i] == "2" & isolation_SS2_SS3[i] == "30"){isolation_SS[i] <- "2 030"}
@@ -115,20 +115,20 @@ data(com_SS2_SS3_predators_abundance)
 ```
 
 Analysing the data:
-```{r running models for abundance predators, cache=T}
+```{r running ab predators, cache=T}
 mix_model_predators_NB <- glmer.nb(com_SS2_SS3_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
 Anova(mix_model_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r pairwise abundances predators, cache = T}
+```{r  pw abundances predators, cache = T}
 emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 It seems that when we only consider predatory insects, community size is affected by time (survey) presence of fish (which have a stronger effect in the third survey) and isolation.
 
 Lets plot it:
-```{r Plotting effect of abundance predators, dpi = 150, fig.height=5, fig.width=5}
+```{r Plotting ab predators, dpi = 150, fig.height=5, fig.width=5}
 boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, ylim = c(0,170), col = "transparent", xaxt="n", main = "Predators")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(com_SS2_SS3_predators_abundance)
@@ -161,19 +161,19 @@ data(com_SS2_SS3_non_predators_abundance)
 ```
 
 Analysing the data:
-```{r running models for non predators abundance, cache=T}
+```{r running predators abundance, cache=T}
 mix_model_non_predators_NB <- glmer.nb(com_SS2_SS3_non_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
 Anova(mix_model_non_predators_NB, test.statistic = "Chisq")
 ```
 
 Now pairwise differences:
-```{r pairwise abundances non predators, cache = T}
+```{r  pw_abundances_non_predators, cache = T}
 emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 It seems that we have similar patterns to when we consider the whole community.
 
 Lets plot it:
-```{r Plotting effect of abundance non predators, dpi = 150, fig.height=5, fig.width=5}
+```{r Plotting ab non predators, dpi = 150, fig.height=5, fig.width=5}
 boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent", xaxt="n", main = "Non-Predators")
 mylevels <- levels(new_All)
 levelProportions <- summary(new_All)/length(com_SS2_SS3_non_predators_abundance)
