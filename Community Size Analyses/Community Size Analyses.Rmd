@@ -112,11 +112,9 @@ box(lwd = 2.5)
 ### Only Predatory Insects Community
 First, lets load the necessary data:
 ```{r loading data}
-data(com_SS2_SS3_abundance,
-     isolation_SS2_SS3,
-     fish_SS2_SS3,
-     SS_SS2_SS3,
-     ID_SS2_SS3,
-     All)
+data(Trait_SS2_SS3)
+
+com_SS2_SS3_abundance_predators <- 
+
 ```
 

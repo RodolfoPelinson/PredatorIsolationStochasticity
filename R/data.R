@@ -62,3 +62,13 @@
 #' }
 #' @source {Experimental Data}
 "Trait_SS2_SS3"
+
+
+
+#' Taxa abundances for the second and third surveys
+#'
+#' A dataset containing the abundances of the taxa that were present in more than three observations in the second and third surveys.
+#'
+#' @format A data frame with 44 rows or 'observations' and 24 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS2_SS3"
