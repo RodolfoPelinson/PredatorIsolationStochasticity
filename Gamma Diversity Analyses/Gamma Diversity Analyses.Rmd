@@ -1,0 +1,56 @@
+---
+title: "Gamma Diversity Analyses"
+author: "Rodolfo Pelinson"
+date: "19/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r instaling package, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
+```
+
+```{r loading the package}
+library(Pelinson.et.al.2020B)
+```
+
+
+## Analysis of Alpha Diversity
+
+Lets load the necessary packages:
+```{r loading packages, warning = F, message = F}
+library(iNEXT)
+```
+
+
+### Whole Community
+First, lets load the necessary data:
+```{r loading_data}
+data(com_SS2_SS3)
+```
+
+```{r}
+absent_30<-as.incfreq(t(decostand(com_SS1_Exp1[which(fish_isolation_SS1 == "1 030 absent"),], method = "pa")))
+present_30<-as.incfreq(t(decostand(com_SS1_Exp1[which(fish_isolation_SS1 == "1 030 present"),], method = "pa")))
+absent_120<-as.incfreq(t(decostand(com_SS1_Exp1[which(fish_isolation_SS1 == "1 120 absent"),], method = "pa")))
+present_120<-as.incfreq(t(decostand(com_SS1_Exp1[which(fish_isolation_SS1 == "1 120 present"),], method = "pa")))
+absent_480<-as.incfreq(t(decostand(com_SS1_Exp1[which(fish_isolation_SS1 == "1 480 absent"),], method = "pa")))
+present_480<-as.incfreq(t(decostand(com_SS1_Exp1[which(fish_isolation_SS1 == "1 480 present"),], method = "pa")))
+
+all <- list(absent_30=absent_30 ,absent_120 =absent_120, absent_480=absent_480, present_30=present_30,present_120=present_120,present_480=present_480)
+
+X_ALL <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =1000, size = c(1:4))
+
+
+Gamma <- rbind(absent_30 = X_ALL$iNextEst$absent_30[4,c(4,5,6)],
+               absent_120 = X_ALL$iNextEst$absent_120[4,c(4,5,6)],
+               absent_480 = X_ALL$iNextEst$absent_480[4,c(4,5,6)],
+               present_30 = X_ALL$iNextEst$present_30[4,c(4,5,6)],
+               present_120 = X_ALL$iNextEst$present_120[4,c(4,5,6)],
+               present_480 = X_ALL$iNextEst$present_480[4,c(4,5,6)])
+```
+

@@ -130,3 +130,86 @@
 #' @format Numerical vector w/ with 44 observations
 #' @source {Experimental Data}
 "com_SS2_SS3_non_predators_richness"
+
+
+
+#' Taxa abundances for the First survey
+#'
+#' A dataset containing the abundances of the taxa that were present in the second and third surveys.
+#'
+#' @format A data frame with 24 rows or 'observations' and 18 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS1"
+
+#' Taxa abundances for the Second survey
+#'
+#' A dataset containing the abundances of the taxa that were present in the second and third surveys.
+#'
+#' @format A data frame with 24 rows or 'observations' and 30 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS2"
+
+
+#' Taxa abundances for the Third survey
+#'
+#' A dataset containing the abundances of the taxa that were present in the second and third surveys.
+#'
+#' @format A data frame with 20 rows or 'observations' and 29 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS3"
+
+
+#' Fish treatment identities for the First survey
+#'
+#' @format Factor w/ 2 levels: "absent","present", and 24 observations
+#' @source {Experimental Data}
+"fish_SS1"
+
+#' Fish treatment identities for the Second survey
+#'
+#' @format Factor w/ 2 levels: "absent","present", and 24 observations
+#' @source {Experimental Data}
+"fish_SS2"
+
+#' Fish treatment identities for the Third survey
+#'
+#' @format Factor w/ 2 levels: "absent","present", and 20 observations
+#' @source {Experimental Data}
+"fish_SS3"
+
+#' Isolation treatment identities for the First survey
+#'
+#' @format Factor w/ 3 levels: "030","120","480", and 24 observations
+#' @source {Experimental Data}
+"isolation_SS1"
+
+#' Isolation treatment identities for the Second survey
+#'
+#' @format Factor w/ 3 levels: "030","120","480", and 24 observations
+#' @source {Experimental Data}
+"isolation_SS2"
+
+#' Isolation treatment identities for the Third survey
+#'
+#' @format Factor w/ 3 levels: "030","120","480", and 20 observations
+#' @source {Experimental Data}
+"isolation_SS3"
+
+
+#' Isolation and fish treatment identities for the First survey
+#'
+#' @format Factor w/ 3 levels: "030","120","480", and 24 observations
+#' @source {Experimental Data}
+"fish_isolation_SS1"
+
+#' Isolation and fish treatment identities for the Second survey
+#'
+#' @format Factor w/ 3 levels: "030","120","480", and 24 observations
+#' @source {Experimental Data}
+"fish_isolation_SS2"
+
+#' Isolation and fish treatment identities for the Third survey
+#'
+#' @format Factor w/ 3 levels: "030","120","480", and 20 observations
+#' @source {Experimental Data}
+"fish_isolation_SS3"
