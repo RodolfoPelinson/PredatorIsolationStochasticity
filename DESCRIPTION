@@ -1,6 +1,6 @@
 Package: Pelinson.et.al.2020B
 Title: Data Analyses for Pelinson et al 2020B
-Version: 0.0.0.1
+Version: 0.0.0.2
 Authors@R: 
     person(given = "Rodolfo",
            family = "Pelinson",
