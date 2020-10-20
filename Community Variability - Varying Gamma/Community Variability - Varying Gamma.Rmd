@@ -10,11 +10,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r loading the package}
+```{r 1}
 library(Pelinson.et.al.2020B)
 ```
 
-```{r loading_other_packages, message=FALSE, warning=FALSE}
+```{r 2, message=FALSE, warning=FALSE}
 library(lme4)
 library(car)
 library(emmeans)
@@ -26,12 +26,12 @@ library(vegan)
 
 ### Whole community for the last two surveys.
 First loading data
-```{r loading data}
+```{r 3}
 data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3, fish_isolation_SS2_SS3)
 ```
 
 Computing observed and expected distances to centroid, and beta-deviation.
-```{r computing_betas, message=FALSE, warning=FALSE}
+```{r 4, message=FALSE, warning=FALSE}
 beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = NULL, times = 10000,
                                       transform = NULL, dist = "bray", fixedmar="both",
                                       shuffle = "both", method = "quasiswap", seed = 2, group = All) 
@@ -40,7 +40,7 @@ beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = NULL, times = 100
 
 #### Expected Community Variability
 Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.
-```{r running_expected, message=FALSE, warning=FALSE}
+```{r 5, message=FALSE, warning=FALSE}
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
 round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
 emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
@@ -48,7 +48,7 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_
 Here the increase in expected distance to centroid increases with isolation only in ponds with fish, in the last survey.
 
 Plotting it:
-```{r plot_expected, dpi = 150, fig.height=5, fig.width=5}
+```{r 6, dpi = 150, fig.height=5, fig.width=5}
 boxplot(beta_deviation_SS2_SS3$expected_distances~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Distance to Centroid (Expected)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(beta_deviation_SS2_SS3$expected_distances)
@@ -76,7 +76,7 @@ box(lwd = 2.5)
 
 #### Beta-Deviation
 Running ANOVA table for the deviations of expected distances to group centroids from observed distances.
-```{r running_deviation, message=FALSE, warning=FALSE}
+```{r 7, message=FALSE, warning=FALSE}
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
 round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
 emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "tukey")
@@ -84,7 +84,7 @@ emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), 
 No significant patterns.
 
 Plotting it:
-```{r plot_deviation, dpi = 150, fig.height=5, fig.width=5}
+```{r 8, dpi = 150, fig.height=5, fig.width=5}
 boxplot(beta_deviation_SS2_SS3$deviation_distances~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Beta-Deviation", xlab = "", at = c(1,2,3,5,6,7),ylim = c(-2,10), lwd = 1.5, col = "transparent", xaxt="n")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(beta_deviation_SS2_SS3$deviation_distances)
