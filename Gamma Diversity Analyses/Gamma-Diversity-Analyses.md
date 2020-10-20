@@ -1,47 +1,48 @@
----
-title: "Gamma Diversity Analyses"
-author: "Rodolfo Pelinson"
-date: "19/10/2020"
-output: github_document
----
+Gamma Diversity Analyses
+================
+Rodolfo Pelinson
+19/10/2020
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r instaling package, eval = FALSE}
+``` r
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-```{r loading the package}
+``` r
 library(Pelinson.et.al.2020B)
 ```
-
 
 ## Analysis of Alpha Diversity
 
 Lets load the necessary packages:
-```{r loading_packages, warning = F, message = F}
+
+``` r
 library(iNEXT)
 library(vegan)
 ```
 
-
 ### Whole Community
+
 First, lets load the necessary data:
-```{r loading_data}
+
+``` r
 data(com_SS1, fish_SS1, isolation_SS1, fish_isolation_SS1,
      com_SS2, fish_SS2, isolation_SS2, fish_isolation_SS2,
      com_SS3, fish_SS3, isolation_SS3, fish_isolation_SS3)
 ```
 
-
 #### First Survey
-First we get the estimated gamma diversity for each treatment for a sample size of four ponds.
 
-First we computed the number of species in each treatment for a similar number of sampled ponds and its respective 95% confidence interval through sample-based rarefaction and extrapolation using the package `iNEXT`. What we call gamma diversity here is the realized species pool that is able to colonize ponds of a given treatment.
-```{r gamma_SS1, cache = T}
+First we get the estimated gamma diversity for each treatment for a
+sample size of four ponds.
+
+First we computed the number of species in each treatment for a similar
+number of sampled ponds and its respective 95% confidence interval
+through sample-based rarefaction and extrapolation using the package
+`iNEXT`. What we call gamma diversity here is the realized species pool
+that is able to colonize ponds of a given treatment.
+
+``` r
 absent_30_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "030 absent"),], method = "pa")))
 present_30_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "030 present"),], method = "pa")))
 absent_120_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "120 absent"),], method = "pa")))
@@ -62,7 +63,8 @@ Gamma_SS1 <- rbind(absent_30 = SS1_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 ```
 
 We can plot the estimates and respective confidence intervals.
-```{r plot_SS1, dpi = 150, fig.height=5, fig.width=5}
+
+``` r
 plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,20), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "First Survey")
 arrows(y0 = c(Gamma_SS1$qD.LCL[1],Gamma_SS1$qD.LCL[2], Gamma_SS1$qD.LCL[3],Gamma_SS1$qD.LCL[4],Gamma_SS1$qD.LCL[5], Gamma_SS1$qD.LCL[6]),
        y1 = c(Gamma_SS1$qD.UCL[1],Gamma_SS1$qD.UCL[2], Gamma_SS1$qD.UCL[3],Gamma_SS1$qD.UCL[4],Gamma_SS1$qD.UCL[5], Gamma_SS1$qD.UCL[6]),
@@ -74,14 +76,22 @@ axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line
 box(lwd = 2.5)
 ```
 
+![](Gamma-Diversity-Analyses_files/figure-gfm/plot_SS1-1.png)<!-- -->
+
 It does not seem to be any important differences among treatments.
 
-
 #### Second Survey
-First we get the estimated gamma diversity for each treatment for a sample size of four ponds.
 
-First we computed the number of species in each treatment for a similar number of sampled ponds and its respective 95% confidence interval through sample-based rarefaction and extrapolation using the package `iNEXT`. What we call gamma diversity here is the realized species pool that is able to colonize ponds of a given treatment.
-```{r gamma_SS2, cache = T}
+First we get the estimated gamma diversity for each treatment for a
+sample size of four ponds.
+
+First we computed the number of species in each treatment for a similar
+number of sampled ponds and its respective 95% confidence interval
+through sample-based rarefaction and extrapolation using the package
+`iNEXT`. What we call gamma diversity here is the realized species pool
+that is able to colonize ponds of a given treatment.
+
+``` r
 absent_30_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "030 absent"),], method = "pa")))
 present_30_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "030 present"),], method = "pa")))
 absent_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "120 absent"),], method = "pa")))
@@ -102,7 +112,8 @@ Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 ```
 
 We can plot the estimates and respective confidence intervals.
-```{r plot_SS2, dpi = 150, fig.height=5, fig.width=5}
+
+``` r
 plot(c(NA,NA,NA,NA,NA,NA),ylim = c(10,30), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
 arrows(y0 = c(Gamma_SS2$qD.LCL[1],Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],Gamma_SS2$qD.LCL[4],Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
        y1 = c(Gamma_SS2$qD.UCL[1],Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],Gamma_SS2$qD.UCL[4],Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
@@ -114,14 +125,22 @@ axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line
 box(lwd = 2.5)
 ```
 
+![](Gamma-Diversity-Analyses_files/figure-gfm/plot_SS2-1.png)<!-- -->
+
 It does not seem to be any important differences among treatments.
 
-
 #### Third Survey
-First we get the estimated gamma diversity for each treatment for a sample size of four ponds.
 
-First we computed the number of species in each treatment for a similar number of sampled ponds and its respective 95% confidence interval through sample-based rarefaction and extrapolation using the package `iNEXT`. What we call gamma diversity here is the realized species pool that is able to colonize ponds of a given treatment.
-```{r gamma_SS3, cache = T}
+First we get the estimated gamma diversity for each treatment for a
+sample size of four ponds.
+
+First we computed the number of species in each treatment for a similar
+number of sampled ponds and its respective 95% confidence interval
+through sample-based rarefaction and extrapolation using the package
+`iNEXT`. What we call gamma diversity here is the realized species pool
+that is able to colonize ponds of a given treatment.
+
+``` r
 absent_30_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "030 absent"),], method = "pa")))
 present_30_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "030 present"),], method = "pa")))
 absent_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "120 absent"),], method = "pa")))
@@ -142,7 +161,8 @@ Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 ```
 
 We can plot the estimates and respective confidence intervals.
-```{r plot_SS3, dpi = 150, fig.height=5, fig.width=5}
+
+``` r
 plot(c(NA,NA,NA,NA,NA,NA),ylim = c(10,30), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
 arrows(y0 = c(Gamma_SS3$qD.LCL[1],Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],Gamma_SS3$qD.LCL[4],Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
        y1 = c(Gamma_SS3$qD.UCL[1],Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],Gamma_SS3$qD.UCL[4],Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
@@ -154,4 +174,7 @@ axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line
 box(lwd = 2.5)
 ```
 
-It seems that there is a higher gamma diversity in the intermediate isolation treatment for fishless ponds.
+![](Gamma-Diversity-Analyses_files/figure-gfm/plot_SS3-1.png)<!-- -->
+
+It seems that there is a higher gamma diversity in the intermediate
+isolation treatment for fishless ponds.
