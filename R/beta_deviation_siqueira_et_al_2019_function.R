@@ -44,7 +44,7 @@ beta_deviation_siqueira_et_al_2019 <- function(com, dist = "bray", keep.gamma = 
       new_com$sites <- as.numeric(new_com$sites)
       new_com_expanded <- new_com[rep(seq.int(1, nrow(new_com)), new_com$abundance), ]
 
-      nulls_frac[[i]] <- replicate(times, null.assembly(new_com_expanded, species.col = "species", site.col = "sites"), simplify = F)
+      nulls_frac[[i]] <- replicate(times, null_assembly(new_com_expanded, species.col = "species", site.col = "sites"), simplify = F)
     }
 
 
@@ -84,7 +84,7 @@ beta_deviation_siqueira_et_al_2019 <- function(com, dist = "bray", keep.gamma = 
     new_com$sites <- as.numeric(new_com$sites)
     new_com_expanded <- new_com[rep(seq.int(1, nrow(new_com)), new_com$abundance), ]
 
-    nulls <- replicate(times, null.assembly(new_com_expanded, species.col = "species", site.col = "sites"), simplify = F)
+    nulls <- replicate(times, null_assembly(new_com_expanded, species.col = "species", site.col = "sites"), simplify = F)
   }
 
 

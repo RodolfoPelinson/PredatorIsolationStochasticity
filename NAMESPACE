@@ -2,3 +2,4 @@
 
 export(beta_deviation)
 export(beta_deviation_siqueira_et_al_2019)
+export(null_assembly)
