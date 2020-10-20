@@ -1,0 +1,151 @@
+---
+title: "Community Variability - First Survey"
+author: "Rodolfo Pelinson"
+date: "20/10/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r instaling package, eval = FALSE}
+install.packages("devtools")
+devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
+```
+
+```{r loading the package}
+library(Pelinson.et.al.2020B)
+```
+
+```{r loading_other_packages, message=FALSE, warning=FALSE}
+library(lme4)
+library(car)
+library(emmeans)
+```
+ 
+
+### Whole community for the First Surveys.
+First loading data
+```{r loading_data_SS1}
+data(com_SS1, All, fish_SS1, isolation_SS1, fish_isolation_SS1)
+```
+
+Computing observed and expected distances to centroid, and beta-deviation.
+```{r computing_betas, cache = T, warning=FALSE, message=FALSE}
+beta_deviation_SS1 <- beta_deviation(com_SS1, strata = fish_isolation_SS1, times = 10000,
+                                      transform = NULL, dist = "bray", fixedmar="both",
+                                      shuffle = "both", method = "quasiswap", seed = 2, group = fish_isolation_SS1) 
+
+```
+
+
+#### Observed Community Variability
+Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
+```{r running_observed}
+fit_observed_SS1 <- lm(beta_deviation_SS1$observed_distances~fish_SS1*isolation_SS1)
+round(Anova(fit_observed_SS1, test.statistic = "F"),3)
+```
+No effect of treatments.
+
+Plotting it:
+```{r plot_observed, dpi = 150, fig.height=5, fig.width=5}
+fish_isolation_SS1 <- factor(fish_isolation_SS1, levels = c("030 absent","120 absent", "480 absent","030 present","120 present", "480 present"))
+
+boxplot(beta_deviation_SS1$observed_distances~isolation_SS1*fish_SS1, outline = F, ylab = "Distance to Centroid (Observed)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
+mylevels <- levels(fish_isolation_SS1)
+levelProportions <- summary(fish_isolation_SS1)/length(beta_deviation_SS1$observed_distances)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3))
+#bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(15,16,17,15,16,17)
+for(i in 1:length(mylevels)){
+  
+  x<- c(1,2,3,5,6,7)[i]
+  thislevel <- mylevels[i]
+  thisvalues <- beta_deviation_SS1$observed_distances[fish_isolation_SS1==thislevel]
+  
+  # take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], cex = 1.5, lwd = 3) 
+  
+}
+boxplot(beta_deviation_SS1$observed_distances~isolation_SS1*fish_SS1, add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7), lwd = 1.5, xaxt="n")
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8, at =c(1,2,3,5,6,7))
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+box(lwd = 2.5)
+```
+
+
+
+
+#### Expected Community Variability
+Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
+```{r running_expected}
+fit_expected_SS1 <- lm(beta_deviation_SS1$expected_distances~fish_SS1*isolation_SS1)
+round(Anova(fit_expected_SS1, test.statistic = "F"),3)
+emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "tukey")
+```
+There is an increase in expected distance to centroid from intermediate to high isolation.
+
+Plotting it:
+```{r plot_expected, dpi = 150, fig.height=5, fig.width=5}
+fish_isolation_SS1 <- factor(fish_isolation_SS1, levels = c("030 absent","120 absent", "480 absent","030 present","120 present", "480 present"))
+
+boxplot(beta_deviation_SS1$expected_distances~isolation_SS1*fish_SS1, outline = F, ylab = "Distance to Centroid (Expected)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
+mylevels <- levels(fish_isolation_SS1)
+levelProportions <- summary(fish_isolation_SS1)/length(beta_deviation_SS1$expected_distances)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3))
+#bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(15,16,17,15,16,17)
+for(i in 1:length(mylevels)){
+  
+  x<- c(1,2,3,5,6,7)[i]
+  thislevel <- mylevels[i]
+  thisvalues <- beta_deviation_SS1$expected_distances[fish_isolation_SS1==thislevel]
+  
+  # take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], cex = 1.5, lwd = 3) 
+  
+}
+boxplot(beta_deviation_SS1$expected_distances~isolation_SS1*fish_SS1, add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7), lwd = 1.5, xaxt="n")
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8, at =c(1,2,3,5,6,7))
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+box(lwd = 2.5)
+```
+
+
+#### Beta-Deviation
+Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
+```{r running_deviation}
+fit_deviation_SS1 <- lm(beta_deviation_SS1$deviation_distances~fish_SS1*isolation_SS1)
+round(Anova(fit_deviation_SS1, test.statistic = "F"),3)
+```
+No significant effect of treatments.
+
+Plotting it:
+```{r plot_deviation, dpi = 150, fig.height=5, fig.width=5}
+boxplot(beta_deviation_SS1$deviation_distances~isolation_SS1*fish_SS1, outline = F, ylab = "Distance to Centroid (deviation)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(-2,10), lwd = 1.5, col = "transparent", xaxt="n")
+mylevels <- levels(fish_isolation_SS1)
+levelProportions <- summary(fish_isolation_SS1)/length(beta_deviation_SS1$deviation_distances)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3))
+#bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(15,16,17,15,16,17)
+for(i in 1:length(mylevels)){
+  
+  x<- c(1,2,3,5,6,7)[i]
+  thislevel <- mylevels[i]
+  thisvalues <- beta_deviation_SS1$deviation_distances[fish_isolation_SS1==thislevel]
+  
+  # take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], cex = 1.5, lwd = 3) 
+  
+}
+boxplot(beta_deviation_SS1$deviation_distances~isolation_SS1*fish_SS1, add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7), lwd = 1.5, xaxt="n")
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8, at =c(1,2,3,5,6,7))
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+abline(h = 0, lty = 2, lwd = 2, col = "grey50")
+box(lwd = 2.5)
+```
