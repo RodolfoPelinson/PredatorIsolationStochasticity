@@ -22,6 +22,7 @@ library(Pelinson.et.al.2020B)
 library(lme4)
 library(car)
 library(emmeans)
+library(vegan)
 ```
  
 
@@ -35,7 +36,7 @@ data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3, 
 
 Computing observed and expected distances to centroid, and beta-deviation.
 ```{r computing_betas, message=FALSE, warning=FALSE}
-beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = All, times = 1000,
+beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = All, times = 10000,
                                       transform = NULL, dist = "bray", fixedmar="both",
                                       shuffle = "both", method = "quasiswap", seed = 2, group = All) 
 
