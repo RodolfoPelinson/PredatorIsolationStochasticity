@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 The goal of Pelinson.et.al.2020B is to walk the user through the data analyses shown in XXXXXXXXX.
 
-##### Here you can find the r code the run some of the results shown in the main paper for:
+#### Here you can find the r code the run some of the results shown in the main paper for:
 
 [Community Size](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/blob/master/Community%20Size%20Analyses/Community-Size-Analyses.md)  
 
@@ -36,7 +36,7 @@ The goal of Pelinson.et.al.2020B is to walk the user through the data analyses s
 \  
 
 
-##### A deeper dive into the observed patterns (shown in the supplements) can be found in the following pages:
+#### A deeper dive into the observed patterns (shown in the supplements) can be found in the following pages:
 
 [Community Variability - Predatory and Non-Predatory Insects](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/blob/master/Community%20Variability%20-%20Pred%20and%20Non-Pred/Community-Variability-Analyses---Pred-and-Non-Pred.md). Here we repeat the analyses for community variability for predatory and non-predatory insects separetely.
 
