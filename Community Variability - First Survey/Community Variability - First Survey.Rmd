@@ -9,20 +9,20 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+This is the same community variability analyses presented in the main paper, but considering only the first survey.
 
+If you haven't, install the package:
 ```{r 1, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-```{r 2}
-library(Pelinson.et.al.2020B)
-```
-
+These are the packages you will need to run this code:
 ```{r 3, message=FALSE, warning=FALSE}
-library(lme4)
-library(car)
-library(emmeans)
+library(Pelinson.et.al.2020B)
+library(lme4) # Version 1.1-23
+library(car) # Version 3.0-7
+library(emmeans) # Version 1.4.8
 ```
  
 

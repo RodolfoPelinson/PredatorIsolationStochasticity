@@ -3,7 +3,7 @@
 \docType{data}
 \name{All}
 \alias{All}
-\title{Fish, isolation and surveyidentities combined for the second and third surveys}
+\title{Fish, isolation and survey identities combined for the second and third surveys}
 \format{
 Factor w/ 12 levels and 44 observations
 }
@@ -14,6 +14,6 @@ Factor w/ 12 levels and 44 observations
 All
 }
 \description{
-Fish, isolation and surveyidentities combined for the second and third surveys
+Fish, isolation and survey identities combined for the second and third surveys
 }
 \keyword{datasets}

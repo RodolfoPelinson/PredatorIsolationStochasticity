@@ -9,23 +9,20 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r instaling_package, eval = FALSE}
+These are the analyses of community size for the whole communities (results shown in the main papaer) and separetely to predatory and non-predatory insects.
+
+If you haven't, install the package:
+```{r 1, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-```{r loading_the_package}
-library(Pelinson.et.al.2020B)
-```
-
-
-## Analysis of Community Size
-
-Lets load the necessary packages:
+These are the packages you will need to run this code:
 ```{r loading_packages, warning = F, message = F}
-library(lme4)
-library(emmeans)
-library(car)
+library(Pelinson.et.al.2020B)
+library(lme4) # Version 1.1-23
+library(emmeans) # Version 1.4.8
+library(car) # Version 3.0-7
 ```
 
 ### Whole Community

@@ -30,12 +30,91 @@
 #' @source {Experimental Data}
 "fish_SS2_SS3"
 
-#' Fish, isolation and surveyidentities combined for the second and third surveys
+#' Fish, isolation and survey identities combined for the second and third surveys
 #'
 #' @format Factor w/ 12 levels and 44 observations
 #' @source {Experimental Data}
 "All"
 
+#' Traits and other relevant information for the first survey only
+#'
+#' Traits and other relevant information about each taxa sampled
+#'
+#' @format A data frame with 18 rows or 'observations' and 16 variables:
+#' \describe{
+#'   \item{species}{Factor variable: Ids of the sampled taxa}
+#'   \item{trophic}{Factor variable: Trophic level of the sampled taxa}
+#'   \item{microhabitat}{Factor variable: Microhabitat level of the sampled taxa}
+#'   \item{volume}{Numeric variable: Volume of the largest individual of each sampled taxa}
+#'   \item{mass}{Numeric variable: Wet mass of the largest individual of each sampled taxa}
+#'   \item{volume_log}{Numeric variable: Log transformed volume of the largest individual of each sampled taxa}
+#'   \item{family}{Character variable: Family of each sampled taxa}
+#'   \item{order}{Character variable:  Order of each sampled taxa}
+#'   \item{total_ab}{Numeric variable: Total abundance of each sampled taxa considering all surveys}
+#'   \item{total_ab_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering all surveys}
+#'   \item{total_ab_SS1}{Numeric variable: Total abundance of each sampled taxa considering the first survey}
+#'   \item{total_ab_SS2}{Numeric variable: Total abundance of each sampled taxa considering the second survey}
+#'   \item{total_ab_SS3}{Numeric variable: Total abundance of each sampled taxa considering the third survey}
+#'   \item{total_ab_SS1_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the first survey}
+#'   \item{total_ab_SS2_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the second survey}
+#'   \item{total_ab_SS3_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the third survey}
+#' }
+#' @source {Experimental Data}
+"Trait_SS1"
+
+
+#' Traits and other relevant information for the second survey only
+#'
+#' Traits and other relevant information about each taxa sampled
+#'
+#' @format A data frame with 30 rows or 'observations' and 16 variables:
+#' \describe{
+#'   \item{species}{Factor variable: Ids of the sampled taxa}
+#'   \item{trophic}{Factor variable: Trophic level of the sampled taxa}
+#'   \item{microhabitat}{Factor variable: Microhabitat level of the sampled taxa}
+#'   \item{volume}{Numeric variable: Volume of the largest individual of each sampled taxa}
+#'   \item{mass}{Numeric variable: Wet mass of the largest individual of each sampled taxa}
+#'   \item{volume_log}{Numeric variable: Log transformed volume of the largest individual of each sampled taxa}
+#'   \item{family}{Character variable: Family of each sampled taxa}
+#'   \item{order}{Character variable:  Order of each sampled taxa}
+#'   \item{total_ab}{Numeric variable: Total abundance of each sampled taxa considering all surveys}
+#'   \item{total_ab_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering all surveys}
+#'   \item{total_ab_SS1}{Numeric variable: Total abundance of each sampled taxa considering the first survey}
+#'   \item{total_ab_SS2}{Numeric variable: Total abundance of each sampled taxa considering the second survey}
+#'   \item{total_ab_SS3}{Numeric variable: Total abundance of each sampled taxa considering the third survey}
+#'   \item{total_ab_SS1_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the first survey}
+#'   \item{total_ab_SS2_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the second survey}
+#'   \item{total_ab_SS3_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the third survey}
+#' }
+#' @source {Experimental Data}
+"Trait_SS2"
+
+
+#' Traits and other relevant information considering for the third survey only
+#'
+#' Traits and other relevant information about each taxa sampled
+#'
+#' @format A data frame with 29 rows or 'observations' and 16 variables:
+#' \describe{
+#'   \item{species}{Factor variable: Ids of the sampled taxa}
+#'   \item{trophic}{Factor variable: Trophic level of the sampled taxa}
+#'   \item{microhabitat}{Factor variable: Microhabitat level of the sampled taxa}
+#'   \item{volume}{Numeric variable: Volume of the largest individual of each sampled taxa}
+#'   \item{mass}{Numeric variable: Wet mass of the largest individual of each sampled taxa}
+#'   \item{volume_log}{Numeric variable: Log transformed volume of the largest individual of each sampled taxa}
+#'   \item{family}{Character variable: Family of each sampled taxa}
+#'   \item{order}{Character variable:  Order of each sampled taxa}
+#'   \item{total_ab}{Numeric variable: Total abundance of each sampled taxa considering all surveys}
+#'   \item{total_ab_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering all surveys}
+#'   \item{total_ab_SS1}{Numeric variable: Total abundance of each sampled taxa considering the first survey}
+#'   \item{total_ab_SS2}{Numeric variable: Total abundance of each sampled taxa considering the second survey}
+#'   \item{total_ab_SS3}{Numeric variable: Total abundance of each sampled taxa considering the third survey}
+#'   \item{total_ab_SS1_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the first survey}
+#'   \item{total_ab_SS2_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the second survey}
+#'   \item{total_ab_SS3_log}{Numeric variable: Log transformed total abundance of each sampled taxa considering the third survey}
+#' }
+#' @source {Experimental Data}
+"Trait_SS3"
 
 #' Traits and other relevant information considering the second and third surveys only
 #'
@@ -135,7 +214,7 @@
 
 #' Taxa abundances for the First survey
 #'
-#' A dataset containing the abundances of the taxa that were present in the second and third surveys.
+#' A dataset containing the abundances of the taxa that were present in the first and third surveys.
 #'
 #' @format A data frame with 24 rows or 'observations' and 18 variables or 'taxa':
 #' @source {Experimental Data}
@@ -152,11 +231,63 @@
 
 #' Taxa abundances for the Third survey
 #'
-#' A dataset containing the abundances of the taxa that were present in the second and third surveys.
+#' A dataset containing the abundances of the taxa that were present in the third and third surveys.
 #'
 #' @format A data frame with 20 rows or 'observations' and 29 variables or 'taxa':
 #' @source {Experimental Data}
 "com_SS3"
+
+
+#' Taxa abundances of predatory insects for the First survey
+#'
+#' A dataset containing the abundances of predatory taxa that were present in the first and third surveys.
+#'
+#' @format A data frame with 24 rows or 'observations' and 18 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS1_predators"
+
+#' Taxa abundances of predatory insects for the Second survey
+#'
+#' A dataset containing the abundances of predatory taxa that were present in the second and third surveys.
+#'
+#' @format A data frame with 24 rows or 'observations' and 30 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS2_predators"
+
+
+#' Taxa abundances of predatory insects for the Third survey
+#'
+#' A dataset containing the abundances of predatory taxa that were present in the third and third surveys.
+#'
+#' @format A data frame with 20 rows or 'observations' and 29 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS3_predators"
+
+
+#' Taxa abundances of non-predatory insects for the First survey
+#'
+#' A dataset containing the abundances of non-predatory taxa that were present in the first and third surveys.
+#'
+#' @format A data frame with 24 rows or 'observations' and 18 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS1_non_predators"
+
+#' Taxa abundances of non-predatory insects for the Second survey
+#'
+#' A dataset containing the abundances of non-predatory taxa that were present in the second and third surveys.
+#'
+#' @format A data frame with 24 rows or 'observations' and 30 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS2_non_predators"
+
+
+#' Taxa abundances of non-predatory insects for the Third survey
+#'
+#' A dataset containing the abundances of non-predatory taxa that were present in the third and third surveys.
+#'
+#' @format A data frame with 20 rows or 'observations' and 29 variables or 'taxa':
+#' @source {Experimental Data}
+"com_SS3_non_predators"
 
 
 #' Fish treatment identities for the First survey

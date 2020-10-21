@@ -3,20 +3,25 @@ Community Variability - Siqueira et al 2020
 Rodolfo Pelinson
 20/10/2020
 
+This is the same community variability analyses presented in the main
+paper, but using a different null model. The same one as used in {
+[Siqueira et al. 2020](https://doi.org/10.1002/ecy.3014)
+
+If you haven’t, install the package:
+
 ``` r
-install.packages("devtools")
+install.packages("devtools") 
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-``` r
-library(Pelinson.et.al.2020B)
-```
+These are the packages we will need to run this data:
 
 ``` r
-library(lme4)
-library(car)
-library(emmeans)
-library(vegan)
+library(Pelinson.et.al.2020B)
+library(lme4) # Version 1.1-23
+library(car) # Version 3.0-7
+library(emmeans) # Version 1.4.8
+library(vegan) # Version 2.5-6
 ```
 
 ## Community Variability
@@ -26,11 +31,8 @@ library(vegan)
 First loading data
 
 ``` r
-data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3, fish_isolation_SS2_SS3)
+data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3)
 ```
-
-    ## Warning in data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, :
-    ## data set 'fish_isolation_SS2_SS3' not found
 
 Computing observed and expected distances to centroid, and
 beta-deviation.
@@ -44,7 +46,7 @@ Looking at residual plots for observed, expected distances to centroids
 and deviations.
 
 ``` r
-fit_expected_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
+fit_expected_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 ```
 
     ## boundary (singular) fit: see ?isSingular
@@ -63,7 +65,7 @@ qqline(resid(fit_expected_SS2_SS3_G, type = "pearson"))
 ![](Community-Variability---Siqueira_2020_files/figure-gfm/7-2.png)<!-- -->
 
 ``` r
-fit_deviation_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
+fit_deviation_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 plot(fit_deviation_SS2_SS3_G)
 ```
 
@@ -75,7 +77,14 @@ qqline(resid(fit_deviation_SS2_SS3_G, type = "pearson"))
 ```
 
 ![](Community-Variability---Siqueira_2020_files/figure-gfm/7-4.png)<!-- -->
-Residual plots are not perfect, but they also does not seem too bad.
+
+The fit of the model for beta deviation here is pretty bad. If we were
+to make inferences based on these results, we would have to look for a
+better statistical model, maybe considering a different statistical
+distribution, which is hard given that we have overdispersion and
+negative values (i.e. excludes some distributions and data
+transformations). But, since we are not interpreting results based on
+this model, we will still use it.
 
 #### Expected Community Variability
 

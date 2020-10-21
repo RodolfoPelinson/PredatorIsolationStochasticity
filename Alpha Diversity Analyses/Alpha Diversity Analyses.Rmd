@@ -10,23 +10,20 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-```{r instaling package, eval = FALSE}
+These are the analyses of alpha diversity for the whole communities and separately to predatory and non-predatory insects. These results are not shown in the main paper.
+
+If you haven't, install the package:
+```{r 1, eval = FALSE}
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-```{r loading the package}
+These are the packages you will need to run this code:
+```{r loading_packages, warning = F, message = F}
 library(Pelinson.et.al.2020B)
-```
-
-
-## Analysis of Alpha Diversity
-
-Lets load the necessary packages:
-```{r loading packages, warning = F, message = F}
-library(lme4)
-library(emmeans)
-library(car)
+library(lme4) # Version 1.1-23
+library(emmeans) # Version 1.4.8
+library(car) # Version 3.0-7
 ```
 
 
