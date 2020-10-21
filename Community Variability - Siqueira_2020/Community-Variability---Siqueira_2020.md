@@ -4,7 +4,7 @@ Rodolfo Pelinson
 20/10/2020
 
 This is the same community variability analyses presented in the main
-paper, but using a different null model. The same one as used in {
+paper, but using a different null model. The same one as used in
 [Siqueira et al. 2020](https://doi.org/10.1002/ecy.3014)
 
 If you haven’t, install the package:
@@ -14,7 +14,7 @@ install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-These are the packages we will need to run this data:
+These are the packages you will need to run this code:
 
 ``` r
 library(Pelinson.et.al.2020B)
