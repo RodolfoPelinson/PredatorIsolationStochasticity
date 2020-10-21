@@ -3,23 +3,24 @@ Alpha Diversity Analyses
 Rodolfo Pelinson
 16/10/2020
 
+These are the analyses of alpha diversity for the whole communities and
+separately to predatory and non-predatory insects. These results are not
+shown in the main paper.
+
+If you haven’t, install the package:
+
 ``` r
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
+These are the packages you will need to run this code:
+
 ``` r
 library(Pelinson.et.al.2020B)
-```
-
-## Analysis of Alpha Diversity
-
-Lets load the necessary packages:
-
-``` r
-library(lme4)
-library(emmeans)
-library(car)
+library(lme4) # Version 1.1-23
+library(emmeans) # Version 1.4.8
+library(car) # Version 3.0-7
 ```
 
 ### Whole Community
