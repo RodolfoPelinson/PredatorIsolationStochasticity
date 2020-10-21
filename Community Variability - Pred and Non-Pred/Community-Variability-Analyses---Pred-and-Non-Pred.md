@@ -3,20 +3,25 @@ Community Variability - Predatory and Non-Predatory Insects
 Rodolfo Pelinson
 20/10/2020
 
+This is the same community variability analyses presented in the main
+paper, but separating the communities into predatory and non-predatory
+insects.
+
+If you haven’t, install the package:
+
 ``` r
 install.packages("devtools")
 devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 ```
 
-``` r
-library(Pelinson.et.al.2020B)
-```
+These are the packages you will need to run this code:
 
 ``` r
-library(lme4)
-library(car)
-library(emmeans)
-library(vegan)
+library(Pelinson.et.al.2020B)
+library(lme4) # Version 1.1-23
+library(car) # Version 3.0-7
+library(emmeans) # Version 1.4.8
+library(vegan) # Version 2.5-6
 ```
 
 ## Community Variability
