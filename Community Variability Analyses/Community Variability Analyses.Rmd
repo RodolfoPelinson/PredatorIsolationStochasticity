@@ -68,8 +68,10 @@ Residual plots are not perfect, but they also does not seem too bad.
 Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
 ```{r running_observed}
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$observed_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "tukey")
+round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 It seems that the effect of isolation is dependent on the presence or absence of fish. When fish is absent, there is no effect of isolation. When it is present, there is a negative effect of isolation.
 
@@ -105,7 +107,7 @@ box(lwd = 2.5)
 Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.
 ```{r running_expected, message=FALSE, warning=FALSE}
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
 emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
 ```
 Patterns are similar to those observed for the observed distances to centroid.
@@ -141,7 +143,7 @@ box(lwd = 2.5)
 Running ANOVA table for the deviations of expected distances to group centroids from observed distances.
 ```{r running_deviation, message=FALSE, warning=FALSE}
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
 emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "tukey")
 ```
 Beta deviation seems to increase with isolation, but only in fishless ponds.
