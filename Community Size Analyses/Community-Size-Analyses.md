@@ -108,29 +108,6 @@ Anova(mix_model_NB, test.statistic = "Chisq")
 Now pairwise differences:
 
 ``` r
-emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3), adjust = "sidak")
-```
-
-    ## NOTE: Results may be misleading due to involvement in interactions
-
-    ## $`emmeans of SS_SS2_SS3`
-    ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            5.06 0.122 Inf      4.79      5.34
-    ##  3            5.96 0.138 Inf      5.65      6.27
-    ## 
-    ## Results are averaged over the levels of: fish_SS2_SS3, isolation_SS2_SS3 
-    ## Results are given on the log (not the response) scale. 
-    ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
-    ## 
-    ## $`pairwise differences of SS_SS2_SS3`
-    ##  contrast estimate   SE  df z.ratio p.value
-    ##  2 - 3      -0.892 0.15 Inf -5.942  <.0001 
-    ## 
-    ## Results are averaged over the levels of: fish_SS2_SS3, isolation_SS2_SS3 
-    ## Results are given on the log (not the response) scale.
-
-``` r
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 ```
 
