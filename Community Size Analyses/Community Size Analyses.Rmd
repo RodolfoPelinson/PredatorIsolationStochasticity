@@ -61,6 +61,7 @@ Now pairwise differences:
 ```{r  pw_ab, cache = T}
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
+
 ```
 It seems that community size grows with time. But it grows larger in fishless ponds, and in higher isolation treatments.
 

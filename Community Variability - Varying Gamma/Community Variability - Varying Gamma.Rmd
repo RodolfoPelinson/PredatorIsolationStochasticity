@@ -2,7 +2,7 @@
 title: "Community Variability - Varying Gamma"
 author: "Rodolfo Pelinson"
 date: "20/10/2020"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -10,21 +10,15 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-This is the same community variability analyses presented in the main paper, but here we are not keeping gamma diversity constant for each treatment. This is to show that Gamma diversity had little impact in the main patterns.
-
-If you haven't, install the package:
-```{r 1, eval = FALSE}
-install.packages("devtools")
-devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
+```{r 1}
+library(Pelinson.et.al.2020B)
 ```
 
-These are the packages you will need to run this code:
-```{r 3, message=FALSE, warning=FALSE}
-library(Pelinson.et.al.2020B)
-library(lme4) # Version 1.1-23
-library(car) # Version 3.0-7
-library(emmeans) # Version 1.4.8
-library(vegan) # Version 2.5-6
+```{r 2, message=FALSE, warning=FALSE}
+library(lme4)
+library(car)
+library(emmeans)
+library(vegan)
 ```
  
 
@@ -32,7 +26,7 @@ library(vegan) # Version 2.5-6
 
 ### Whole community for the last two surveys.
 First loading data
-```{r 3.1}
+```{r 3}
 data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3, fish_isolation_SS2_SS3)
 ```
 

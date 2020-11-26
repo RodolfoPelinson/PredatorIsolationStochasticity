@@ -52,9 +52,7 @@ absent_480_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "48
 present_480_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "480 present"),], method = "pa")))
 
 all <- list(absent_30=absent_30_SS1 ,absent_120 =absent_120_SS1, absent_480=absent_480_SS1, present_30=present_30_SS1,present_120=present_120_SS1,present_480=present_480_SS1)
-
 SS1_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
-
 Gamma_SS1 <- rbind(absent_30 = SS1_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS1_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS1_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -99,11 +97,8 @@ absent_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "12
 present_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "120 present"),], method = "pa")))
 absent_480_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "480 absent"),], method = "pa")))
 present_480_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "480 present"),], method = "pa")))
-
 all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2, absent_480=absent_480_SS2, present_30=present_30_SS2,present_120=present_120_SS2,present_480=present_480_SS2)
-
 SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
-
 Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS2_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS2_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -148,11 +143,8 @@ absent_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "12
 present_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "120 present"),], method = "pa")))
 absent_480_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "480 absent"),], method = "pa")))
 present_480_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "480 present"),], method = "pa")))
-
 all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3, absent_480=absent_480_SS3, present_30=present_30_SS3,present_120=present_120_SS3,present_480=present_480_SS3)
-
 SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
-
 Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS3_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS3_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -205,11 +197,8 @@ absent_120_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_
 present_120_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "120 present"),], method = "pa")))
 absent_480_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "480 absent"),], method = "pa")))
 present_480_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "480 present"),], method = "pa")))
-
 all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2, absent_480=absent_480_SS2, present_30=present_30_SS2,present_120=present_120_SS2,present_480=present_480_SS2)
-
 SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
-
 Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS2_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS2_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -254,9 +243,7 @@ absent_120_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_
 present_120_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "120 present"),], method = "pa")))
 absent_480_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "480 absent"),], method = "pa")))
 present_480_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "480 present"),], method = "pa")))
-
 all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3, absent_480=absent_480_SS3, present_30=present_30_SS3,present_120=present_120_SS3,present_480=present_480_SS3)
-
 SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
 ```
 
@@ -316,11 +303,8 @@ absent_120_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolat
 present_120_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "120 present"),], method = "pa")))
 absent_480_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "480 absent"),], method = "pa")))
 present_480_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "480 present"),], method = "pa")))
-
 all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2, absent_480=absent_480_SS2, present_30=present_30_SS2,present_120=present_120_SS2,present_480=present_480_SS2)
-
 SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
-
 Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS2_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS2_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -343,9 +327,8 @@ axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line
 box(lwd = 2.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/11-1.png)<!-- -->
-
-It does not seem to be any important differences among treatments.
+![](Gamma-Diversity-Analyses_files/figure-gfm/11-1.png)<!-- --> It does
+not seem to be any important differences among treatments.
 
 #### Third Survey
 
@@ -367,9 +350,7 @@ absent_480_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolat
 present_480_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "480 present"),], method = "pa")))
 
 all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3, absent_480=absent_480_SS3, present_30=present_30_SS3,present_120=present_120_SS3,present_480=present_480_SS3)
-
 SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
-
 Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS3_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS3_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
