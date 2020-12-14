@@ -301,7 +301,7 @@ round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3), adjust = "tukey")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3`
@@ -317,16 +317,16 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3), adjust = "tuke
     ## 
     ## $`pairwise differences of isolation_SS2_SS3`
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.0272 0.0361 16.2 0.755   0.7349 
-    ##  30 - 480    0.0962 0.0369 16.8 2.611   0.0460 
-    ##  120 - 480   0.0690 0.0369 16.8 1.872   0.1775 
+    ##  30 - 120    0.0272 0.0361 16.2 0.755   0.8434 
+    ##  30 - 480    0.0962 0.0369 16.8 2.611   0.0541 
+    ##  120 - 480   0.0690 0.0369 16.8 1.872   0.2181 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 ``` r
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "tukey")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
@@ -350,22 +350,22 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), a
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.0368 0.0488 14.9 -0.755  0.7355 
-    ##  30 - 480   -0.0130 0.0510 16.2 -0.256  0.9647 
-    ##  120 - 480   0.0238 0.0510 16.2  0.465  0.8882 
+    ##  30 - 120   -0.0368 0.0488 14.9 -0.755  0.8444 
+    ##  30 - 480   -0.0130 0.0510 16.2 -0.256  0.9922 
+    ##  120 - 480   0.0238 0.0510 16.2  0.465  0.9563 
     ## 
     ## fish_SS2_SS3 = present:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.0913 0.0532 17.4  1.716  0.2275 
-    ##  30 - 480    0.2055 0.0532 17.4  3.863  0.0033 
-    ##  120 - 480   0.1142 0.0532 17.4  2.147  0.1092 
+    ##  30 - 120    0.0913 0.0532 17.4  1.716  0.2805 
+    ##  30 - 480    0.2055 0.0532 17.4  3.863  0.0036 
+    ##  120 - 480   0.1142 0.0532 17.4  2.147  0.1322 
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 ``` r
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
@@ -389,22 +389,22 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adj
     ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120   -0.1051 0.0488 32 -2.155  0.0949 
-    ##  30 - 480    0.0520 0.0488 32  1.067  0.5412 
-    ##  120 - 480   0.1571 0.0488 32  3.221  0.0080 
+    ##  30 - 120   -0.1051 0.0488 32 -2.155  0.1120 
+    ##  30 - 480    0.0520 0.0488 32  1.067  0.6482 
+    ##  120 - 480   0.1571 0.0488 32  3.221  0.0088 
     ## 
     ## SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120    0.1595 0.0532 32  2.999  0.0140 
-    ##  30 - 480    0.1405 0.0553 32  2.541  0.0415 
-    ##  120 - 480  -0.0191 0.0553 32 -0.345  0.9366 
+    ##  30 - 120    0.1595 0.0532 32  2.999  0.0155 
+    ##  30 - 480    0.1405 0.0553 32  2.541  0.0476 
+    ##  120 - 480  -0.0191 0.0553 32 -0.345  0.9808 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 ``` r
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
@@ -439,30 +439,30 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120  -0.07533 0.0690 32 -1.092  0.5256 
-    ##  30 - 480  -0.00687 0.0690 32 -0.100  0.9945 
-    ##  120 - 480  0.06846 0.0690 32  0.993  0.5866 
+    ##  30 - 120  -0.07533 0.0690 32 -1.092  0.6311 
+    ##  30 - 480  -0.00687 0.0690 32 -0.100  0.9995 
+    ##  120 - 480  0.06846 0.0690 32  0.993  0.6968 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120  -0.13478 0.0690 32 -1.955  0.1401 
-    ##  30 - 480   0.11089 0.0690 32  1.608  0.2569 
-    ##  120 - 480  0.24566 0.0690 32  3.563  0.0033 
+    ##  30 - 120  -0.13478 0.0690 32 -1.955  0.1679 
+    ##  30 - 480   0.11089 0.0690 32  1.608  0.3130 
+    ##  120 - 480  0.24566 0.0690 32  3.563  0.0035 
     ## 
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120   0.00173 0.0690 32  0.025  0.9997 
-    ##  30 - 480  -0.01923 0.0752 32 -0.256  0.9647 
-    ##  120 - 480 -0.02096 0.0752 32 -0.279  0.9582 
+    ##  30 - 120   0.00173 0.0690 32  0.025  1.0000 
+    ##  30 - 480  -0.01923 0.0752 32 -0.256  0.9920 
+    ##  120 - 480 -0.02096 0.0752 32 -0.279  0.9897 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE df t.ratio p.value
     ##  30 - 120   0.31735 0.0810 32  3.916  0.0013 
-    ##  30 - 480   0.30015 0.0810 32  3.704  0.0022 
-    ##  120 - 480 -0.01720 0.0810 32 -0.212  0.9755 
+    ##  30 - 480   0.30015 0.0810 32  3.704  0.0024 
+    ##  120 - 480 -0.01720 0.0810 32 -0.212  0.9954 
     ## 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 Patterns are similar to those observed for the observed distances to
 centroid.
