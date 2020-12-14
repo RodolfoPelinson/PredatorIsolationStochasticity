@@ -301,6 +301,109 @@ round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3), adjust = "tukey")
+```
+
+    ## $`emmeans of isolation_SS2_SS3`
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.374 0.0255 16.2    0.306    0.442
+    ##  120                0.347 0.0255 16.2    0.279    0.415
+    ##  480                0.278 0.0266 17.4    0.208    0.348
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3`
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.0272 0.0361 16.2 0.755   0.7349 
+    ##  30 - 480    0.0962 0.0369 16.8 2.611   0.0460 
+    ##  120 - 480   0.0690 0.0369 16.8 1.872   0.1775 
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: tukey method for comparing a family of 3 estimates
+
+``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "tukey")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.316 0.0345 14.9    0.224    0.409
+    ##  120                0.353 0.0345 14.9    0.260    0.446
+    ##  480                0.329 0.0376 17.4    0.230    0.429
+    ## 
+    ## fish_SS2_SS3 = present:
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.432 0.0376 17.4    0.332    0.531
+    ##  120                0.340 0.0376 17.4    0.241    0.440
+    ##  480                0.226 0.0376 17.4    0.127    0.325
+    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120   -0.0368 0.0488 14.9 -0.755  0.7355 
+    ##  30 - 480   -0.0130 0.0510 16.2 -0.256  0.9647 
+    ##  120 - 480   0.0238 0.0510 16.2  0.465  0.8882 
+    ## 
+    ## fish_SS2_SS3 = present:
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.0913 0.0532 17.4  1.716  0.2275 
+    ##  30 - 480    0.2055 0.0532 17.4  3.863  0.0033 
+    ##  120 - 480   0.1142 0.0532 17.4  2.147  0.1092 
+    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: tukey method for comparing a family of 3 estimates
+
+``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.287 0.0345 32    0.200    0.374
+    ##  120                0.392 0.0345 32    0.305    0.479
+    ##  480                0.235 0.0345 32    0.148    0.322
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.461 0.0376 32    0.366    0.556
+    ##  120                0.302 0.0376 32    0.207    0.396
+    ##  480                0.321 0.0405 32    0.219    0.423
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   -0.1051 0.0488 32 -2.155  0.0949 
+    ##  30 - 480    0.0520 0.0488 32  1.067  0.5412 
+    ##  120 - 480   0.1571 0.0488 32  3.221  0.0080 
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120    0.1595 0.0532 32  2.999  0.0140 
+    ##  30 - 480    0.1405 0.0553 32  2.541  0.0415 
+    ##  120 - 480  -0.0191 0.0553 32 -0.345  0.9366 
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: tukey method for comparing a family of 3 estimates
+
+``` r
 emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
 ```
 
