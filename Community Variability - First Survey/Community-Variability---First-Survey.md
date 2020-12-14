@@ -112,7 +112,7 @@ round(Anova(fit_expected_SS1, test.statistic = "F"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "tukey")
+emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "sidak")
 ```
 
     ## NOTE: Results may be misleading due to involvement in interactions
@@ -129,12 +129,12 @@ emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "tukey")
     ## 
     ## $`pairwise differences of isolation_SS1`
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  030 - 120   0.0740 0.0367 18  2.018  0.1365 
-    ##  030 - 480  -0.0345 0.0367 18 -0.941  0.6221 
-    ##  120 - 480  -0.1085 0.0367 18 -2.959  0.0218 
+    ##  030 - 120   0.0740 0.0367 18  2.018  0.1661 
+    ##  030 - 480  -0.0345 0.0367 18 -0.941  0.7367 
+    ##  120 - 480  -0.1085 0.0367 18 -2.959  0.0250 
     ## 
     ## Results are averaged over the levels of: fish_SS1 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 There is an increase in expected distance to centroid from intermediate
 to high isolation.

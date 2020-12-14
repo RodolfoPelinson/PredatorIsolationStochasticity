@@ -84,7 +84,7 @@ Running ANOVA table for observed distances to group centroids, or observed beta-
 ```{r 8}
 fit_expected_SS1 <- lm(beta_deviation_SS1$expected_distances~fish_SS1*isolation_SS1)
 round(Anova(fit_expected_SS1, test.statistic = "F"),3)
-emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "tukey")
+emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "sidak")
 ```
 There is an increase in expected distance to centroid from intermediate to high isolation.
 
