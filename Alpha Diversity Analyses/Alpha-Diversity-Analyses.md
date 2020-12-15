@@ -181,70 +181,65 @@ emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "si
     ## P value adjustment: sidak method for 3 tests
 
 ``` r
-emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
-    ## $`emmeans of fish_SS2_SS3 | isolation_SS2_SS3, SS_SS2_SS3`
-    ## isolation_SS2_SS3 = 30, SS_SS2_SS3 = 2:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent         5.25 0.484 29.4    4.109     6.39
-    ##  present        3.50 0.484 29.4    2.359     4.64
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                  5.25 0.484 29.4    4.025     6.48
+    ##  120                 4.25 0.484 29.4    3.025     5.48
+    ##  480                 4.25 0.484 29.4    3.025     5.48
     ## 
-    ## isolation_SS2_SS3 = 120, SS_SS2_SS3 = 2:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent         4.25 0.484 29.4    3.109     5.39
-    ##  present        1.75 0.484 29.4    0.609     2.89
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                  3.50 0.484 29.4    2.275     4.73
+    ##  120                 1.75 0.484 29.4    0.525     2.98
+    ##  480                 3.25 0.484 29.4    2.025     4.48
     ## 
-    ## isolation_SS2_SS3 = 480, SS_SS2_SS3 = 2:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent         4.25 0.484 29.4    3.109     5.39
-    ##  present        3.25 0.484 29.4    2.109     4.39
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                  4.75 0.484 29.4    3.525     5.98
+    ##  120                 4.25 0.484 29.4    3.025     5.48
+    ##  480                 4.64 0.560 31.4    3.228     6.05
     ## 
-    ## isolation_SS2_SS3 = 30, SS_SS2_SS3 = 3:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent         4.75 0.484 29.4    3.609     5.89
-    ##  present        5.39 0.560 31.4    4.072     6.70
-    ## 
-    ## isolation_SS2_SS3 = 120, SS_SS2_SS3 = 3:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent         4.25 0.484 29.4    3.109     5.39
-    ##  present        2.59 0.560 31.4    1.272     3.90
-    ## 
-    ## isolation_SS2_SS3 = 480, SS_SS2_SS3 = 3:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent         4.64 0.560 31.4    3.325     5.95
-    ##  present        1.97 0.560 31.4    0.659     3.29
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                  5.39 0.560 31.4    3.975     6.80
+    ##  120                 2.59 0.560 31.4    1.175     4.00
+    ##  480                 1.97 0.560 31.4    0.562     3.38
     ## 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
-    ## $`pairwise differences of fish_SS2_SS3 | isolation_SS2_SS3, SS_SS2_SS3`
-    ## isolation_SS2_SS3 = 30, SS_SS2_SS3 = 2:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    1.750 0.685 29.4  2.556  0.0160 
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120     1.000 0.685 29.4  1.461  0.3960 
+    ##  30 - 480     1.000 0.685 29.4  1.461  0.3960 
+    ##  120 - 480    0.000 0.685 29.4  0.000  1.0000 
     ## 
-    ## isolation_SS2_SS3 = 120, SS_SS2_SS3 = 2:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    2.500 0.685 29.4  3.652  0.0010 
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120     1.750 0.685 29.4  2.556  0.0472 
+    ##  30 - 480     0.250 0.685 29.4  0.365  0.9775 
+    ##  120 - 480   -1.500 0.685 29.4 -2.191  0.1056 
     ## 
-    ## isolation_SS2_SS3 = 480, SS_SS2_SS3 = 2:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    1.000 0.685 29.4  1.461  0.1547 
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120     0.500 0.685 29.4  0.730  0.8519 
+    ##  30 - 480     0.110 0.740 30.7  0.149  0.9984 
+    ##  120 - 480   -0.390 0.740 30.7 -0.527  0.9369 
     ## 
-    ## isolation_SS2_SS3 = 30, SS_SS2_SS3 = 3:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present   -0.637 0.740 30.7 -0.860  0.3963 
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120     2.800 0.792 31.4  3.537  0.0038 
+    ##  30 - 480     3.413 0.792 31.4  4.312  0.0004 
+    ##  120 - 480    0.613 0.792 31.4  0.775  0.8284 
     ## 
-    ## isolation_SS2_SS3 = 120, SS_SS2_SS3 = 3:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    1.663 0.740 30.7  2.248  0.0319 
-    ## 
-    ## isolation_SS2_SS3 = 480, SS_SS2_SS3 = 3:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    2.667 0.792 31.4  3.369  0.0020 
-    ## 
-    ## Degrees-of-freedom method: kenward-roger
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
 
 It seems like there is an effect of fish and isolation on predatory
 insect richness. Also, the effect of fish stronger in low isolation

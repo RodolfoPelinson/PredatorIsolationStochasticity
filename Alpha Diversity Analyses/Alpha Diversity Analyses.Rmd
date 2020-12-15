@@ -103,7 +103,7 @@ round(Anova(mix_model_predators_NB, test.statistic = "Chisq"),3)
 Now pairwise differences:
 ```{r  pw_rch_pr, cache = T}
 emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
-emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 It seems like there is an effect of fish and isolation on predatory insect richness. Also, the effect of fish stronger in low isolation treatments in the second survey, and stronger in high isolation treatments in the third survey.
 
