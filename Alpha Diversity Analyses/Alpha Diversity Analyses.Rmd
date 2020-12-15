@@ -109,20 +109,16 @@ It seems like there is an effect of fish and isolation on predatory insect richn
 
 
 Lets plot it:
-```{r Plotting_rch_pr, dpi = 150, fig.height=5, fig.width=10}
-boxplot(com_SS2_SS3_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3, outline = F, ylab = "Richness", xlab = "", lwd = 1.5, ylim = c(0,8), col = "transparent", main = "Predators", at = c(1,2,4,5,7,8,10,11,13,14,16,17), xaxt="n")
-
-All2 <- factor(All, levels = c("2 030 absent","2 030 present","2 120 absent","2 120 present","2 480 absent","2 480 present",
-                               "3 030 absent","3 030 present","3 120 absent","3 120 present","3 480 absent","3 480 present"))
-
-mylevels <- levels(All2)
-levelProportions <- summary(All2)/length(com_SS2_SS3_predators_richness)
-col <- c(rep(c("sienna3","dodgerblue3"),3), rep("grey70",6))
-bg <- c(rep(c("sienna3","dodgerblue3"),3),rep(c("sienna3","dodgerblue3"),3))
-pch <- c(15,15,16,16,17,17,22,22,21,21,24,24)
+```{r Plotting_ab_pr, dpi = 150, fig.height=5, fig.width=5}
+boxplot(com_SS2_SS3_predators_richness~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Richness", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, col = "transparent", xaxt="n", main = "Predators")
+mylevels <- levels(All)
+levelProportions <- summary(All)/length(com_SS2_SS3_predators_richness)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3), rep("grey70",6))
+bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(15,16,17,15,16,17,22,21,24,22,21,24)
 for(i in 1:length(mylevels)){
 
-  x<- c(1,2,4,5,7,8,10,11,13,14,16,17)[i]
+  x<- c(1,2,3,5,6,7,1,2,3,5,6,7)[i]
   thislevel <- mylevels[i]
   thisvalues <- com_SS2_SS3_predators_richness[All==thislevel]
 
@@ -131,11 +127,11 @@ for(i in 1:length(mylevels)){
   points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3)
 
 }
-boxplot(com_SS2_SS3_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3, add = T, outline = F,at = c(1,2,4,5,7,8,10,11,13,14,16,17), lwd = 1.5, col = "transparent", xaxt="n")
-axis(1,labels = c("Abs.","Pre.", "Abs.","Pre.","Abs.","Pre.","Abs.","Pre.", "Abs.","Pre.","Abs.","Pre."), cex.axis = 0.8, at =c(1,2,4,5,7,8,10,11,13,14,16,17))
-axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 1, at =c(1.5,4.5,7.5,10.5,13.5,16.5), line = 1.5, tick = F )
-axis(1,labels = c("Second","Third"), cex.axis = 1.2, at =c(4.5,13.5), line = 3, tick = F )
+boxplot(com_SS2_SS3_predators_richness~isolation_SS2_SS3*fish_SS2_SS3, add = T, outline = F,at = c(1,2,3,5,6,7), lwd = 1.5, col = "transparent", xaxt="n")
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8, at =c(1,2,3,5,6,7))
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
 box(lwd = 2.5)
+
 
 ```
 
