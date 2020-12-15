@@ -165,7 +165,7 @@ round(Anova(mix_model_non_predators_NB, test.statistic = "Chisq"),3)
 
 Now pairwise differences:
 ```{r  pw_ab_non_pr, cache = T}
-emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_non_predators_NB, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 It seems that we have similar patterns to when we consider the whole community.
 
