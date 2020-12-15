@@ -71,6 +71,45 @@ round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.261 0.0416 14.9    0.150    0.373
+    ##  120                0.399 0.0416 14.9    0.287    0.511
+    ##  480                0.306 0.0454 17.4    0.186    0.426
+    ## 
+    ## fish_SS2_SS3 = present:
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.348 0.0454 17.4    0.228    0.468
+    ##  120                0.333 0.0454 17.4    0.213    0.453
+    ##  480                0.437 0.0454 17.4    0.317    0.557
+    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120   -0.1378 0.0588 14.9 -2.344  0.0966 
+    ##  30 - 480   -0.0447 0.0615 16.2 -0.726  0.8580 
+    ##  120 - 480   0.0932 0.0615 16.2  1.514  0.3841 
+    ## 
+    ## fish_SS2_SS3 = present:
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.0155 0.0641 17.4  0.241  0.9934 
+    ##  30 - 480   -0.0887 0.0641 17.4 -1.383  0.4568 
+    ##  120 - 480  -0.1042 0.0641 17.4 -1.624  0.3239 
+    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
+
+``` r
 emmeans(fit_observed_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
@@ -195,6 +234,138 @@ round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
     ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  6.679  2      0.035 *  
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of fish_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  fish_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  absent        0.256 0.0266 32    0.193    0.318
+    ##  present       0.304 0.0266 32    0.241    0.366
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  fish_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  absent        0.242 0.0283 32    0.175    0.308
+    ##  present       0.404 0.0313 32    0.331    0.478
+    ## 
+    ## Results are averaged over the levels of: isolation_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 2 estimates 
+    ## 
+    ## $`pairwise differences of fish_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  contrast         estimate     SE df t.ratio p.value
+    ##  absent - present  -0.0483 0.0377 32 -1.281  0.2096 
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  contrast         estimate     SE df t.ratio p.value
+    ##  absent - present  -0.1626 0.0422 32 -3.852  0.0005 
+    ## 
+    ## Results are averaged over the levels of: isolation_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger
+
+``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.294 0.0326 32    0.211    0.376
+    ##  120                0.268 0.0326 32    0.185    0.350
+    ##  480                0.278 0.0326 32    0.196    0.360
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.249 0.0356 32    0.159    0.339
+    ##  120                0.303 0.0356 32    0.214    0.393
+    ##  480                0.416 0.0384 32    0.320    0.513
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120    0.0261 0.0462 32  0.566  0.9233 
+    ##  30 - 480    0.0155 0.0462 32  0.337  0.9821 
+    ##  120 - 480  -0.0106 0.0462 32 -0.230  0.9941 
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   -0.0545 0.0504 32 -1.081  0.6386 
+    ##  30 - 480   -0.1671 0.0523 32 -3.194  0.0094 
+    ##  120 - 480  -0.1127 0.0523 32 -2.153  0.1123 
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
+
+``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.201 0.0462 32   0.0851    0.318
+    ##  120                0.305 0.0462 32   0.1891    0.422
+    ##  480                0.260 0.0462 32   0.1438    0.376
+    ## 
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.386 0.0462 32   0.2696    0.502
+    ##  120                0.230 0.0462 32   0.1134    0.346
+    ##  480                0.296 0.0462 32   0.1799    0.412
+    ## 
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.202 0.0462 32   0.0853    0.318
+    ##  120                0.231 0.0462 32   0.1144    0.347
+    ##  480                0.293 0.0542 32   0.1560    0.429
+    ## 
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+    ##  30                 0.297 0.0542 32   0.1599    0.433
+    ##  120                0.376 0.0542 32   0.2397    0.513
+    ##  480                0.540 0.0542 32   0.4031    0.676
+    ## 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   -0.1039 0.0653 32 -1.592  0.3212 
+    ##  30 - 480   -0.0587 0.0653 32 -0.899  0.7566 
+    ##  120 - 480   0.0453 0.0653 32  0.694  0.8696 
+    ## 
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120    0.1562 0.0653 32  2.393  0.0667 
+    ##  30 - 480    0.0897 0.0653 32  1.375  0.4462 
+    ##  120 - 480  -0.0665 0.0653 32 -1.019  0.6800 
+    ## 
+    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   -0.0291 0.0653 32 -0.446  0.9603 
+    ##  30 - 480   -0.0911 0.0712 32 -1.279  0.5070 
+    ##  120 - 480  -0.0620 0.0712 32 -0.871  0.7735 
+    ## 
+    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   -0.0798 0.0767 32 -1.040  0.6657 
+    ##  30 - 480   -0.2432 0.0767 32 -3.170  0.0100 
+    ##  120 - 480  -0.1634 0.0767 32 -2.130  0.1179 
+    ## 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
 
 Patterns are similar to those observed for the observed distances to
 centroid.
@@ -366,63 +537,80 @@ round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 ```
 
-    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
-    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.283 0.0580 31.8   0.1368    0.429
-    ##  120                0.450 0.0580 31.8   0.3038    0.596
-    ##  480                0.472 0.0580 31.8   0.3257    0.618
+    ##  30                 0.395 0.0429 15.1    0.280    0.510
+    ##  120                0.463 0.0429 15.1    0.348    0.578
+    ##  480                0.456 0.0464 17.6    0.334    0.579
     ## 
-    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
+    ## fish_SS2_SS3 = present:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.413 0.0580 31.8   0.2663    0.559
-    ##  120                0.422 0.0580 31.8   0.2756    0.568
-    ##  480                0.197 0.0580 31.8   0.0503    0.343
+    ##  30                 0.504 0.0464 17.6    0.382    0.627
+    ##  120                0.328 0.0464 17.6    0.205    0.450
+    ##  480                0.261 0.0464 17.6    0.138    0.383
     ## 
-    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
-    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.508 0.0580 31.8   0.3613    0.654
-    ##  120                0.475 0.0580 31.8   0.3290    0.622
-    ##  480                0.441 0.0681 32.0   0.2690    0.612
-    ## 
-    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
-    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.596 0.0681 32.0   0.4241    0.767
-    ##  120                0.234 0.0681 32.0   0.0622    0.405
-    ##  480                0.325 0.0681 32.0   0.1536    0.497
-    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
     ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
-    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
-    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.1670 0.0821 31.8 -2.034  0.1436 
-    ##  30 - 480   -0.1888 0.0821 31.8 -2.301  0.0820 
-    ##  120 - 480  -0.0219 0.0821 31.8 -0.267  0.9909 
+    ##  30 - 120   -0.0674 0.0607 15.1 -1.110  0.6332 
+    ##  30 - 480   -0.0610 0.0632 16.4 -0.964  0.7240 
+    ##  120 - 480   0.0064 0.0632 16.4  0.101  0.9995 
     ## 
-    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
+    ## fish_SS2_SS3 = present:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.0093 0.0821 31.8 -0.113  0.9993 
-    ##  30 - 480    0.2160 0.0821 31.8  2.632  0.0385 
-    ##  120 - 480   0.2253 0.0821 31.8  2.745  0.0293 
+    ##  30 - 120    0.1763 0.0657 17.6  2.684  0.0454 
+    ##  30 - 480    0.2433 0.0657 17.6  3.703  0.0050 
+    ##  120 - 480   0.0670 0.0657 17.6  1.019  0.6881 
     ## 
-    ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
+
+``` r
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.348 0.0410 31.8    0.244    0.451
+    ##  120                0.436 0.0410 31.8    0.333    0.539
+    ##  480                0.334 0.0410 31.8    0.231    0.438
+    ## 
+    ## SS_SS2_SS3 = 3:
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.552 0.0447 31.9    0.439    0.664
+    ##  120                0.355 0.0447 31.9    0.242    0.467
+    ##  480                0.383 0.0482 32.0    0.262    0.504
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
+    ## SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.0323 0.0821 31.8  0.393  0.9722 
-    ##  30 - 480    0.0669 0.0895 31.9  0.748  0.8425 
-    ##  120 - 480   0.0347 0.0895 31.9  0.387  0.9733 
+    ##  30 - 120   -0.0881 0.0580 31.8 -1.518  0.3612 
+    ##  30 - 480    0.0136 0.0580 31.8  0.234  0.9938 
+    ##  120 - 480   0.1017 0.0580 31.8  1.753  0.2448 
     ## 
-    ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
+    ## SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.3619 0.0963 32.0  3.757  0.0021 
-    ##  30 - 480    0.2705 0.0963 32.0  2.808  0.0251 
-    ##  120 - 480  -0.0914 0.0963 32.0 -0.949  0.7253 
+    ##  30 - 120    0.1971 0.0633 31.9  3.114  0.0116 
+    ##  30 - 480    0.1687 0.0657 31.9  2.566  0.0448 
+    ##  120 - 480  -0.0284 0.0657 31.9 -0.431  0.9638 
     ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## P value adjustment: sidak method for 3 tests
 
@@ -485,6 +673,31 @@ round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
     ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  1.834  2      0.400    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3`
+    ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+    ##  30                 0.444 0.0299 16.2    0.364    0.524
+    ##  120                0.378 0.0299 16.2    0.299    0.458
+    ##  480                0.299 0.0312 17.4    0.216    0.381
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3`
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.0657 0.0423 16.2 1.552   0.3640 
+    ##  30 - 480    0.1450 0.0432 16.8 3.354   0.0114 
+    ##  120 - 480   0.0793 0.0432 16.8 1.835   0.2323 
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
 
 ``` r
 emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
@@ -579,6 +792,70 @@ round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
     ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 13.242  2      0.001 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+``` r
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3`
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                0.0627 0.349 16.2   -0.866    0.991
+    ##  120               0.7076 0.349 16.2   -0.221    1.636
+    ##  480               1.2965 0.364 17.4    0.336    2.257
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3`
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120    -0.645 0.494 16.2 -1.307  0.5061 
+    ##  30 - 480    -1.234 0.504 16.8 -2.447  0.0751 
+    ##  120 - 480   -0.589 0.504 16.8 -1.168  0.5933 
+    ## 
+    ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
+
+``` r
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
+```
+
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                -0.231 0.472 14.9   -1.498     1.04
+    ##  120                1.696 0.472 14.9    0.429     2.96
+    ##  480                1.866 0.515 17.4    0.508     3.22
+    ## 
+    ## fish_SS2_SS3 = present:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                 0.357 0.515 17.4   -1.002     1.72
+    ##  120               -0.281 0.515 17.4   -1.639     1.08
+    ##  480                0.727 0.515 17.4   -0.632     2.09
+    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## 
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120    -1.927 0.667 14.9 -2.889  0.0334 
+    ##  30 - 480    -2.098 0.698 16.2 -3.005  0.0247 
+    ##  120 - 480   -0.170 0.698 16.2 -0.244  0.9932 
+    ## 
+    ## fish_SS2_SS3 = present:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120     0.637 0.728 17.4  0.876  0.7764 
+    ##  30 - 480    -0.370 0.728 17.4 -0.509  0.9440 
+    ##  120 - 480   -1.007 0.728 17.4 -1.384  0.4561 
+    ## 
+    ## Results are averaged over the levels of: SS_SS2_SS3 
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
 
 ``` r
 emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
