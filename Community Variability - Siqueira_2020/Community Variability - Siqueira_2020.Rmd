@@ -65,8 +65,12 @@ The fit of the model for beta deviation here is pretty bad. If we were to make i
 Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.
 ```{r 8, message=FALSE, warning=FALSE}
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+
 ```
 Patterns are similar to those observed for the observed distances using the other null model.
 
@@ -101,9 +105,10 @@ box(lwd = 2.5)
 Running ANOVA table for the deviations of expected distances to group centroids from observed distances.
 ```{r 10, message=FALSE, warning=FALSE}
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 
 ```
 Beta-deviation seems to be greater in fishless ponds, and in the higher isolation treatment. **But, as we know by inspecting the residuals, this model have a very poor fit.**
