@@ -398,45 +398,47 @@ round(Anova(mix_model_non_predators_NB, test.statistic = "Chisq"),3)
 Now pairwise differences:
 
 ``` r
-emmeans(mix_model_non_predators_NB, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 
     ## NOTE: Results may be misleading due to involvement in interactions
 
-    ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
-    ## SS_SS2_SS3 = 2:
-    ##  isolation_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  30                  4.91 0.263 Inf      4.28      5.54
-    ##  120                 4.89 0.276 Inf      4.24      5.55
-    ##  480                 4.70 0.265 Inf      4.06      5.33
+    ## $`emmeans of SS_SS2_SS3 | isolation_SS2_SS3`
+    ## isolation_SS2_SS3 = 30:
+    ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
+    ##  2            4.91 0.263 Inf      4.32      5.50
+    ##  3            5.30 0.353 Inf      4.51      6.08
     ## 
-    ## SS_SS2_SS3 = 3:
-    ##  isolation_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  30                  5.30 0.353 Inf      4.45      6.14
-    ##  120                 5.71 0.292 Inf      5.01      6.41
-    ##  480                 6.46 0.306 Inf      5.73      7.19
+    ## isolation_SS2_SS3 = 120:
+    ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
+    ##  2            4.89 0.276 Inf      4.28      5.51
+    ##  3            5.71 0.292 Inf      5.05      6.36
+    ## 
+    ## isolation_SS2_SS3 = 480:
+    ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
+    ##  2            4.70 0.265 Inf      4.10      5.29
+    ##  3            6.46 0.306 Inf      5.78      7.15
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 3 estimates 
+    ## Conf-level adjustment: sidak method for 2 estimates 
     ## 
-    ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
-    ## SS_SS2_SS3 = 2:
-    ##  contrast  estimate    SE  df z.ratio p.value
-    ##  30 - 120    0.0158 0.378 Inf  0.042  1.0000 
-    ##  30 - 480    0.2145 0.372 Inf  0.577  0.9171 
-    ##  120 - 480   0.1987 0.377 Inf  0.527  0.9351 
+    ## $`pairwise differences of SS_SS2_SS3 | isolation_SS2_SS3`
+    ## isolation_SS2_SS3 = 30:
+    ##  contrast estimate    SE  df z.ratio p.value
+    ##  2 - 3      -0.385 0.405 Inf -0.949  0.3424 
     ## 
-    ## SS_SS2_SS3 = 3:
-    ##  contrast  estimate    SE  df z.ratio p.value
-    ##  30 - 120   -0.4120 0.428 Inf -0.964  0.7062 
-    ##  30 - 480   -1.1662 0.447 Inf -2.607  0.0271 
-    ##  120 - 480  -0.7542 0.415 Inf -1.817  0.1936 
+    ## isolation_SS2_SS3 = 120:
+    ##  contrast estimate    SE  df z.ratio p.value
+    ##  2 - 3      -0.813 0.355 Inf -2.291  0.0220 
+    ## 
+    ## isolation_SS2_SS3 = 480:
+    ##  contrast estimate    SE  df z.ratio p.value
+    ##  2 - 3      -1.766 0.372 Inf -4.751  <.0001 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
-    ## Results are given on the log (not the response) scale. 
-    ## P value adjustment: sidak method for 3 tests
+    ## Results are given on the log (not the response) scale.
 
 It seems that we have similar patterns to when we consider the whole
 community.
