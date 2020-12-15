@@ -74,20 +74,20 @@ Analysing the data:
 
 ``` r
 mix_model_richness_NB <- lmer(com_SS2_SS3_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
-Anova(mix_model_richness_NB, test.statistic = "Chisq")
+round(Anova(mix_model_richness_NB, test.statistic = "Chisq"),3)
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: com_SS2_SS3_richness
-    ##                                             Chisq Df Pr(>Chisq)    
-    ## fish_SS2_SS3                              12.7360  1  0.0003587 ***
-    ## isolation_SS2_SS3                          0.3934  2  0.8214269    
-    ## SS_SS2_SS3                                 0.3189  1  0.5722735    
-    ## fish_SS2_SS3:isolation_SS2_SS3             2.9020  2  0.2343391    
-    ## fish_SS2_SS3:SS_SS2_SS3                    0.0119  1  0.9129797    
-    ## isolation_SS2_SS3:SS_SS2_SS3               4.6086  2  0.0998285 .  
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  4.2128  2  0.1216776    
+    ##                                            Chisq Df Pr(>Chisq)    
+    ## fish_SS2_SS3                              12.736  1     <2e-16 ***
+    ## isolation_SS2_SS3                          0.393  2      0.821    
+    ## SS_SS2_SS3                                 0.319  1      0.572    
+    ## fish_SS2_SS3:isolation_SS2_SS3             2.902  2      0.234    
+    ## fish_SS2_SS3:SS_SS2_SS3                    0.012  1      0.913    
+    ## isolation_SS2_SS3:SS_SS2_SS3               4.609  2      0.100 .  
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  4.213  2      0.122    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -134,20 +134,20 @@ Analysing the data:
 
 ``` r
 mix_model_predators_NB <- lmer(com_SS2_SS3_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
-Anova(mix_model_predators_NB, test.statistic = "Chisq")
+round(Anova(mix_model_predators_NB, test.statistic = "Chisq"),3)
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: com_SS2_SS3_predators_richness
-    ##                                             Chisq Df Pr(>Chisq)    
-    ## fish_SS2_SS3                              20.2584  1  6.765e-06 ***
-    ## isolation_SS2_SS3                         13.6283  2   0.001098 ** 
-    ## SS_SS2_SS3                                 0.6010  1   0.438201    
-    ## fish_SS2_SS3:isolation_SS2_SS3             3.3606  2   0.186321    
-    ## fish_SS2_SS3:SS_SS2_SS3                    1.4155  1   0.234153    
-    ## isolation_SS2_SS3:SS_SS2_SS3               3.2956  2   0.192477    
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 11.1988  2   0.003700 ** 
+    ##                                            Chisq Df Pr(>Chisq)    
+    ## fish_SS2_SS3                              20.258  1     <2e-16 ***
+    ## isolation_SS2_SS3                         13.628  2      0.001 ***
+    ## SS_SS2_SS3                                 0.601  1      0.438    
+    ## fish_SS2_SS3:isolation_SS2_SS3             3.361  2      0.186    
+    ## fish_SS2_SS3:SS_SS2_SS3                    1.415  1      0.234    
+    ## isolation_SS2_SS3:SS_SS2_SS3               3.296  2      0.192    
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 11.199  2      0.004 ** 
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -296,20 +296,20 @@ Analysing the data:
 
 ``` r
 mix_model_non_predators <- lmer(com_SS2_SS3_non_predators_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "bobyqa"))
-Anova(mix_model_non_predators, test.statistic = "Chisq")
+round(Anova(mix_model_non_predators, test.statistic = "Chisq"),3)
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: com_SS2_SS3_non_predators_richness
-    ##                                            Chisq Df Pr(>Chisq)  
-    ## fish_SS2_SS3                              0.9749  1    0.32347  
-    ## isolation_SS2_SS3                         5.5420  2    0.06260 .
-    ## SS_SS2_SS3                                0.0438  1    0.83423  
-    ## fish_SS2_SS3:isolation_SS2_SS3            0.7567  2    0.68499  
-    ## fish_SS2_SS3:SS_SS2_SS3                   0.2384  1    0.62538  
-    ## isolation_SS2_SS3:SS_SS2_SS3              6.5742  2    0.03736 *
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 4.8928  2    0.08661 .
+    ##                                           Chisq Df Pr(>Chisq)  
+    ## fish_SS2_SS3                              0.975  1      0.323  
+    ## isolation_SS2_SS3                         5.542  2      0.063 .
+    ## SS_SS2_SS3                                0.044  1      0.834  
+    ## fish_SS2_SS3:isolation_SS2_SS3            0.757  2      0.685  
+    ## fish_SS2_SS3:SS_SS2_SS3                   0.238  1      0.625  
+    ## isolation_SS2_SS3:SS_SS2_SS3              6.574  2      0.037 *
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 4.893  2      0.087 .
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
