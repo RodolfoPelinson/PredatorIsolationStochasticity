@@ -423,45 +423,43 @@ round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 ```
 
-    ## $`emmeans of fish_SS2_SS3 | isolation_SS2_SS3`
-    ## isolation_SS2_SS3 = 30:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent        1.113 0.490 14.9   -0.105     2.33
-    ##  present       0.259 0.535 17.4   -1.049     1.57
+    ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                 1.113 0.490 14.9   -0.204     2.43
+    ##  120                1.869 0.490 14.9    0.552     3.19
+    ##  480                0.262 0.535 17.4   -1.150     1.67
     ## 
-    ## isolation_SS2_SS3 = 120:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent        1.869 0.490 14.9    0.651     3.09
-    ##  present       0.538 0.535 17.4   -0.770     1.85
-    ## 
-    ## isolation_SS2_SS3 = 480:
-    ##  fish_SS2_SS3 emmean    SE   df lower.CL upper.CL
-    ##  absent        0.262 0.535 17.4   -1.046     1.57
-    ##  present       0.143 0.535 17.4   -1.165     1.45
+    ## fish_SS2_SS3 = present:
+    ##  isolation_SS2_SS3 emmean    SE   df lower.CL upper.CL
+    ##  30                 0.259 0.535 17.4   -1.152     1.67
+    ##  120                0.538 0.535 17.4   -0.874     1.95
+    ##  480                0.143 0.535 17.4   -1.268     1.56
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
-    ## $`pairwise differences of fish_SS2_SS3 | isolation_SS2_SS3`
-    ## isolation_SS2_SS3 = 30:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    0.854 0.725 16.2 1.177   0.2562 
+    ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
+    ## fish_SS2_SS3 = absent:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120    -0.756 0.693 14.9 -1.091  0.6458 
+    ##  30 - 480     0.851 0.725 16.2  1.173  0.5912 
+    ##  120 - 480    1.607 0.725 16.2  2.216  0.1190 
     ## 
-    ## isolation_SS2_SS3 = 120:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    1.331 0.725 16.2 1.835   0.0849 
-    ## 
-    ## isolation_SS2_SS3 = 480:
-    ##  contrast         estimate    SE   df t.ratio p.value
-    ##  absent - present    0.119 0.756 17.4 0.157   0.8769 
+    ## fish_SS2_SS3 = present:
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120    -0.279 0.756 17.4 -0.369  0.9773 
+    ##  30 - 480     0.116 0.756 17.4  0.153  0.9983 
+    ##  120 - 480    0.395 0.756 17.4  0.522  0.9399 
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
-    ## Degrees-of-freedom method: kenward-roger
+    ## Degrees-of-freedom method: kenward-roger 
+    ## P value adjustment: sidak method for 3 tests
 
 Beta deviation seems to increase with isolation, but only in fishless
 ponds.

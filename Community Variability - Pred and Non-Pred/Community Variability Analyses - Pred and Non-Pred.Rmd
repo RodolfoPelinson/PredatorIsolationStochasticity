@@ -128,7 +128,7 @@ Running ANOVA table for the deviations of expected distances to group centroids 
 ```{r 10, message=FALSE, warning=FALSE}
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
 round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 ```
 Beta deviation seems to increase with isolation, but only in fishless ponds.
 
