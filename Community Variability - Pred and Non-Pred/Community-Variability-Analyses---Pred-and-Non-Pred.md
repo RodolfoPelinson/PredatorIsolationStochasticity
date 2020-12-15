@@ -53,25 +53,25 @@ observed beta-diversity/community variability in each treatment.
 
 ``` r
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$observed_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
-    ## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: beta_deviation_SS2_SS3_predators$observed_distances
-    ##                                               F Df Df.res Pr(>F)   
-    ## fish_SS2_SS3                              1.102  1 16.626  0.309   
-    ## isolation_SS2_SS3                         1.016  2 16.546  0.383   
-    ## SS_SS2_SS3                                5.302  1 16.421  0.035 * 
-    ## fish_SS2_SS3:isolation_SS2_SS3            3.197  2 16.651  0.067 . 
-    ## fish_SS2_SS3:SS_SS2_SS3                   8.896  1 16.574  0.009 **
-    ## isolation_SS2_SS3:SS_SS2_SS3              3.684  2 16.483  0.048 * 
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 1.828  2 16.604  0.192   
+    ##                                           Chisq Df Pr(>Chisq)   
+    ## fish_SS2_SS3                              1.199  1      0.273   
+    ## isolation_SS2_SS3                         2.129  2      0.345   
+    ## SS_SS2_SS3                                5.533  1      0.019 * 
+    ## fish_SS2_SS3:isolation_SS2_SS3            6.370  2      0.041 * 
+    ## fish_SS2_SS3:SS_SS2_SS3                   9.009  1      0.003 **
+    ## isolation_SS2_SS3:SS_SS2_SS3              7.528  2      0.023 * 
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 3.697  2      0.157   
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of fish_SS2_SS3 | SS_SS2_SS3`
@@ -103,7 +103,7 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust =
     ## Degrees-of-freedom method: kenward-roger
 
 ``` r
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
@@ -127,19 +127,19 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adj
     ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120    0.0100 0.0588 32  0.171  0.9841 
-    ##  30 - 480    0.0566 0.0588 32  0.962  0.6055 
-    ##  120 - 480   0.0465 0.0588 32  0.792  0.7108 
+    ##  30 - 120    0.0100 0.0588 32  0.171  0.9976 
+    ##  30 - 480    0.0566 0.0588 32  0.962  0.7165 
+    ##  120 - 480   0.0465 0.0588 32  0.792  0.8191 
     ## 
     ## SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120   -0.1324 0.0641 32 -2.064  0.1135 
-    ##  30 - 480   -0.1900 0.0667 32 -2.850  0.0202 
-    ##  120 - 480  -0.0576 0.0667 32 -0.863  0.6669 
+    ##  30 - 120   -0.1324 0.0641 32 -2.064  0.1350 
+    ##  30 - 480   -0.1900 0.0667 32 -2.850  0.0226 
+    ##  120 - 480  -0.0576 0.0667 32 -0.863  0.7778 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 Distance to centroid for predators is greater in pods with fish and in
 higher isolation treatments, but only for the last survey
@@ -179,20 +179,20 @@ expected beta-diversity/community variability in each treatment.
 
 ``` r
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
-    ## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: beta_deviation_SS2_SS3_predators$expected_distances
-    ##                                                F Df Df.res Pr(>F)   
-    ## fish_SS2_SS3                              12.006  1 16.626  0.003 **
-    ## isolation_SS2_SS3                          1.874  2 16.546  0.185   
-    ## SS_SS2_SS3                                 1.851  1 16.421  0.192   
-    ## fish_SS2_SS3:isolation_SS2_SS3             1.779  2 16.651  0.199   
-    ## fish_SS2_SS3:SS_SS2_SS3                    3.899  1 16.574  0.065 . 
-    ## isolation_SS2_SS3:SS_SS2_SS3               3.149  2 16.483  0.069 . 
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  3.298  2 16.604  0.062 . 
+    ##                                            Chisq Df Pr(>Chisq)    
+    ## fish_SS2_SS3                              12.353  1     <2e-16 ***
+    ## isolation_SS2_SS3                          3.958  2      0.138    
+    ## SS_SS2_SS3                                 1.930  1      0.165    
+    ## fish_SS2_SS3:isolation_SS2_SS3             3.541  2      0.170    
+    ## fish_SS2_SS3:SS_SS2_SS3                    3.975  1      0.046 *  
+    ## isolation_SS2_SS3:SS_SS2_SS3               6.463  2      0.039 *  
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  6.679  2      0.035 *  
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -234,25 +234,25 @@ centroids from observed distances.
 
 ``` r
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
-    ## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: beta_deviation_SS2_SS3_predators$deviation_distances
-    ##                                               F Df Df.res Pr(>F)   
-    ## fish_SS2_SS3                              4.476  1 16.626  0.050 * 
-    ## isolation_SS2_SS3                         1.852  2 16.546  0.188   
-    ## SS_SS2_SS3                                0.838  1 16.421  0.373   
-    ## fish_SS2_SS3:isolation_SS2_SS3            1.067  2 16.651  0.367   
-    ## fish_SS2_SS3:SS_SS2_SS3                   9.300  1 16.574  0.007 **
-    ## isolation_SS2_SS3:SS_SS2_SS3              0.349  2 16.483  0.711   
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 2.405  2 16.604  0.121   
+    ##                                           Chisq Df Pr(>Chisq)   
+    ## fish_SS2_SS3                              4.384  1      0.036 * 
+    ## isolation_SS2_SS3                         3.746  2      0.154   
+    ## SS_SS2_SS3                                0.912  1      0.340   
+    ## fish_SS2_SS3:isolation_SS2_SS3            2.067  2      0.356   
+    ## fish_SS2_SS3:SS_SS2_SS3                   9.372  1      0.002 **
+    ## isolation_SS2_SS3:SS_SS2_SS3              0.703  2      0.704   
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 4.893  2      0.087 . 
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3), adjust = "tukey")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of fish_SS2_SS3 | isolation_SS2_SS3`
@@ -348,25 +348,25 @@ observed beta-diversity/community variability in each treatment.
 
 ``` r
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_non_predators$observed_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
-    ## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: beta_deviation_SS2_SS3_non_predators$observed_distances
-    ##                                               F Df Df.res Pr(>F)   
-    ## fish_SS2_SS3                              3.826  1 16.805  0.067 . 
-    ## isolation_SS2_SS3                         1.530  2 16.725  0.245   
-    ## SS_SS2_SS3                                3.276  1 16.186  0.089 . 
-    ## fish_SS2_SS3:isolation_SS2_SS3            6.841  2 16.828  0.007 **
-    ## fish_SS2_SS3:SS_SS2_SS3                   0.297  1 16.347  0.593   
-    ## isolation_SS2_SS3:SS_SS2_SS3              5.765  2 16.251  0.013 * 
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 2.465  2 16.378  0.116   
+    ##                                            Chisq Df Pr(>Chisq)    
+    ## fish_SS2_SS3                               3.887  1      0.049 *  
+    ## isolation_SS2_SS3                          3.178  2      0.204    
+    ## SS_SS2_SS3                                 3.265  1      0.071 .  
+    ## fish_SS2_SS3:isolation_SS2_SS3            13.724  2      0.001 ***
+    ## fish_SS2_SS3:SS_SS2_SS3                    0.292  1      0.589    
+    ## isolation_SS2_SS3:SS_SS2_SS3              11.718  2      0.003 ** 
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  5.014  2      0.082 .  
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
@@ -401,30 +401,30 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.1670 0.0821 31.8 -2.034  0.1205 
-    ##  30 - 480   -0.1888 0.0821 31.8 -2.301  0.0702 
-    ##  120 - 480  -0.0219 0.0821 31.8 -0.267  0.9616 
+    ##  30 - 120   -0.1670 0.0821 31.8 -2.034  0.1436 
+    ##  30 - 480   -0.1888 0.0821 31.8 -2.301  0.0820 
+    ##  120 - 480  -0.0219 0.0821 31.8 -0.267  0.9909 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.0093 0.0821 31.8 -0.113  0.9930 
-    ##  30 - 480    0.2160 0.0821 31.8  2.632  0.0338 
-    ##  120 - 480   0.2253 0.0821 31.8  2.745  0.0260 
+    ##  30 - 120   -0.0093 0.0821 31.8 -0.113  0.9993 
+    ##  30 - 480    0.2160 0.0821 31.8  2.632  0.0385 
+    ##  120 - 480   0.2253 0.0821 31.8  2.745  0.0293 
     ## 
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.0323 0.0821 31.8  0.393  0.9186 
-    ##  30 - 480    0.0669 0.0895 31.9  0.748  0.7371 
-    ##  120 - 480   0.0347 0.0895 31.9  0.387  0.9208 
+    ##  30 - 120    0.0323 0.0821 31.8  0.393  0.9722 
+    ##  30 - 480    0.0669 0.0895 31.9  0.748  0.8425 
+    ##  120 - 480   0.0347 0.0895 31.9  0.387  0.9733 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.3619 0.0963 32.0  3.757  0.0019 
-    ##  30 - 480    0.2705 0.0963 32.0  2.808  0.0223 
-    ##  120 - 480  -0.0914 0.0963 32.0 -0.949  0.6140 
+    ##  30 - 120    0.3619 0.0963 32.0  3.757  0.0021 
+    ##  30 - 480    0.2705 0.0963 32.0  2.808  0.0251 
+    ##  120 - 480  -0.0914 0.0963 32.0 -0.949  0.7253 
     ## 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 Similar to when we analysed the whole community, it seems that the
 effect of isolation is dependent on the presence or absence of fish.
@@ -469,25 +469,25 @@ expected beta-diversity/community variability in each treatment.
 
 ``` r
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_non_predators$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
-    ## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: beta_deviation_SS2_SS3_non_predators$expected_distances
-    ##                                               F Df Df.res Pr(>F)   
-    ## fish_SS2_SS3                              0.784  1 16.626  0.389   
-    ## isolation_SS2_SS3                         5.078  2 16.546  0.019 * 
-    ## SS_SS2_SS3                                4.884  1 16.421  0.042 * 
-    ## fish_SS2_SS3:isolation_SS2_SS3            2.105  2 16.651  0.153   
-    ## fish_SS2_SS3:SS_SS2_SS3                   0.862  1 16.574  0.367   
-    ## isolation_SS2_SS3:SS_SS2_SS3              7.773  2 16.483  0.004 **
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 0.907  2 16.604  0.423   
+    ##                                            Chisq Df Pr(>Chisq)    
+    ## fish_SS2_SS3                               0.821  1      0.365    
+    ## isolation_SS2_SS3                         10.389  2      0.006 ** 
+    ## SS_SS2_SS3                                 4.924  1      0.026 *  
+    ## fish_SS2_SS3:isolation_SS2_SS3             4.296  2      0.117    
+    ## fish_SS2_SS3:SS_SS2_SS3                    0.874  1      0.350    
+    ## isolation_SS2_SS3:SS_SS2_SS3              15.799  2     <2e-16 ***
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  1.834  2      0.400    
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
@@ -511,19 +511,19 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adj
     ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120   -0.1052 0.0572 32 -1.839  0.1733 
-    ##  30 - 480    0.0692 0.0572 32  1.210  0.4563 
-    ##  120 - 480   0.1744 0.0572 32  3.048  0.0124 
+    ##  30 - 120   -0.1052 0.0572 32 -1.839  0.2091 
+    ##  30 - 480    0.0692 0.0572 32  1.210  0.5529 
+    ##  120 - 480   0.1744 0.0572 32  3.048  0.0137 
     ## 
     ## SS_SS2_SS3 = 3:
     ##  contrast  estimate     SE df t.ratio p.value
-    ##  30 - 120    0.2366 0.0624 32  3.790  0.0018 
-    ##  30 - 480    0.2209 0.0649 32  3.405  0.0050 
-    ##  120 - 480  -0.0157 0.0649 32 -0.242  0.9681 
+    ##  30 - 120    0.2366 0.0624 32  3.790  0.0019 
+    ##  30 - 480    0.2209 0.0649 32  3.405  0.0054 
+    ##  120 - 480  -0.0157 0.0649 32 -0.242  0.9931 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 There is a decrease in the expected distance to centroid with isolation,
 and this decrease is stronger in for the last survey\!
@@ -563,25 +563,25 @@ centroids from observed distances.
 
 ``` r
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_non_predators$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
-    ## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
     ## Response: beta_deviation_SS2_SS3_non_predators$deviation_distances
-    ##                                               F Df Df.res Pr(>F)   
-    ## fish_SS2_SS3                              4.989  1 16.627  0.040 * 
-    ## isolation_SS2_SS3                         3.319  2 16.547  0.061 . 
-    ## SS_SS2_SS3                                0.083  1 16.420  0.777   
-    ## fish_SS2_SS3:isolation_SS2_SS3            3.748  2 16.652  0.045 * 
-    ## fish_SS2_SS3:SS_SS2_SS3                   0.181  1 16.573  0.676   
-    ## isolation_SS2_SS3:SS_SS2_SS3              1.823  2 16.482  0.193   
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 6.509  2 16.603  0.008 **
+    ##                                            Chisq Df Pr(>Chisq)    
+    ## fish_SS2_SS3                               4.977  1      0.026 *  
+    ## isolation_SS2_SS3                          6.650  2      0.036 *  
+    ## SS_SS2_SS3                                 0.074  1      0.785    
+    ## fish_SS2_SS3:isolation_SS2_SS3             7.499  2      0.024 *  
+    ## fish_SS2_SS3:SS_SS2_SS3                    0.197  1      0.657    
+    ## isolation_SS2_SS3:SS_SS2_SS3               3.644  2      0.162    
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 13.242  2      0.001 ***
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
@@ -616,30 +616,30 @@ emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
     ##  contrast  estimate    SE df t.ratio p.value
-    ##  30 - 120   -0.7822 0.943 32 -0.829  0.6877 
-    ##  30 - 480   -3.4182 0.943 32 -3.625  0.0028 
-    ##  120 - 480  -2.6359 0.943 32 -2.795  0.0230 
+    ##  30 - 120   -0.7822 0.943 32 -0.829  0.7977 
+    ##  30 - 480   -3.4182 0.943 32 -3.625  0.0030 
+    ##  120 - 480  -2.6359 0.943 32 -2.795  0.0259 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
     ##  contrast  estimate    SE df t.ratio p.value
-    ##  30 - 120    1.1086 0.943 32  1.176  0.4761 
-    ##  30 - 480    1.0863 0.943 32  1.152  0.4900 
-    ##  120 - 480  -0.0222 0.943 32 -0.024  0.9997 
+    ##  30 - 120    1.1086 0.943 32  1.176  0.5755 
+    ##  30 - 480    1.0863 0.943 32  1.152  0.5913 
+    ##  120 - 480  -0.0222 0.943 32 -0.024  1.0000 
     ## 
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
     ##  contrast  estimate    SE df t.ratio p.value
-    ##  30 - 120   -3.0721 0.943 32 -3.258  0.0073 
-    ##  30 - 480   -0.7769 1.029 32 -0.755  0.7328 
-    ##  120 - 480   2.2953 1.029 32  2.231  0.0812 
+    ##  30 - 120   -3.0721 0.943 32 -3.258  0.0080 
+    ##  30 - 480   -0.7769 1.029 32 -0.755  0.8388 
+    ##  120 - 480   2.2953 1.029 32  2.231  0.0953 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
     ##  contrast  estimate    SE df t.ratio p.value
-    ##  30 - 120    0.1661 1.108 32  0.150  0.9877 
-    ##  30 - 480   -1.8266 1.108 32 -1.648  0.2406 
-    ##  120 - 480  -1.9927 1.108 32 -1.798  0.1864 
+    ##  30 - 120    0.1661 1.108 32  0.150  0.9983 
+    ##  30 - 480   -1.8266 1.108 32 -1.648  0.2928 
+    ##  120 - 480  -1.9927 1.108 32 -1.798  0.2253 
     ## 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 Similarly to patterns for the whole community, there is an increase in
 beta deviation with isolation, but only in fishless ponds. This effect

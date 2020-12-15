@@ -49,9 +49,9 @@ beta_deviation_SS2_SS3_predators <- beta_deviation(com_SS2_SS3_predators, strata
 Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
 ```{r 6, message=FALSE, warning=FALSE}
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$observed_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 Distance to centroid for predators is greater in pods with fish and in higher isolation treatments, but only for the last survey
 
@@ -88,7 +88,7 @@ box(lwd = 2.5)
 Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.
 ```{r 8, message=FALSE, warning=FALSE}
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
+round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 Patterns are similar to those observed for the observed distances to centroid.
 
@@ -122,8 +122,8 @@ box(lwd = 2.5)
 Running ANOVA table for the deviations of expected distances to group centroids from observed distances.
 ```{r 10, message=FALSE, warning=FALSE}
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_predators$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3), adjust = "tukey")
+round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ fish_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
 ```
 Beta deviation seems to increase with isolation, but only in fishless ponds.
 
@@ -176,8 +176,8 @@ beta_deviation_SS2_SS3_non_predators <- beta_deviation(com_SS2_SS3_non_predators
 Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
 ```{r 14, message=FALSE, warning=FALSE}
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_non_predators$observed_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 Similar to when we analysed the whole community, it seems that the effect of isolation is dependent on the presence or absence of fish. When fish is absent, there is no effect of isolation. When it is present, there is a negative effect of isolation. This effect of isolation is stronger from low and intermediate isolation to high isolation in the second survey, and stronger from low to intermediate and high isolation in the last survey.
 
@@ -214,8 +214,8 @@ box(lwd = 2.5)
 Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.
 ```{r 16, message=FALSE, warning=FALSE}
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_non_predators$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_expected_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 
 ```
 There is a decrease in the expected distance to centroid with isolation, and this decrease is stronger in for the last survey!
@@ -252,8 +252,8 @@ box(lwd = 2.5)
 Running ANOVA table for the deviations of expected distances to group centroids from observed distances.
 ```{r 18, message=FALSE, warning=FALSE}
 fit_deviation_SS2_SS3 <- lmer(beta_deviation_SS2_SS3_non_predators$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = "F"),3)
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "tukey")
+round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = "sidak")
 ```
 Similarly to patterns for the whole community, there is an increase in beta deviation with isolation, but only in fishless ponds. This effect seems stronger in the second survey.
 
