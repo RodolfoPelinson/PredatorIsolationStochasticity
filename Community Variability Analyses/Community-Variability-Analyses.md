@@ -520,7 +520,7 @@ round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ``` r
-emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "tukey")
+emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
 ```
 
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
@@ -544,19 +544,19 @@ emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), 
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
     ##  contrast  estimate    SE   df t.ratio p.value
-    ##  30 - 120    -2.485 0.786 14.9 -3.163  0.0167 
-    ##  30 - 480    -2.257 0.822 16.2 -2.746  0.0359 
-    ##  120 - 480    0.228 0.822 16.2  0.277  0.9587 
+    ##  30 - 120    -2.485 0.786 14.9 -3.163  0.0192 
+    ##  30 - 480    -2.257 0.822 16.2 -2.746  0.0420 
+    ##  120 - 480    0.228 0.822 16.2  0.277  0.9901 
     ## 
     ## fish_SS2_SS3 = present:
     ##  contrast  estimate    SE   df t.ratio p.value
-    ##  30 - 120     1.057 0.857 17.4  1.234  0.4500 
-    ##  30 - 480    -0.202 0.857 17.4 -0.236  0.9699 
-    ##  120 - 480   -1.259 0.857 17.4 -1.469  0.3293 
+    ##  30 - 120     1.057 0.857 17.4  1.234  0.5502 
+    ##  30 - 480    -0.202 0.857 17.4 -0.236  0.9938 
+    ##  120 - 480   -1.259 0.857 17.4 -1.469  0.4066 
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
-    ## P value adjustment: tukey method for comparing a family of 3 estimates
+    ## P value adjustment: sidak method for 3 tests
 
 Beta deviation seems to increase with isolation, but only in fishless
 ponds.

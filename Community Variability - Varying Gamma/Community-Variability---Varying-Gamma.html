@@ -399,21 +399,91 @@ library(vegan)</code></pre>
 <h4>Expected Community Variability</h4>
 <p>Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.</p>
 <pre class="r"><code>fit_expected_SS2_SS3 &lt;- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = &quot;nlminbwrap&quot;))
-round(Anova(fit_expected_SS2_SS3, test.statistic = &quot;F&quot;),3)</code></pre>
-<pre><code>## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+round(Anova(fit_expected_SS2_SS3, test.statistic = &quot;Chisq&quot;),3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: beta_deviation_SS2_SS3$expected_distances
-##                                               F Df Df.res Pr(&gt;F)  
-## fish_SS2_SS3                              0.219  1 16.626  0.646  
-## isolation_SS2_SS3                         0.921  2 16.546  0.418  
-## SS_SS2_SS3                                0.689  1 16.421  0.418  
-## fish_SS2_SS3:isolation_SS2_SS3            3.025  2 16.651  0.076 .
-## fish_SS2_SS3:SS_SS2_SS3                   0.612  1 16.574  0.445  
-## isolation_SS2_SS3:SS_SS2_SS3              4.482  2 16.483  0.028 *
-## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 4.327  2 16.604  0.031 *
+##                                           Chisq Df Pr(&gt;Chisq)   
+## fish_SS2_SS3                              0.222  1      0.637   
+## isolation_SS2_SS3                         1.895  2      0.388   
+## SS_SS2_SS3                                0.708  1      0.400   
+## fish_SS2_SS3:isolation_SS2_SS3            6.263  2      0.044 * 
+## fish_SS2_SS3:SS_SS2_SS3                   0.614  1      0.433   
+## isolation_SS2_SS3:SS_SS2_SS3              9.222  2      0.010 **
+## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 8.756  2      0.013 * 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = &quot;tukey&quot;)</code></pre>
+<pre class="r"><code>emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = &quot;sidak&quot;)</code></pre>
+<pre><code>## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
+## fish_SS2_SS3 = absent:
+##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+##  30                 0.336 0.0322 14.9    0.249    0.422
+##  120                0.377 0.0322 14.9    0.290    0.463
+##  480                0.377 0.0351 17.4    0.285    0.470
+## 
+## fish_SS2_SS3 = present:
+##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
+##  30                 0.444 0.0351 17.4    0.351    0.536
+##  120                0.383 0.0351 17.4    0.290    0.476
+##  480                0.301 0.0351 17.4    0.208    0.394
+## 
+## Results are averaged over the levels of: SS_SS2_SS3 
+## Degrees-of-freedom method: kenward-roger 
+## Confidence level used: 0.95 
+## Conf-level adjustment: sidak method for 3 estimates 
+## 
+## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
+## fish_SS2_SS3 = absent:
+##  contrast   estimate     SE   df t.ratio p.value
+##  30 - 120  -0.040761 0.0455 14.9 -0.895  0.7671 
+##  30 - 480  -0.041628 0.0476 16.2 -0.874  0.7785 
+##  120 - 480 -0.000867 0.0476 16.2 -0.018  1.0000 
+## 
+## fish_SS2_SS3 = present:
+##  contrast   estimate     SE   df t.ratio p.value
+##  30 - 120   0.060696 0.0497 17.4  1.222  0.5576 
+##  30 - 480   0.142622 0.0497 17.4  2.871  0.0309 
+##  120 - 480  0.081926 0.0497 17.4  1.649  0.3115 
+## 
+## Results are averaged over the levels of: SS_SS2_SS3 
+## Degrees-of-freedom method: kenward-roger 
+## P value adjustment: sidak method for 3 tests</code></pre>
+<pre class="r"><code>emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3), adjust = &quot;sidak&quot;)</code></pre>
+<pre><code>## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
+## SS_SS2_SS3 = 2:
+##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+##  30                 0.316 0.0322 32    0.235    0.397
+##  120                0.410 0.0322 32    0.329    0.491
+##  480                0.346 0.0322 32    0.265    0.427
+## 
+## SS_SS2_SS3 = 3:
+##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
+##  30                 0.463 0.0351 32    0.375    0.552
+##  120                0.350 0.0351 32    0.261    0.438
+##  480                0.332 0.0378 32    0.237    0.428
+## 
+## Results are averaged over the levels of: fish_SS2_SS3 
+## Degrees-of-freedom method: kenward-roger 
+## Confidence level used: 0.95 
+## Conf-level adjustment: sidak method for 3 estimates 
+## 
+## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
+## SS_SS2_SS3 = 2:
+##  contrast  estimate     SE df t.ratio p.value
+##  30 - 120   -0.0937 0.0455 32 -2.059  0.1364 
+##  30 - 480   -0.0298 0.0455 32 -0.655  0.8873 
+##  120 - 480   0.0639 0.0455 32  1.404  0.4283 
+## 
+## SS_SS2_SS3 = 3:
+##  contrast  estimate     SE df t.ratio p.value
+##  30 - 120    0.1137 0.0497 32  2.288  0.0841 
+##  30 - 480    0.1308 0.0516 32  2.534  0.0483 
+##  120 - 480   0.0172 0.0516 32  0.332  0.9828 
+## 
+## Results are averaged over the levels of: fish_SS2_SS3 
+## Degrees-of-freedom method: kenward-roger 
+## P value adjustment: sidak method for 3 tests</code></pre>
+<pre class="r"><code>emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3), adjust = &quot;sidak&quot;)</code></pre>
 <pre><code>## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
 ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
 ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
@@ -446,30 +516,30 @@ round(Anova(fit_expected_SS2_SS3, test.statistic = &quot;F&quot;),3)</code></pre
 ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
 ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
 ##  contrast  estimate     SE df t.ratio p.value
-##  30 - 120  -0.05137 0.0644 32 -0.798  0.7069 
-##  30 - 480  -0.04512 0.0644 32 -0.701  0.7647 
-##  120 - 480  0.00625 0.0644 32  0.097  0.9948 
+##  30 - 120  -0.05137 0.0644 32 -0.798  0.8155 
+##  30 - 480  -0.04512 0.0644 32 -0.701  0.8661 
+##  120 - 480  0.00625 0.0644 32  0.097  0.9995 
 ## 
 ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
 ##  contrast  estimate     SE df t.ratio p.value
-##  30 - 120  -0.13608 0.0644 32 -2.114  0.1029 
-##  30 - 480  -0.01454 0.0644 32 -0.226  0.9723 
-##  120 - 480  0.12155 0.0644 32  1.888  0.1586 
+##  30 - 120  -0.13608 0.0644 32 -2.114  0.1219 
+##  30 - 480  -0.01454 0.0644 32 -0.226  0.9944 
+##  120 - 480  0.12155 0.0644 32  1.888  0.1908 
 ## 
 ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
 ##  contrast  estimate     SE df t.ratio p.value
-##  30 - 120  -0.03015 0.0644 32 -0.468  0.8866 
-##  30 - 480  -0.03813 0.0702 32 -0.543  0.8508 
-##  120 - 480 -0.00799 0.0702 32 -0.114  0.9929 
+##  30 - 120  -0.03015 0.0644 32 -0.468  0.9544 
+##  30 - 480  -0.03813 0.0702 32 -0.543  0.9316 
+##  120 - 480 -0.00799 0.0702 32 -0.114  0.9993 
 ## 
 ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
 ##  contrast  estimate     SE df t.ratio p.value
-##  30 - 120   0.25747 0.0757 32  3.403  0.0050 
-##  30 - 480   0.29978 0.0757 32  3.963  0.0011 
-##  120 - 480  0.04231 0.0757 32  0.559  0.8425 
+##  30 - 120   0.25747 0.0757 32  3.403  0.0054 
+##  30 - 480   0.29978 0.0757 32  3.963  0.0012 
+##  120 - 480  0.04231 0.0757 32  0.559  0.9259 
 ## 
 ## Degrees-of-freedom method: kenward-roger 
-## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+## P value adjustment: sidak method for 3 tests</code></pre>
 <p>Here the increase in expected distance to centroid increases with isolation only in ponds with fish, in the last survey.</p>
 <p>Plotting it:</p>
 <pre class="r"><code>boxplot(beta_deviation_SS2_SS3$expected_distances~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = &quot;Distance to Centroid (Expected)&quot;, xlab = &quot;&quot;, at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = &quot;transparent&quot;, xaxt=&quot;n&quot;)
@@ -499,21 +569,21 @@ box(lwd = 2.5)</code></pre>
 <h4>Beta-Deviation</h4>
 <p>Running ANOVA table for the deviations of expected distances to group centroids from observed distances.</p>
 <pre class="r"><code>fit_deviation_SS2_SS3 &lt;- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = &quot;nlminbwrap&quot;))
-round(Anova(fit_deviation_SS2_SS3, test.statistic = &quot;F&quot;),3)</code></pre>
-<pre><code>## Analysis of Deviance Table (Type II Wald F tests with Kenward-Roger df)
+round(Anova(fit_deviation_SS2_SS3, test.statistic = &quot;Chisq&quot;),3)</code></pre>
+<pre><code>## Analysis of Deviance Table (Type II Wald chisquare tests)
 ## 
 ## Response: beta_deviation_SS2_SS3$deviation_distances
-##                                               F Df Df.res Pr(&gt;F)  
-## fish_SS2_SS3                              4.105  1 16.798  0.059 .
-## isolation_SS2_SS3                         0.114  2 16.717  0.893  
-## SS_SS2_SS3                                3.376  1 16.196  0.085 .
-## fish_SS2_SS3:isolation_SS2_SS3            4.029  2 16.821  0.037 *
-## fish_SS2_SS3:SS_SS2_SS3                   2.601  1 16.357  0.126  
-## isolation_SS2_SS3:SS_SS2_SS3              2.423  2 16.261  0.120  
-## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 0.890  2 16.388  0.430  
+##                                           Chisq Df Pr(&gt;Chisq)  
+## fish_SS2_SS3                              4.215  1      0.040 *
+## isolation_SS2_SS3                         0.247  2      0.884  
+## SS_SS2_SS3                                3.392  1      0.066 .
+## fish_SS2_SS3:isolation_SS2_SS3            8.105  2      0.017 *
+## fish_SS2_SS3:SS_SS2_SS3                   2.620  1      0.106  
+## isolation_SS2_SS3:SS_SS2_SS3              4.941  2      0.085 .
+## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 1.813  2      0.404  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code>emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = &quot;tukey&quot;)</code></pre>
+<pre class="r"><code>emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3), adjust = &quot;sidak&quot;)</code></pre>
 <pre><code>## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
 ## fish_SS2_SS3 = absent:
 ##  isolation_SS2_SS3   emmean    SE   df lower.CL upper.CL
@@ -535,19 +605,19 @@ round(Anova(fit_deviation_SS2_SS3, test.statistic = &quot;F&quot;),3)</code></pr
 ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
 ## fish_SS2_SS3 = absent:
 ##  contrast  estimate    SE   df t.ratio p.value
-##  30 - 120    -1.720 0.803 15.1 -2.141  0.1146 
-##  30 - 480    -1.534 0.837 16.4 -1.832  0.1902 
-##  120 - 480    0.186 0.837 16.4  0.222  0.9733 
+##  30 - 120    -1.720 0.803 15.1 -2.141  0.1398 
+##  30 - 480    -1.534 0.837 16.4 -1.832  0.2342 
+##  120 - 480    0.186 0.837 16.4  0.222  0.9948 
 ## 
 ## fish_SS2_SS3 = present:
 ##  contrast  estimate    SE   df t.ratio p.value
-##  30 - 120     1.503 0.870 17.6  1.727  0.2231 
-##  30 - 480     0.743 0.870 17.6  0.855  0.6750 
-##  120 - 480   -0.759 0.870 17.6 -0.873  0.6640 
+##  30 - 120     1.503 0.870 17.6  1.727  0.2750 
+##  30 - 480     0.743 0.870 17.6  0.855  0.7886 
+##  120 - 480   -0.759 0.870 17.6 -0.873  0.7781 
 ## 
 ## Results are averaged over the levels of: SS_SS2_SS3 
 ## Degrees-of-freedom method: kenward-roger 
-## P value adjustment: tukey method for comparing a family of 3 estimates</code></pre>
+## P value adjustment: sidak method for 3 tests</code></pre>
 <p>No significant patterns.</p>
 <p>Plotting it:</p>
 <pre class="r"><code>boxplot(beta_deviation_SS2_SS3$deviation_distances~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = &quot;Beta-Deviation&quot;, xlab = &quot;&quot;, at = c(1,2,3,5,6,7),ylim = c(-2,10), lwd = 1.5, col = &quot;transparent&quot;, xaxt=&quot;n&quot;)
