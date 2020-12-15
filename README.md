@@ -40,7 +40,7 @@ survey of the experiment only. We let this one out of the main paper
 because it was to early in the assembly process.
 
 [Community Variability - Allowing Gamma diversity to
-vary](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/tree/master/Community%20Variability%20-%20Varying%20Gamma).
+vary](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/blob/master/Community%20Variability%20-%20Varying%20Gamma/Community-Variability---Varying-Gamma.md).
 Here we repeat the analyses for community variability for the whole
 community, but allowing gamma diversity to vary among treatments.
 

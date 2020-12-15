@@ -42,7 +42,7 @@ The goal of Pelinson.et.al.2020B is to walk the user through the data analyses s
 
 [Community Variability - First Survey](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/blob/master/Community%20Variability%20-%20First%20Survey/Community-Variability---First-Survey.md). Here we repeat the analyses for community variability for the first survey of the experiment only. We let this one out of the main paper because it was to early in the assembly process.
 
-[Community Variability - Allowing Gamma diversity to vary](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/tree/master/Community%20Variability%20-%20Varying%20Gamma). Here we repeat the analyses for community variability for the whole community, but allowing gamma diversity to vary among treatments.
+[Community Variability - Allowing Gamma diversity to vary](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/blob/master/Community%20Variability%20-%20Varying%20Gamma/Community-Variability---Varying-Gamma.md). Here we repeat the analyses for community variability for the whole community, but allowing gamma diversity to vary among treatments.
 
 [Community Variability - Different Null-Model algorithm](https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/blob/master/Community%20Variability%20-%20Siqueira_2020/Community-Variability---Siqueira_2020.md). Here we repeat the analyses for community variability using the null-model algorithm used by [Siqueira et al 2020](https://doi.org/10.1002/ecy.3014).
 
