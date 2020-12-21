@@ -8,7 +8,7 @@
 <!-- badges: end -->
 
 The goal of PredatorIsolationStochasticity is to walk the user through
-the data analyses shown in XXXX.
+the data analyses shown in Pelinson et al. 2020B.
 
 #### Here you can find the r code the run some of the results shown in the main paper for:
 
