@@ -1,4 +1,4 @@
-Package: Pelinson.et.al.2020B
+Package: PredatorIsolationStochasticity
 Title: Data Analyses for Pelinson et al 2020B
 Version: 0.0.0.2
 Authors@R: 
@@ -13,7 +13,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-URL: https://github.com/RodolfoPelinson/Pelinson.et.al.2020B
-BugReports: https://github.com/RodolfoPelinson/Pelinson.et.al.2020B/issues
+URL: https://github.com/RodolfoPelinson/PredatorIsolationStochasticity
+BugReports: https://github.com/RodolfoPelinson/PredatorIsolationStochasticity/issues
 Depends: 
     R (>= 2.10)
