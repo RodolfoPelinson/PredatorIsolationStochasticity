@@ -7,17 +7,9 @@ These are the analyses of gamma diversity for the whole communities
 (shown in the main paper) and separately to predatory and non-predatory
 insects.
 
-If you haven’t, install the package:
-
-``` r
-install.packages("devtools")
-devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
-```
-
 These are the packages you will need to run this code:
 
 ``` r
-library(Pelinson.et.al.2020B)
 library(iNEXT) # Version 2.0.20
 library(vegan) # Version 2.5-6
 ```
@@ -44,15 +36,24 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "030 absent"),], method = "pa")))
-present_30_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "030 present"),], method = "pa")))
-absent_120_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "120 absent"),], method = "pa")))
-present_120_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "120 present"),], method = "pa")))
-absent_480_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "480 absent"),], method = "pa")))
-present_480_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 == "480 present"),], method = "pa")))
+absent_30_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 
+                                                == "030 absent"),], method = "pa")))
+present_30_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 
+                                                == "030 present"),], method = "pa")))
+absent_120_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 
+                                                == "120 absent"),], method = "pa")))
+present_120_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 
+                                                == "120 present"),], method = "pa")))
+absent_480_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 
+                                                == "480 absent"),], method = "pa")))
+present_480_SS1 <- as.incfreq(t(decostand(com_SS1[which(fish_isolation_SS1 
+                                                == "480 present"),], method = "pa")))
 
-all <- list(absent_30=absent_30_SS1 ,absent_120 =absent_120_SS1, absent_480=absent_480_SS1, present_30=present_30_SS1,present_120=present_120_SS1,present_480=present_480_SS1)
-SS1_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+all <- list(absent_30=absent_30_SS1 ,absent_120 =absent_120_SS1,
+            absent_480=absent_480_SS1, present_30=present_30_SS1,
+            present_120=present_120_SS1,present_480=present_480_SS1)
+SS1_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T,
+                   conf = 0.95, nboot =10000, size = c(1:4))
 Gamma_SS1 <- rbind(absent_30 = SS1_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS1_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS1_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -64,14 +65,22 @@ Gamma_SS1 <- rbind(absent_30 = SS1_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,20), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "First Survey")
-arrows(y0 = c(Gamma_SS1$qD.LCL[1],Gamma_SS1$qD.LCL[2], Gamma_SS1$qD.LCL[3],Gamma_SS1$qD.LCL[4],Gamma_SS1$qD.LCL[5], Gamma_SS1$qD.LCL[6]),
-       y1 = c(Gamma_SS1$qD.UCL[1],Gamma_SS1$qD.UCL[2], Gamma_SS1$qD.UCL[3],Gamma_SS1$qD.UCL[4],Gamma_SS1$qD.UCL[5], Gamma_SS1$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,20), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "First Survey")
+arrows(y0 = c(Gamma_SS1$qD.LCL[1], Gamma_SS1$qD.LCL[2], Gamma_SS1$qD.LCL[3],
+              Gamma_SS1$qD.LCL[4], Gamma_SS1$qD.LCL[5], Gamma_SS1$qD.LCL[6]),
+       y1 = c(Gamma_SS1$qD.UCL[1], Gamma_SS1$qD.UCL[2], Gamma_SS1$qD.UCL[3],
+              Gamma_SS1$qD.UCL[4], Gamma_SS1$qD.UCL[5], Gamma_SS1$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS1$qD[1],Gamma_SS1$qD[2], Gamma_SS1$qD[3],Gamma_SS1$qD[4],Gamma_SS1$qD[5], Gamma_SS1$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS1$qD[1], Gamma_SS1$qD[2], Gamma_SS1$qD[3],Gamma_SS1$qD[4],
+             Gamma_SS1$qD[5], Gamma_SS1$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2,
+     tick = F)
 box(lwd = 2.5)
 ```
 
@@ -91,14 +100,23 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "030 absent"),], method = "pa")))
-present_30_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "030 present"),], method = "pa")))
-absent_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "120 absent"),], method = "pa")))
-present_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "120 present"),], method = "pa")))
-absent_480_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "480 absent"),], method = "pa")))
-present_480_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 == "480 present"),], method = "pa")))
-all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2, absent_480=absent_480_SS2, present_30=present_30_SS2,present_120=present_120_SS2,present_480=present_480_SS2)
-SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+absent_30_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 
+                                             == "030 absent"),], method = "pa")))
+present_30_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 
+                                             == "030 present"),], method = "pa")))
+absent_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 
+                                             == "120 absent"),], method = "pa")))
+present_120_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 
+                                             == "120 present"),], method = "pa")))
+absent_480_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 
+                                             == "480 absent"),], method = "pa")))
+present_480_SS2 <- as.incfreq(t(decostand(com_SS2[which(fish_isolation_SS2 
+                                             == "480 present"),], method = "pa")))
+all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2,
+            absent_480=absent_480_SS2, present_30=present_30_SS2,
+            present_120=present_120_SS2,present_480=present_480_SS2)
+SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T,
+                   conf = 0.95, nboot =10000, size = c(1:4))
 Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS2_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS2_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -110,14 +128,22 @@ Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(10,30), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
-arrows(y0 = c(Gamma_SS2$qD.LCL[1],Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],Gamma_SS2$qD.LCL[4],Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
-       y1 = c(Gamma_SS2$qD.UCL[1],Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],Gamma_SS2$qD.UCL[4],Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(10,30), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
+arrows(y0 = c(Gamma_SS2$qD.LCL[1], Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],
+              Gamma_SS2$qD.LCL[4], Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
+       y1 = c(Gamma_SS2$qD.UCL[1], Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],
+              Gamma_SS2$qD.UCL[4], Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS2$qD[1],Gamma_SS2$qD[2], Gamma_SS2$qD[3],Gamma_SS2$qD[4],Gamma_SS2$qD[5], Gamma_SS2$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS2$qD[1], Gamma_SS2$qD[2], Gamma_SS2$qD[3],Gamma_SS2$qD[4],
+             Gamma_SS2$qD[5], Gamma_SS2$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2,
+     tick = F)
 box(lwd = 2.5)
 ```
 
@@ -137,14 +163,23 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "030 absent"),], method = "pa")))
-present_30_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "030 present"),], method = "pa")))
-absent_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "120 absent"),], method = "pa")))
-present_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "120 present"),], method = "pa")))
-absent_480_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "480 absent"),], method = "pa")))
-present_480_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 == "480 present"),], method = "pa")))
-all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3, absent_480=absent_480_SS3, present_30=present_30_SS3,present_120=present_120_SS3,present_480=present_480_SS3)
-SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+absent_30_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 
+                                            == "030 absent"),], method = "pa")))
+present_30_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 
+                                            == "030 present"),], method = "pa")))
+absent_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 
+                                            == "120 absent"),], method = "pa")))
+present_120_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 
+                                            == "120 present"),], method = "pa")))
+absent_480_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 
+                                            == "480 absent"),], method = "pa")))
+present_480_SS3 <- as.incfreq(t(decostand(com_SS3[which(fish_isolation_SS3 
+                                            == "480 present"),], method = "pa")))
+all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3,
+            absent_480=absent_480_SS3, present_30=present_30_SS3,
+            present_120=present_120_SS3,present_480=present_480_SS3)
+SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T,
+                   conf = 0.95, nboot =10000, size = c(1:4))
 Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS3_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS3_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -156,20 +191,29 @@ Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(10,30), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
-arrows(y0 = c(Gamma_SS3$qD.LCL[1],Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],Gamma_SS3$qD.LCL[4],Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
-       y1 = c(Gamma_SS3$qD.UCL[1],Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],Gamma_SS3$qD.UCL[4],Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(10,30), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
+arrows(y0 = c(Gamma_SS3$qD.LCL[1], Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],
+              Gamma_SS3$qD.LCL[4], Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
+       y1 = c(Gamma_SS3$qD.UCL[1], Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],
+              Gamma_SS3$qD.UCL[4], Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS3$qD[1],Gamma_SS3$qD[2], Gamma_SS3$qD[3],Gamma_SS3$qD[4],Gamma_SS3$qD[5], Gamma_SS3$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS3$qD[1], Gamma_SS3$qD[2], Gamma_SS3$qD[3],Gamma_SS3$qD[4],
+             Gamma_SS3$qD[5], Gamma_SS3$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2,
+     tick = F)
 box(lwd = 2.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/8-1.png)<!-- --> It seems
-that there is a higher gamma diversity in the intermediate isolation
-treatment for fishless ponds.
+![](Gamma-Diversity-Analyses_files/figure-gfm/8-1.png)<!-- -->
+
+It seems that there is a higher gamma diversity in the intermediate
+isolation treatment for fishless ponds.
 
 ### Predatory Insects
 
@@ -191,14 +235,23 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "030 absent"),], method = "pa")))
-present_30_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "030 present"),], method = "pa")))
-absent_120_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "120 absent"),], method = "pa")))
-present_120_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "120 present"),], method = "pa")))
-absent_480_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "480 absent"),], method = "pa")))
-present_480_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2 == "480 present"),], method = "pa")))
-all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2, absent_480=absent_480_SS2, present_30=present_30_SS2,present_120=present_120_SS2,present_480=present_480_SS2)
-SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+absent_30_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2
+                                                == "030 absent"),], method = "pa")))
+present_30_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2
+                                                == "030 present"),], method = "pa")))
+absent_120_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2
+                                                == "120 absent"),], method = "pa")))
+present_120_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2
+                                                == "120 present"),], method = "pa")))
+absent_480_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2
+                                                == "480 absent"),], method = "pa")))
+present_480_SS2 <- as.incfreq(t(decostand(com_SS2_predators[which(fish_isolation_SS2
+                                                == "480 present"),], method = "pa")))
+all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2,
+            absent_480=absent_480_SS2, present_30=present_30_SS2,
+            present_120=present_120_SS2,present_480=present_480_SS2)
+SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,
+                   se = T, conf = 0.95, nboot =10000, size = c(1:4))
 Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS2_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS2_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -210,14 +263,22 @@ Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,10), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
-arrows(y0 = c(Gamma_SS2$qD.LCL[1],Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],Gamma_SS2$qD.LCL[4],Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
-       y1 = c(Gamma_SS2$qD.UCL[1],Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],Gamma_SS2$qD.UCL[4],Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,10), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
+arrows(y0 = c(Gamma_SS2$qD.LCL[1], Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],
+              Gamma_SS2$qD.LCL[4], Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
+       y1 = c(Gamma_SS2$qD.UCL[1], Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],
+              Gamma_SS2$qD.UCL[4], Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS2$qD[1],Gamma_SS2$qD[2], Gamma_SS2$qD[3],Gamma_SS2$qD[4],Gamma_SS2$qD[5], Gamma_SS2$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS2$qD[1], Gamma_SS2$qD[2], Gamma_SS2$qD[3],Gamma_SS2$qD[4],
+             Gamma_SS2$qD[5], Gamma_SS2$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2,
+     tick = F)
 box(lwd = 2.5)
 ```
 
@@ -237,14 +298,23 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "030 absent"),], method = "pa")))
-present_30_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "030 present"),], method = "pa")))
-absent_120_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "120 absent"),], method = "pa")))
-present_120_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "120 present"),], method = "pa")))
-absent_480_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "480 absent"),], method = "pa")))
-present_480_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 == "480 present"),], method = "pa")))
-all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3, absent_480=absent_480_SS3, present_30=present_30_SS3,present_120=present_120_SS3,present_480=present_480_SS3)
-SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+absent_30_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 
+                                                 == "030 absent"),], method = "pa")))
+present_30_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 
+                                                 == "030 present"),], method = "pa")))
+absent_120_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 
+                                                 == "120 absent"),], method = "pa")))
+present_120_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 
+                                                 == "120 present"),], method = "pa")))
+absent_480_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 
+                                                 == "480 absent"),], method = "pa")))
+present_480_SS3 <- as.incfreq(t(decostand(com_SS3_predators[which(fish_isolation_SS3 
+                                                 == "480 present"),], method = "pa")))
+all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3,
+            absent_480=absent_480_SS3, present_30=present_30_SS3,
+            present_120=present_120_SS3,present_480=present_480_SS3)
+SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T,
+                   conf = 0.95, nboot =10000, size = c(1:4))
 ```
 
     ## Warning in Fun(x, q): Insufficient data to provide reliable estimators and
@@ -262,19 +332,28 @@ Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,12), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
-arrows(y0 = c(Gamma_SS3$qD.LCL[1],Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],Gamma_SS3$qD.LCL[4],Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
-       y1 = c(Gamma_SS3$qD.UCL[1],Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],Gamma_SS3$qD.UCL[4],Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(0,12), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
+arrows(y0 = c(Gamma_SS3$qD.LCL[1], Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],
+              Gamma_SS3$qD.LCL[4], Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
+       y1 = c(Gamma_SS3$qD.UCL[1], Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],
+              Gamma_SS3$qD.UCL[4], Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS3$qD[1],Gamma_SS3$qD[2], Gamma_SS3$qD[3],Gamma_SS3$qD[4],Gamma_SS3$qD[5], Gamma_SS3$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS3$qD[1], Gamma_SS3$qD[2], Gamma_SS3$qD[3],Gamma_SS3$qD[4],
+             Gamma_SS3$qD[5], Gamma_SS3$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2,
+     tick = F)
 box(lwd = 2.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/plot_SS3-1.png)<!-- --> It
-seems that there is a higher gamma diversity in the intermediate
+![](Gamma-Diversity-Analyses_files/figure-gfm/plot_SS3-1.png)<!-- -->
+
+It seems that there is a higher gamma diversity in the intermediate
 isolation treatment for fishless ponds.
 
 ### Non-Predatory Insects
@@ -297,14 +376,23 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "030 absent"),], method = "pa")))
-present_30_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "030 present"),], method = "pa")))
-absent_120_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "120 absent"),], method = "pa")))
-present_120_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "120 present"),], method = "pa")))
-absent_480_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "480 absent"),], method = "pa")))
-present_480_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 == "480 present"),], method = "pa")))
-all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2, absent_480=absent_480_SS2, present_30=present_30_SS2,present_120=present_120_SS2,present_480=present_480_SS2)
-SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+absent_30_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 
+                                               == "030 absent"),], method = "pa")))
+present_30_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 
+                                               == "030 present"),], method = "pa")))
+absent_120_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 
+                                               == "120 absent"),], method = "pa")))
+present_120_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 
+                                               == "120 present"),], method = "pa")))
+absent_480_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 
+                                               == "480 absent"),], method = "pa")))
+present_480_SS2 <- as.incfreq(t(decostand(com_SS2_non_predators[which(fish_isolation_SS2 
+                                               == "480 present"),], method = "pa")))
+all <- list(absent_30=absent_30_SS2 ,absent_120 =absent_120_SS2,
+            absent_480=absent_480_SS2, present_30=present_30_SS2,
+            present_120=present_120_SS2,present_480=present_480_SS2)
+SS2_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T,
+                   conf = 0.95, nboot =10000, size = c(1:4))
 Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS2_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS2_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -316,19 +404,28 @@ Gamma_SS2 <- rbind(absent_30 = SS2_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(6,18), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
-arrows(y0 = c(Gamma_SS2$qD.LCL[1],Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],Gamma_SS2$qD.LCL[4],Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
-       y1 = c(Gamma_SS2$qD.UCL[1],Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],Gamma_SS2$qD.UCL[4],Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(6,18), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Second Survey")
+arrows(y0 = c(Gamma_SS2$qD.LCL[1], Gamma_SS2$qD.LCL[2], Gamma_SS2$qD.LCL[3],
+              Gamma_SS2$qD.LCL[4], Gamma_SS2$qD.LCL[5], Gamma_SS2$qD.LCL[6]),
+       y1 = c(Gamma_SS2$qD.UCL[1], Gamma_SS2$qD.UCL[2], Gamma_SS2$qD.UCL[3],
+              Gamma_SS2$qD.UCL[4], Gamma_SS2$qD.UCL[5], Gamma_SS2$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS2$qD[1],Gamma_SS2$qD[2], Gamma_SS2$qD[3],Gamma_SS2$qD[4],Gamma_SS2$qD[5], Gamma_SS2$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS2$qD[1], Gamma_SS2$qD[2], Gamma_SS2$qD[3],Gamma_SS2$qD[4],
+             Gamma_SS2$qD[5], Gamma_SS2$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1,
+     line = 2, tick = F)
 box(lwd = 2.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/11-1.png)<!-- --> It does
-not seem to be any important differences among treatments.
+![](Gamma-Diversity-Analyses_files/figure-gfm/11-1.png)<!-- -->
+
+It does not seem to be any important differences among treatments.
 
 #### Third Survey
 
@@ -342,15 +439,24 @@ through sample-based rarefaction and extrapolation using the package
 that is able to colonize ponds of a given treatment.
 
 ``` r
-absent_30_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "030 absent"),], method = "pa")))
-present_30_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "030 present"),], method = "pa")))
-absent_120_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "120 absent"),], method = "pa")))
-present_120_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "120 present"),], method = "pa")))
-absent_480_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "480 absent"),], method = "pa")))
-present_480_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 == "480 present"),], method = "pa")))
+absent_30_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 
+                                                == "030 absent"),], method = "pa")))
+present_30_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 
+                                                == "030 present"),], method = "pa")))
+absent_120_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 
+                                                == "120 absent"),], method = "pa")))
+present_120_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 
+                                                == "120 present"),], method = "pa")))
+absent_480_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 
+                                                == "480 absent"),], method = "pa")))
+present_480_SS3 <- as.incfreq(t(decostand(com_SS3_non_predators[which(fish_isolation_SS3 
+                                                == "480 present"),], method = "pa")))
 
-all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3, absent_480=absent_480_SS3, present_30=present_30_SS3,present_120=present_120_SS3,present_480=present_480_SS3)
-SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T, conf = 0.95,nboot =10000, size = c(1:4))
+all <- list(absent_30=absent_30_SS3 ,absent_120 =absent_120_SS3,
+            absent_480=absent_480_SS3, present_30=present_30_SS3,
+            present_120=present_120_SS3,present_480=present_480_SS3)
+SS3_iNEXT <- iNEXT(all, datatype = "incidence_freq", q = 0, knots = 40,se = T,
+                   conf = 0.95, nboot =10000, size = c(1:4))
 Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
                absent_120 = SS3_iNEXT$iNextEst$absent_120[4,c(4,5,6)],
                absent_480 = SS3_iNEXT$iNextEst$absent_480[4,c(4,5,6)],
@@ -362,17 +468,26 @@ Gamma_SS3 <- rbind(absent_30 = SS3_iNEXT$iNextEst$absent_30[4,c(4,5,6)],
 We can plot the estimates and respective confidence intervals.
 
 ``` r
-plot(c(NA,NA,NA,NA,NA,NA),ylim = c(6,18), xlim = c(0.5,7.5),type = "p", xaxt = "n",ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
-arrows(y0 = c(Gamma_SS3$qD.LCL[1],Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],Gamma_SS3$qD.LCL[4],Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
-       y1 = c(Gamma_SS3$qD.UCL[1],Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],Gamma_SS3$qD.UCL[4],Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
+plot(c(NA,NA,NA,NA,NA,NA),ylim = c(6,18), xlim = c(0.5,7.5),type = "p", xaxt = "n",
+     ylab = "Gamma",xlab = "", cex.lab = 1, cex.axis = 1, main = "Third Survey")
+arrows(y0 = c(Gamma_SS3$qD.LCL[1],Gamma_SS3$qD.LCL[2], Gamma_SS3$qD.LCL[3],
+              Gamma_SS3$qD.LCL[4],Gamma_SS3$qD.LCL[5], Gamma_SS3$qD.LCL[6]),
+       y1 = c(Gamma_SS3$qD.UCL[1],Gamma_SS3$qD.UCL[2], Gamma_SS3$qD.UCL[3],
+              Gamma_SS3$qD.UCL[4],Gamma_SS3$qD.UCL[5], Gamma_SS3$qD.UCL[6]),
        x1 = c(1,2,3,5,6,7), x0 = c(1,2,3,5,6,7), 
        code = 3, angle = 90, length = 0.05, c("grey50"), lwd = 2)
-points(y = c(Gamma_SS3$qD[1],Gamma_SS3$qD[2], Gamma_SS3$qD[3],Gamma_SS3$qD[4],Gamma_SS3$qD[5], Gamma_SS3$qD[6]), x = c(1,2,3,5,6,7), cex = 2, pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1","dodgerblue3", "dodgerblue4"))
-axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"), las = 1, cex.axis = 1)
-axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2, tick = F)
+points(y = c(Gamma_SS3$qD[1], Gamma_SS3$qD[2], Gamma_SS3$qD[3],Gamma_SS3$qD[4],
+             Gamma_SS3$qD[5], Gamma_SS3$qD[6]), x = c(1,2,3,5,6,7), cex = 2,
+       pch = c(15,16,17), col = c("sienna1","sienna3","sienna4","dodgerblue1",
+                                  "dodgerblue3", "dodgerblue4"))
+axis(1, at = c(1,2,3,5,6,7), labels = c("30m ","120m","480m","30m","120m","480m"),
+     las = 1, cex.axis = 1)
+axis(1, at = c(2,6), labels = c("Fishless ","Fish"), las = 1, cex.axis = 1, line = 2,
+     tick = F)
 box(lwd = 2.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/13-1.png)<!-- --> It seems
-that there is a higher gamma diversity in the intermediate isolation
-treatment for fishless ponds.
+![](Gamma-Diversity-Analyses_files/figure-gfm/13-1.png)<!-- -->
+
+It seems that there is a higher gamma diversity in the intermediate
+isolation treatment for fishless ponds.

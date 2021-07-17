@@ -7,17 +7,9 @@ These are the analyses of community size for the whole communities
 (results shown in the main papaer) and separetely to predatory and
 non-predatory insects.
 
-If you haven’t, install the package:
-
-``` r
-install.packages("devtools")
-devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
-```
-
 These are the packages you will need to run this code:
 
 ``` r
-library(Pelinson.et.al.2020B)
 library(lme4) # Version 1.1-23
 library(emmeans) # Version 1.4.8
 library(car) # Version 3.0-7
@@ -40,9 +32,12 @@ Now, lets check what probability distribution should we choose using the
 most complex model we have:
 
 ``` r
-mix_model_G <- lmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
-mix_model_P <- glmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), family = "poisson")
-mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+mix_model_G <- lmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + 
+                      (1|ID_SS2_SS3), REML = F)
+mix_model_P <- glmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + 
+                       (1|ID_SS2_SS3), family = "poisson")
+mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*
+                           SS_SS2_SS3 + (1|ID_SS2_SS3))
 ```
 
     ## Warning in glmer.nb(com_SS2_SS3_abundance ~ fish_SS2_SS3 * isolation_SS2_SS3 * :
@@ -81,7 +76,8 @@ negative binomial is the best option here.
 So we can go further analysing the data:
 
 ``` r
-mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+mix_model_NB <- glmer.nb(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*
+                           SS_SS2_SS3 + (1|ID_SS2_SS3))
 ```
 
     ## Warning in glmer.nb(com_SS2_SS3_abundance ~ fish_SS2_SS3 * isolation_SS2_SS3 * :
@@ -108,7 +104,8 @@ round(Anova(mix_model_NB, test.statistic = "Chisq"),3)
 Now pairwise differences:
 
 ``` r
-emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3),
+        adjust = "sidak")
 ```
 
     ## NOTE: Results may be misleading due to involvement in interactions
@@ -116,33 +113,33 @@ emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|fish_SS2_SS3), adjust = "sidak"
     ## $`emmeans of SS_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            4.94 0.172 Inf      4.56      5.33
-    ##  3            6.14 0.183 Inf      5.73      6.55
+    ##  2            4.94 0.172 Inf      4.61      5.28
+    ##  3            6.14 0.183 Inf      5.78      6.50
     ## 
     ## fish_SS2_SS3 = present:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            5.18 0.173 Inf      4.80      5.57
-    ##  3            5.77 0.202 Inf      5.32      6.22
+    ##  2            5.18 0.173 Inf      4.84      5.52
+    ##  3            5.77 0.202 Inf      5.38      6.17
     ## 
     ## Results are averaged over the levels of: isolation_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
     ## 
     ## $`pairwise differences of SS_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3       -1.20 0.202 Inf -5.930  <.0001 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3    -1.20 0.202 Inf  -5.930  <.0001
     ## 
     ## fish_SS2_SS3 = present:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3       -0.59 0.220 Inf -2.685  0.0073 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3    -0.59 0.220 Inf  -2.685  0.0073
     ## 
     ## Results are averaged over the levels of: isolation_SS2_SS3 
     ## Results are given on the log (not the response) scale.
 
 ``` r
-emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3),
+        adjust = "sidak")
 ```
 
     ## NOTE: Results may be misleading due to involvement in interactions
@@ -150,36 +147,35 @@ emmeans(mix_model_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "s
     ## $`emmeans of SS_SS2_SS3 | isolation_SS2_SS3`
     ## isolation_SS2_SS3 = 30:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            5.25 0.210 Inf      4.78      5.72
-    ##  3            5.65 0.238 Inf      5.12      6.18
+    ##  2            5.25 0.210 Inf      4.84      5.67
+    ##  3            5.65 0.238 Inf      5.18      6.11
     ## 
     ## isolation_SS2_SS3 = 120:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            5.09 0.213 Inf      4.62      5.57
-    ##  3            5.75 0.228 Inf      5.24      6.26
+    ##  2            5.09 0.213 Inf      4.68      5.51
+    ##  3            5.75 0.228 Inf      5.30      6.20
     ## 
     ## isolation_SS2_SS3 = 480:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            4.84 0.211 Inf      4.37      5.31
-    ##  3            6.47 0.239 Inf      5.93      7.01
+    ##  2            4.84 0.211 Inf      4.43      5.25
+    ##  3            6.47 0.239 Inf      6.00      6.94
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
     ## 
     ## $`pairwise differences of SS_SS2_SS3 | isolation_SS2_SS3`
     ## isolation_SS2_SS3 = 30:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3      -0.394 0.264 Inf -1.489  0.1365 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3   -0.394 0.264 Inf  -1.489  0.1365
     ## 
     ## isolation_SS2_SS3 = 120:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3      -0.654 0.249 Inf -2.631  0.0085 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3   -0.654 0.249 Inf  -2.631  0.0085
     ## 
     ## isolation_SS2_SS3 = 480:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3      -1.630 0.262 Inf -6.229  <.0001 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3   -1.630 0.262 Inf  -6.229  <.0001
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Results are given on the log (not the response) scale.
@@ -200,11 +196,15 @@ for(i in 1:length(All)){
   if(SS_SS2_SS3[i] == "3" & isolation_SS2_SS3[i] == "480"){isolation_SS[i] <- "3 480"}
 }
 isolation_SS <- as.factor(isolation_SS)
-isolation_SS <- factor(isolation_SS, levels = c("2 030", "3 030","2 120", "3 120","2 480", "3 480" ))
-new_All <- factor(All, levels = c("2 030 absent","3 030 absent","2 120 absent","3 120 absent","2 480 absent","3 480 absent",
-                                  "2 030 present","3 030 present","2 120 present","3 120 present","2 480 present","3 480 present"))
+isolation_SS <- factor(isolation_SS, levels = c("2 030", "3 030","2 120",
+                                                "3 120","2 480", "3 480" ))
+new_All <- factor(All, levels = c("2 030 absent","3 030 absent","2 120 absent",
+                                  "3 120 absent","2 480 absent","3 480 absent",
+                                  "2 030 present","3 030 present","2 120 present",
+                                  "3 120 present","2 480 present","3 480 present"))
 
-boxplot(com_SS2_SS3_abundance~isolation_SS, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent", xaxt="n")
+boxplot(com_SS2_SS3_abundance~isolation_SS, outline = F, ylab = "Abundance", xlab = "",
+        at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent", xaxt="n")
 mylevels <- levels(new_All)
 levelProportions <- summary(new_All)/length(com_SS2_SS3_abundance)
 col <-  c(rep(c("sienna3","grey70"),3), rep(c("dodgerblue3","grey70"),3))
@@ -221,9 +221,12 @@ for(i in 1:length(mylevels)){
   points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i], cex = 1.5, lwd = 3) 
   
 }
-axis(1,labels = c("1st", "2nd", "1st", "2nd", "1st", "2nd"), cex.axis = 0.8, at =c(1,2,4,5,7,8))
-axis(1,labels = c("30 m","120 m", "480 m"), cex.axis = 1, at =c(1.5,4.5,7.5), line = 1.5, tick = F )
-boxplot(com_SS2_SS3_abundance~isolation_SS, add = T, col = "transparent", outline = F,at = c(1,2,4,5,7,8), lwd = 1.5, xaxt="n")
+axis(1,labels = c("1st", "2nd", "1st", "2nd", "1st", "2nd"), cex.axis = 0.8,
+     at =c(1,2,4,5,7,8))
+axis(1,labels = c("30 m","120 m", "480 m"), cex.axis = 1, at =c(1.5,4.5,7.5),
+     line = 1.5, tick = F )
+boxplot(com_SS2_SS3_abundance~isolation_SS, add = T, col = "transparent", outline = F,
+        at = c(1,2,4,5,7,8), lwd = 1.5, xaxt="n")
 box(lwd = 2.5)
 ```
 
@@ -240,7 +243,9 @@ data(com_SS2_SS3_predators_abundance)
 Analysing the data:
 
 ``` r
-mix_model_predators_NB <- glmer.nb(com_SS2_SS3_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
+mix_model_predators_NB <- glmer.nb(com_SS2_SS3_predators_abundance~fish_SS2_SS3*
+                                     isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3),
+                                   control = glmerControl(optimizer = "bobyqa"))
 ```
 
     ## Warning in glmer.nb(com_SS2_SS3_predators_abundance ~ fish_SS2_SS3 *
@@ -275,20 +280,19 @@ emmeans(mix_model_predators_NB, list(pairwise ~ isolation_SS2_SS3), adjust = "si
 
     ## $`emmeans of isolation_SS2_SS3`
     ##  isolation_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  30                  4.10 0.119 Inf      3.81      4.38
-    ##  120                 3.24 0.130 Inf      2.93      3.55
-    ##  480                 2.79 0.140 Inf      2.46      3.13
+    ##  30                  4.10 0.119 Inf      3.86      4.33
+    ##  120                 3.24 0.130 Inf      2.99      3.50
+    ##  480                 2.79 0.140 Inf      2.52      3.07
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3`
-    ##  contrast  estimate    SE  df z.ratio p.value
-    ##  30 - 120     0.852 0.176 Inf 4.853   <.0001 
-    ##  30 - 480     1.302 0.183 Inf 7.100   <.0001 
-    ##  120 - 480    0.449 0.190 Inf 2.367   0.0528 
+    ##  1         estimate    SE  df z.ratio p.value
+    ##  30 - 120     0.852 0.176 Inf   4.853  <.0001
+    ##  30 - 480     1.302 0.183 Inf   7.100  <.0001
+    ##  120 - 480    0.449 0.190 Inf   2.367  0.0528
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
@@ -303,27 +307,26 @@ emmeans(mix_model_predators_NB, list(pairwise ~ fish_SS2_SS3|SS_SS2_SS3), adjust
     ## $`emmeans of fish_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
     ##  fish_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  absent         3.73 0.118 Inf      3.47      4.00
-    ##  present        2.79 0.133 Inf      2.49      3.09
+    ##  absent         3.73 0.118 Inf      3.50      3.96
+    ##  present        2.79 0.133 Inf      2.53      3.05
     ## 
     ## SS_SS2_SS3 = 3:
     ##  fish_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  absent         4.27 0.120 Inf      4.01      4.54
-    ##  present        2.71 0.159 Inf      2.36      3.07
+    ##  absent         4.27 0.120 Inf      4.04      4.51
+    ##  present        2.71 0.159 Inf      2.40      3.03
     ## 
     ## Results are averaged over the levels of: isolation_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
     ## 
     ## $`pairwise differences of fish_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
-    ##  contrast         estimate    SE  df z.ratio p.value
-    ##  absent - present    0.943 0.177 Inf 5.314   <.0001 
+    ##  2                estimate    SE  df z.ratio p.value
+    ##  absent - present    0.943 0.177 Inf   5.314  <.0001
     ## 
     ## SS_SS2_SS3 = 3:
-    ##  contrast         estimate    SE  df z.ratio p.value
-    ##  absent - present    1.561 0.199 Inf 7.851   <.0001 
+    ##  2                estimate    SE  df z.ratio p.value
+    ##  absent - present    1.561 0.199 Inf   7.851  <.0001
     ## 
     ## Results are averaged over the levels of: isolation_SS2_SS3 
     ## Results are given on the log (not the response) scale.
@@ -335,7 +338,9 @@ in the third survey) and isolation.
 Lets plot it:
 
 ``` r
-boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, ylim = c(0,170), col = "transparent", xaxt="n", main = "Predators")
+boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, outline = F,
+        ylab = "Abundance", xlab = "", at = c(1,2,3,5,6,7), lwd = 1.5, ylim = c(0,170),
+        col = "transparent", xaxt="n", main = "Predators")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(com_SS2_SS3_predators_abundance)
 col <- c(rep("sienna3",3), rep("dodgerblue3",3), rep("grey70",6))
@@ -352,8 +357,10 @@ for(i in 1:length(mylevels)){
   points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3)
 
 }
-boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, add = T, outline = F,at = c(1,2,3,5,6,7), lwd = 1.5, col = "transparent", xaxt="n")
-axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8, at =c(1,2,3,5,6,7))
+boxplot(com_SS2_SS3_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3, add = T,
+        outline = F,at = c(1,2,3,5,6,7), lwd = 1.5, col = "transparent", xaxt="n")
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8,
+     at =c(1,2,3,5,6,7))
 axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
 box(lwd = 2.5)
 ```
@@ -371,7 +378,9 @@ data(com_SS2_SS3_non_predators_abundance)
 Analysing the data:
 
 ``` r
-mix_model_non_predators_NB <- glmer.nb(com_SS2_SS3_non_predators_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = glmerControl(optimizer = "bobyqa"))
+mix_model_non_predators_NB <- glmer.nb(com_SS2_SS3_non_predators_abundance~fish_SS2_SS3*
+                                         isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3),
+                                       control = glmerControl(optimizer = "bobyqa"))
 ```
 
     ## Warning in glmer.nb(com_SS2_SS3_non_predators_abundance ~ fish_SS2_SS3 * : no
@@ -398,7 +407,8 @@ round(Anova(mix_model_non_predators_NB, test.statistic = "Chisq"),3)
 Now pairwise differences:
 
 ``` r
-emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3), adjust = "sidak")
+emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3),
+        adjust = "sidak")
 ```
 
     ## NOTE: Results may be misleading due to involvement in interactions
@@ -406,36 +416,35 @@ emmeans(mix_model_non_predators_NB, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3
     ## $`emmeans of SS_SS2_SS3 | isolation_SS2_SS3`
     ## isolation_SS2_SS3 = 30:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            4.91 0.263 Inf      4.32      5.50
-    ##  3            5.30 0.353 Inf      4.51      6.08
+    ##  2            4.91 0.263 Inf      4.39      5.43
+    ##  3            5.30 0.353 Inf      4.60      5.99
     ## 
     ## isolation_SS2_SS3 = 120:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            4.89 0.276 Inf      4.28      5.51
-    ##  3            5.71 0.292 Inf      5.05      6.36
+    ##  2            4.89 0.276 Inf      4.35      5.44
+    ##  3            5.71 0.292 Inf      5.13      6.28
     ## 
     ## isolation_SS2_SS3 = 480:
     ##  SS_SS2_SS3 emmean    SE  df asymp.LCL asymp.UCL
-    ##  2            4.70 0.265 Inf      4.10      5.29
-    ##  3            6.46 0.306 Inf      5.78      7.15
+    ##  2            4.70 0.265 Inf      4.18      5.21
+    ##  3            6.46 0.306 Inf      5.86      7.06
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Results are given on the log (not the response) scale. 
     ## Confidence level used: 0.95 
-    ## Conf-level adjustment: sidak method for 2 estimates 
     ## 
     ## $`pairwise differences of SS_SS2_SS3 | isolation_SS2_SS3`
     ## isolation_SS2_SS3 = 30:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3      -0.385 0.405 Inf -0.949  0.3424 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3   -0.385 0.405 Inf  -0.949  0.3424
     ## 
     ## isolation_SS2_SS3 = 120:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3      -0.813 0.355 Inf -2.291  0.0220 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3   -0.813 0.355 Inf  -2.291  0.0220
     ## 
     ## isolation_SS2_SS3 = 480:
-    ##  contrast estimate    SE  df z.ratio p.value
-    ##  2 - 3      -1.766 0.372 Inf -4.751  <.0001 
+    ##  2     estimate    SE  df z.ratio p.value
+    ##  2 - 3   -1.766 0.372 Inf  -4.751  <.0001
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Results are given on the log (not the response) scale.
@@ -446,7 +455,9 @@ community.
 Lets plot it:
 
 ``` r
-boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, outline = F, ylab = "Abundance", xlab = "", at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent", xaxt="n", main = "Non-Predators")
+boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, outline = F, ylab = "Abundance",
+        xlab = "", at = c(1,2,4,5,7,8), lwd = 1.5, ylim = c(0,1400), col = "transparent",
+        xaxt="n", main = "Non-Predators")
 mylevels <- levels(new_All)
 levelProportions <- summary(new_All)/length(com_SS2_SS3_non_predators_abundance)
 col <-  c(rep(c("sienna3","grey70"),3), rep(c("dodgerblue3","grey70"),3))
@@ -463,9 +474,12 @@ for(i in 1:length(mylevels)){
   points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i], cex = 1.5, lwd = 3) 
   
 }
-axis(1,labels = c("1st", "2nd", "1st", "2nd", "1st", "2nd"), cex.axis = 0.8, at =c(1,2,4,5,7,8))
-axis(1,labels = c("30 m","120 m", "480 m"), cex.axis = 1, at =c(1.5,4.5,7.5), line = 1.5, tick = F )
-boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, add = T, col = "transparent", outline = F,at = c(1,2,4,5,7,8), lwd = 1.5, xaxt="n")
+axis(1,labels = c("1st", "2nd", "1st", "2nd", "1st", "2nd"), cex.axis = 0.8,
+     at =c(1,2,4,5,7,8))
+axis(1,labels = c("30 m","120 m", "480 m"), cex.axis = 1, at =c(1.5,4.5,7.5), line = 1.5,
+     tick = F )
+boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS, add = T, col = "transparent",
+        outline = F,at = c(1,2,4,5,7,8), lwd = 1.5, xaxt="n")
 box(lwd = 2.5)
 ```
 
