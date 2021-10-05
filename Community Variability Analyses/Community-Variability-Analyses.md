@@ -604,3 +604,299 @@ box(lwd = 2.5)
 ```
 
 ![](Community-Variability-Analyses_files/figure-gfm/plot_deviation-1.png)<!-- -->
+
+#### Observed Environmental Variability
+
+\#\#\#\#Multivariate effect of Environmental Variability
+
+``` r
+env_data_SS2_SS3_st <- decostand(env_data_SS2_SS3, method = "stand", na.rm = TRUE)
+
+env_data_SS2_SS3_dist <- vegdist(env_data_SS2_SS3_st, method = "euclidean", na.rm = TRUE)
+
+betadisper_SS2_SS3 <- betadisper(env_data_SS2_SS3_dist, group = All)
+
+
+fit_observed_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
+                               isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+
+round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
+```
+
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
+    ## 
+    ## Response: betadisper_SS2_SS3$distances
+    ##                                           Chisq Df Pr(>Chisq)
+    ## fish_SS2_SS3                              1.823  1      0.177
+    ## isolation_SS2_SS3                         0.091  2      0.956
+    ## SS_SS2_SS3                                1.812  1      0.178
+    ## fish_SS2_SS3:isolation_SS2_SS3            0.306  2      0.858
+    ## fish_SS2_SS3:SS_SS2_SS3                   0.618  1      0.432
+    ## isolation_SS2_SS3:SS_SS2_SS3              2.555  2      0.279
+    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 0.203  2      0.904
+
+``` r
+fit_observed_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
+round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+```
+
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
+    ## 
+    ## Response: beta_deviation_SS2_SS3$observed_distances
+    ##                              Chisq Df Pr(>Chisq)
+    ## betadisper_SS2_SS3$distances 1.621  1      0.203
+
+``` r
+fit_deviation_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
+round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+```
+
+    ## Analysis of Deviance Table (Type II Wald chisquare tests)
+    ## 
+    ## Response: beta_deviation_SS2_SS3$observed_distances
+    ##                              Chisq Df Pr(>Chisq)
+    ## betadisper_SS2_SS3$distances 1.621  1      0.203
+
+``` r
+boxplot(betadisper_SS2_SS3$distances~isolation_SS2_SS3*fish_SS2_SS3,
+        outline = F, ylab = "Distance to Centroid (Environmental Variability)", xlab = "",
+        at = c(1,2,3,5,6,7),ylim = c(0,5), lwd = 1.5, col = "transparent", xaxt="n")
+mylevels <- levels(All)
+levelProportions <- summary(All)/length(betadisper_SS2_SS3$distances)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3), rep("grey70",6))
+bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(15,16,17,15,16,17,22,21,24,22,21,24)
+for(i in 1:length(mylevels)){
+  
+  x<- c(1,2,3,5,6,7,1,2,3,5,6,7)[i]
+  thislevel <- mylevels[i]
+  thisvalues <- betadisper_SS2_SS3$distances[All==thislevel]
+  
+  # take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3) 
+  
+}
+boxplot(betadisper_SS2_SS3$distances~isolation_SS2_SS3*fish_SS2_SS3,
+        add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7),
+        lwd = 1.5, xaxt="n")
+axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8,
+     at =c(1,2,3,5,6,7))
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+box(lwd = 2.5)
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+
+``` r
+par(mfrow = c(1,2))
+plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Distance to Centroid (Observed Comm. Variability)", xlab = "Distance to Centroid (Environmental Variability)")
+
+plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Beta Deviation", xlab = "Distance to Centroid (Environmental Variability)")
+abline(h = 0, lty = 2, col = "grey50", lwd = 2)
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/plot_env-1.png)<!-- -->
+
+\#\#\#\#Univariate effect of Environmental Variability
+
+First, we have to built a matrix with all univariate distances, that is,
+how much each observation of each variable differs from its treatment
+mean.
+
+``` r
+distances_env_uni <- data.frame(matrix(NA, ncol = ncol(env_data_SS2_SS3_st), nrow = nrow(env_data_SS2_SS3_st)))
+for(i in 1:ncol(env_data_SS2_SS3_st)){
+  if(anyNA(env_data_SS2_SS3_st[,i])){
+     na_position <- match(NA, env_data_SS2_SS3_st[,i]) 
+     distances_env_uni_dist <- vegdist(env_data_SS2_SS3_st[-na_position,i], method = "euclidean", na.rm = FALSE)
+     betadisper_env_uni <- betadisper(distances_env_uni_dist, group = All[-na_position])
+     distances <- betadisper_env_uni$distances
+     distances <- append(distances, NA, after=na_position)
+     distances_env_uni[,i] <- distances
+  }else{
+    distances_env_uni_dist <- vegdist(env_data_SS2_SS3_st[,i], method = "euclidean", na.rm = FALSE)
+    betadisper_env_uni <- betadisper(distances_env_uni_dist, group = All)
+    distances_env_uni[,i] <- betadisper_env_uni$distances
+  }
+}
+colnames(distances_env_uni) <- colnames(env_data_SS2_SS3_st)
+```
+
+Now we can run ANOVAS for each environmental variable
+
+``` r
+uni_anova_env <- data.frame(matrix(NA, ncol = ncol(distances_env_uni), nrow = 7))
+for(i in 1:ncol(distances_env_uni)){
+  fit <- lmer(distances_env_uni[,i]~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+  uni_anova_env[,i] <- round(Anova(fit, test.statistic = "Chisq"),3)$`Pr(>Chisq)`
+}
+```
+
+    ## boundary (singular) fit: see ?isSingular
+    ## boundary (singular) fit: see ?isSingular
+    ## boundary (singular) fit: see ?isSingular
+
+``` r
+rownames(uni_anova_env) <- c("fish", "isolation", "survey", "fish:isolation", "fish:survey", "isolation:survey","fish:isolation:survey")
+colnames(uni_anova_env) <- colnames(distances_env_uni)
+uni_anova_env
+```
+
+    ##                       depth conductivity    ph    do turbidity clorophylla_a
+    ## fish                  0.723        0.393 0.129 0.221     0.054         0.915
+    ## isolation             0.389        0.381 0.125 0.447     0.262         0.267
+    ## survey                0.179        0.313 0.020 0.609     0.303         0.075
+    ## fish:isolation        0.857        0.434 0.011 0.978     0.800         0.875
+    ## fish:survey           0.484        0.333 0.523 0.180     0.242         0.552
+    ## isolation:survey      0.349        0.426 0.058 0.923     0.678         0.280
+    ## fish:isolation:survey 0.615        0.492 0.519 0.040     0.787         0.659
+    ##                       phycocyanin canopy
+    ## fish                        0.235  0.435
+    ## isolation                   0.265  0.206
+    ## survey                      0.134  0.458
+    ## fish:isolation              0.940  0.060
+    ## fish:survey                 0.974  0.831
+    ## isolation:survey            0.518  0.935
+    ## fish:isolation:survey       0.845  0.681
+
+Because we are blindly looking for an effect without previous hypothesis
+for specific variables, it is important to correct p values of each main
+and interactive effect for multiple comparisons.
+
+``` r
+uni_anova_env_adjusted_p <- uni_anova_env
+for(i in 1:nrow(uni_anova_env)){
+  uni_anova_env_adjusted_p[i,] <- p.adjust(uni_anova_env_adjusted_p[i,], method = "fdr") 
+}
+uni_anova_env_adjusted_p
+```
+
+    ##                           depth conductivity     ph    do turbidity
+    ## fish                  0.8262857    0.5800000 0.4700 0.470 0.4320000
+    ## isolation             0.4445714    0.4445714 0.4272 0.447 0.4272000
+    ## survey                0.3580000    0.4173333 0.1600 0.609 0.4173333
+    ## fish:isolation        0.9780000    0.9780000 0.0880 0.978 0.9780000
+    ## fish:survey           0.7360000    0.7360000 0.7360 0.736 0.7360000
+    ## isolation:survey      0.8288000    0.8288000 0.4640 0.935 0.9040000
+    ## fish:isolation:survey 0.8450000    0.8450000 0.8450 0.320 0.8450000
+    ##                       clorophylla_a phycocyanin    canopy
+    ## fish                         0.9150   0.4700000 0.5800000
+    ## isolation                    0.4272   0.4272000 0.4272000
+    ## survey                       0.3000   0.3573333 0.5234286
+    ## fish:isolation               0.9780   0.9780000 0.2400000
+    ## fish:survey                  0.7360   0.9740000 0.9497143
+    ## isolation:survey             0.8288   0.8288000 0.9350000
+    ## fish:isolation:survey        0.8450   0.8450000 0.8450000
+
+Plotting it.
+
+``` r
+par(mfrow = c(4,2))
+for(j in 1:ncol(distances_env_uni)){
+  boxplot(distances_env_uni[,j]~isolation_SS2_SS3*fish_SS2_SS3,
+          outline = F, ylab = "Variability", xlab = "",
+          at = c(1,2,3,5,6,7), ylim = c(0,max(na.omit(distances_env_uni[,j]))*1.1), lwd = 1, col = "transparent", xaxt="n", main = paste(colnames(distances_env_uni)[j]))
+  mylevels <- levels(All)
+  levelProportions <- summary(All)/length(distances_env_uni[,j])
+  col <- c(rep("sienna3",3), rep("dodgerblue3",3), rep("grey70",6))
+  bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+  pch <- c(15,16,17,15,16,17,22,21,24,22,21,24)
+  for(i in 1:length(mylevels)){
+    
+    x<- c(1,2,3,5,6,7,1,2,3,5,6,7)[i]
+    thislevel <- mylevels[i]
+    thisvalues <- distances_env_uni[,j][All==thislevel]
+    
+    # take the x-axis indices and add a jitter, proportional to the N in each level
+    myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
+    points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3) 
+    
+  }
+  boxplot(distances_env_uni[,j]~isolation_SS2_SS3*fish_SS2_SS3,
+          add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7),
+          lwd = 1, xaxt="n")
+  axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8,
+       at =c(1,2,3,5,6,7))
+  axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+}
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+
+Lets also check if any if the variability in any of those variables have
+an effect on observed community variability…
+
+``` r
+uni_anova_env_com <- data.frame(matrix(NA, nrow = ncol(distances_env_uni), ncol = 3))
+for(i in 1:ncol(distances_env_uni)){
+  fit <- lmer(beta_deviation_SS2_SS3$observed_distances ~ distances_env_uni[,i] + (1|ID_SS2_SS3))
+  uni_anova_env_com[i,1] <- fit@beta[2]
+  uni_anova_env_com[i,2] <- round(Anova(fit, test.statistic = "Chisq"),3)$`Pr(>Chisq)`
+}
+uni_anova_env_com[,3] <- p.adjust(uni_anova_env_com[,2], method = "fdr") 
+rownames(uni_anova_env_com) <- colnames(env_data_SS2_SS3_st)
+colnames(uni_anova_env_com) <- c("estimate","p","adjust.p")
+uni_anova_env_com
+```
+
+    ##                   estimate     p  adjust.p
+    ## depth          0.061860693 0.015 0.1200000
+    ## conductivity   0.001619571 0.935 0.9350000
+    ## ph             0.022181534 0.598 0.6834286
+    ## do             0.023335011 0.519 0.6834286
+    ## turbidity      0.023246876 0.432 0.6834286
+    ## clorophylla_a  0.023786955 0.273 0.6834286
+    ## phycocyanin    0.032000975 0.215 0.6834286
+    ## canopy        -0.016881286 0.574 0.6834286
+
+and beta deviation
+
+``` r
+uni_anova_env_dev <- data.frame(matrix(NA, nrow = ncol(distances_env_uni), ncol = 3))
+for(i in 1:ncol(distances_env_uni)){
+  fit <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ distances_env_uni[,i] + (1|ID_SS2_SS3))
+  uni_anova_env_dev[i,1] <- fit@beta[2]
+  uni_anova_env_dev[i,2] <- round(Anova(fit, test.statistic = "Chisq"),3)$`Pr(>Chisq)`
+}
+uni_anova_env_dev[,3] <- p.adjust(uni_anova_env_dev[,2], method = "fdr") 
+rownames(uni_anova_env_dev) <- colnames(env_data_SS2_SS3_st)
+colnames(uni_anova_env_dev) <- c("estimate","p","adjust.p")
+uni_anova_env_dev
+```
+
+    ##                  estimate     p  adjust.p
+    ## depth          0.35781642 0.358 0.7160000
+    ## conductivity   0.12249765 0.672 0.7680000
+    ## ph             0.33688171 0.577 0.7680000
+    ## do             0.96495138 0.057 0.2960000
+    ## turbidity     -0.05039154 0.905 0.9050000
+    ## clorophylla_a  0.55212446 0.074 0.2960000
+    ## phycocyanin    0.25382971 0.498 0.7680000
+    ## canopy        -0.58733323 0.130 0.3466667
+
+We can plot it.
+
+``` r
+par(mfrow = c(4,2))
+for(i in 1:ncol(distances_env_uni)){
+  plot(beta_deviation_SS2_SS3$observed_distances ~ distances_env_uni[,i],
+       pch = 16, ylab = "Observed Comm. Variability",
+       xlab = "Environmental Variability", main = paste(colnames(distances_env_uni)[i]))
+  
+}
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+``` r
+par(mfrow = c(4,2))
+for(i in 1:ncol(distances_env_uni)){
+  plot(beta_deviation_SS2_SS3$deviation_distances ~ distances_env_uni[,i],
+       pch = 16, ylab = "Beta Deviation",
+       xlab = "Environmental Variability", main = paste(colnames(distances_env_uni)[i]))
+  
+}
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
