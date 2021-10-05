@@ -344,3 +344,89 @@
 #' @format Factor w/ 3 levels: "030","120","480", and 20 observations
 #' @source {Experimental Data}
 "fish_isolation_SS3"
+
+
+#' Environmental variables in all surveys
+#'
+#' @format A data frame with 72 rows or 'observations' and 10 variables:
+#' \describe{
+#'   \item{pond}{Pond IDs}
+#'   \item{survey}{One of the three surveys}
+#'   \item{depth}{Average depth (cm) of each pond}
+#'   \item{conductivity}{Water conductivity of each pond in each survey}
+#'   \item{ph}{Water pH in each pond in each survey}
+#'   \item{do}{Dissolved Oxygen (mg/L) in each pond in each survey}
+#'   \item{turbidity}{Water turbidity (NTU) in each pond in each survey}
+#'   \item{clorophylla_a}{Clorophylla-a values in each pond in each survey}
+#'   \item{phycocyanin}{Phycocyanin values in each pond in each survey}
+#'   \item{canopy}{Average canopy cover value (%) in each pond in each survey}
+#' }
+#' @source {Experimental Data}
+"env_data_all"
+
+
+
+#' Environmental variables in the first survey
+#'
+#' @format A data frame with 24 rows or 'observations' and 8 variables:
+#' \describe{
+#'   \item{depth}{Average depth (cm) of each pond}
+#'   \item{conductivity}{Water conductivity of each pond}
+#'   \item{ph}{Water pH in each pond}
+#'   \item{do}{Dissolved Oxygen (mg/L) in each pond}
+#'   \item{turbidity}{Water turbidity (NTU) in each pond}
+#'   \item{clorophylla_a}{Clorophylla-a values in each pond}
+#'   \item{phycocyanin}{Phycocyanin values in each pond}
+#'   \item{canopy}{Average canopy cover value (%) in each pond}
+#' }
+#' @source {Experimental Data}
+"env_data_SS1"
+
+#' Environmental variables in the second survey
+#'
+#' @format A data frame with 24 rows or 'observations' and 8 variables:
+#' \describe{
+#'   \item{depth}{Average depth (cm) of each pond}
+#'   \item{conductivity}{Water conductivity of each pond}
+#'   \item{ph}{Water pH in each pond}
+#'   \item{do}{Dissolved Oxygen (mg/L) in each pond}
+#'   \item{turbidity}{Water turbidity (NTU) in each pond}
+#'   \item{clorophylla_a}{Clorophylla-a values in each pond}
+#'   \item{phycocyanin}{Phycocyanin values in each pond}
+#'   \item{canopy}{Average canopy cover value (%) in each pond}
+#' }
+#' @source {Experimental Data}
+"env_data_SS2"
+
+#' Environmental variables in the third survey
+#'
+#' @format A data frame with 20 rows or 'observations' and 8 variables:
+#' \describe{
+#'   \item{depth}{Average depth (cm) of each pond}
+#'   \item{conductivity}{Water conductivity of each pond}
+#'   \item{ph}{Water pH in each pond}
+#'   \item{do}{Dissolved Oxygen (mg/L) in each pond}
+#'   \item{turbidity}{Water turbidity (NTU) in each pond}
+#'   \item{clorophylla_a}{Clorophylla-a values in each pond}
+#'   \item{phycocyanin}{Phycocyanin values in each pond}
+#'   \item{canopy}{Average canopy cover value (%) in each pond}
+#' }
+#' @source {Experimental Data}
+"env_data_SS3"
+
+
+#' Environmental variables in the second and third surveys
+#'
+#' @format A data frame with 20 rows or 'observations' and 8 variables:
+#' \describe{
+#'   \item{depth}{Average depth (cm) of each pond}
+#'   \item{conductivity}{Water conductivity of each pond}
+#'   \item{ph}{Water pH in each pond}
+#'   \item{do}{Dissolved Oxygen (mg/L) in each pond}
+#'   \item{turbidity}{Water turbidity (NTU) in each pond}
+#'   \item{clorophylla_a}{Clorophylla-a values in each pond}
+#'   \item{phycocyanin}{Phycocyanin values in each pond}
+#'   \item{canopy}{Average canopy cover value (%) in each pond}
+#' }
+#' @source {Experimental Data}
+"env_data_SS2_SS3"
