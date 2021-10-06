@@ -662,7 +662,8 @@ everything seems ok.
 running anovas for each of those models
 
 ``` r
-round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
+anova_env <- round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
+anova_env
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
@@ -678,7 +679,8 @@ round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
     ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 0.203  2      0.904
 
 ``` r
-round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_observed_env <- round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_observed_env
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
@@ -688,7 +690,8 @@ round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
     ## betadisper_SS2_SS3$distances 1.621  1      0.203
 
 ``` r
-round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_deviation_env <- round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_deviation_env
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)

@@ -274,11 +274,14 @@ everything seems ok.
 
 running anovas for each of those models
 ```{r, dpi = 150, fig.height=5, fig.width=10}
-round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
+anova_env <- round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
+anova_env
 
-round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_observed_env <- round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_observed_env
 
-round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_deviation_env <- round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "Chisq"),3)
+anova_deviation_env
 ```
 It seems that there is no evidence of any kind of effect of treatments on environmental variabiliy or of environmental variability on community variability or beta deviation
 
