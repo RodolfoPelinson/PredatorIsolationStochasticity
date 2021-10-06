@@ -8,10 +8,13 @@ This is the community variability analyses presented in the main paper.
 These are the packages you will need to run this code:
 
 ``` r
+library(PredatorIsolationStochasticity)
+
 library(lme4) # Version 1.1-23
 library(car) # Version 3.0-7
 library(emmeans) # Version 1.4.8
 library(vegan) # Version 2.5-6
+library(DHARMa) # Version 0.3.3.0
 ```
 
 ## Community Variability
@@ -44,52 +47,37 @@ and deviations.
 ``` r
 fit_observed_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$observed_distances~fish_SS2_SS3*
                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-plot(fit_observed_SS2_SS3_G)
+
+resid_observed <- simulateResiduals(fit_observed_SS2_SS3_G)
+plot(resid_observed)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/checking_distribution-1.png)<!-- -->
-
-``` r
-qqnorm(resid(fit_observed_SS2_SS3_G, type = "pearson"))
-qqline(resid(fit_observed_SS2_SS3_G, type = "pearson"))
-```
-
-![](Community-Variability-Analyses_files/figure-gfm/checking_distribution-2.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/checking%20distribution-1.png)<!-- -->
 
 ``` r
 fit_expected_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*
-                                 isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
+                                 isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), 
+                               control = lmerControl(optimizer = c("bobyqa"), restart_edge = TRUE, boundary.tol = 1e-10))
 ```
 
     ## boundary (singular) fit: see ?isSingular
 
 ``` r
-plot(fit_expected_SS2_SS3_G)
+resid_expected <- simulateResiduals(fit_expected_SS2_SS3_G)
+plot(resid_expected)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/checking_distribution-3.png)<!-- -->
-
-``` r
-qqnorm(resid(fit_expected_SS2_SS3_G, type = "pearson"))
-qqline(resid(fit_expected_SS2_SS3_G, type = "pearson"))
-```
-
-![](Community-Variability-Analyses_files/figure-gfm/checking_distribution-4.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/checking%20distribution-2.png)<!-- -->
 
 ``` r
 fit_deviation_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*
-                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
-plot(fit_deviation_SS2_SS3_G)
+                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+
+resid_deviation <- simulateResiduals(fit_deviation_SS2_SS3_G)
+plot(resid_deviation)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/checking_distribution-5.png)<!-- -->
-
-``` r
-qqnorm(resid(fit_deviation_SS2_SS3_G, type = "pearson"))
-qqline(resid(fit_deviation_SS2_SS3_G, type = "pearson"))
-```
-
-![](Community-Variability-Analyses_files/figure-gfm/checking_distribution-6.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/checking%20distribution-3.png)<!-- -->
 Residual plots are not perfect, but they also does not seem too bad.
 
 #### Observed Community Variability
@@ -100,6 +88,7 @@ observed beta-diversity/community variability in each treatment.
 ``` r
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$observed_distances~fish_SS2_SS3*
                                isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+
 round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
@@ -127,32 +116,33 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3),
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.322 0.0395 15.3    0.238    0.406
-    ##  120                0.450 0.0395 15.3    0.366    0.534
-    ##  480                0.425 0.0424 17.9    0.336    0.514
+    ##  30                 0.322 0.0395 15.3    0.216    0.428
+    ##  120                0.450 0.0395 15.3    0.344    0.556
+    ##  480                0.425 0.0424 17.9    0.313    0.537
     ## 
     ## fish_SS2_SS3 = present:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.479 0.0424 17.9    0.390    0.568
-    ##  120                0.329 0.0424 17.9    0.240    0.418
-    ##  480                0.269 0.0424 17.9    0.179    0.358
+    ##  30                 0.479 0.0424 17.9    0.367    0.591
+    ##  120                0.329 0.0424 17.9    0.217    0.441
+    ##  480                0.269 0.0424 17.9    0.157    0.380
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
-    ##  2         estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.1280 0.0559 15.3  -2.291  0.1056
-    ##  30 - 480   -0.1029 0.0580 16.6  -1.776  0.2565
-    ##  120 - 480   0.0250 0.0580 16.6   0.432  0.9645
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120   -0.1280 0.0559 15.3 -2.291  0.1056 
+    ##  30 - 480   -0.1029 0.0580 16.6 -1.776  0.2565 
+    ##  120 - 480   0.0250 0.0580 16.6  0.432  0.9645 
     ## 
     ## fish_SS2_SS3 = present:
-    ##  2         estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.1499 0.0600 17.9   2.499  0.0659
-    ##  30 - 480    0.2105 0.0600 17.9   3.509  0.0076
-    ##  120 - 480   0.0606 0.0600 17.9   1.010  0.6938
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.1499 0.0600 17.9  2.499  0.0659 
+    ##  30 - 480    0.2105 0.0600 17.9  3.509  0.0076 
+    ##  120 - 480   0.0606 0.0600 17.9  1.010  0.6938 
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
@@ -168,32 +158,33 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3),
     ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.340 0.0362 31.0    0.266    0.413
-    ##  120                0.424 0.0362 31.0    0.350    0.498
-    ##  480                0.311 0.0362 31.0    0.237    0.385
+    ##  30                 0.340 0.0362 31.0    0.248    0.431
+    ##  120                0.424 0.0362 31.0    0.333    0.515
+    ##  480                0.311 0.0362 31.0    0.220    0.403
     ## 
     ## SS_SS2_SS3 = 3:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.461 0.0394 31.5    0.381    0.542
-    ##  120                0.355 0.0394 31.5    0.275    0.435
-    ##  480                0.382 0.0423 31.8    0.296    0.468
+    ##  30                 0.461 0.0394 31.5    0.362    0.561
+    ##  120                0.355 0.0394 31.5    0.256    0.454
+    ##  480                0.382 0.0423 31.8    0.276    0.489
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
-    ##  2         estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.0843 0.0512 31.0  -1.646  0.2948
-    ##  30 - 480    0.0284 0.0512 31.0   0.554  0.9277
-    ##  120 - 480   0.1127 0.0512 31.0   2.200  0.1024
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120   -0.0843 0.0512 31.0 -1.646  0.2948 
+    ##  30 - 480    0.0284 0.0512 31.0  0.554  0.9277 
+    ##  120 - 480   0.1127 0.0512 31.0  2.200  0.1024 
     ## 
     ## SS_SS2_SS3 = 3:
-    ##  2         estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.1062 0.0557 31.5   1.908  0.1841
-    ##  30 - 480    0.0792 0.0578 31.7   1.370  0.4490
-    ##  120 - 480  -0.0270 0.0578 31.7  -0.468  0.9546
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.1062 0.0557 31.5  1.908  0.1841 
+    ##  30 - 480    0.0792 0.0578 31.7  1.370  0.4490 
+    ##  120 - 480  -0.0270 0.0578 31.7 -0.468  0.9546 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
@@ -209,35 +200,36 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3),
     ## $`emmeans of SS_SS2_SS3 | isolation_SS2_SS3`
     ## isolation_SS2_SS3 = 30:
     ##  SS_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  2           0.340 0.0362 31.0    0.266    0.413
-    ##  3           0.461 0.0394 31.5    0.381    0.542
+    ##  2           0.340 0.0362 31.0    0.255    0.425
+    ##  3           0.461 0.0394 31.5    0.369    0.554
     ## 
     ## isolation_SS2_SS3 = 120:
     ##  SS_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  2           0.424 0.0362 31.0    0.350    0.498
-    ##  3           0.355 0.0394 31.5    0.275    0.435
+    ##  2           0.424 0.0362 31.0    0.339    0.509
+    ##  3           0.355 0.0394 31.5    0.263    0.448
     ## 
     ## isolation_SS2_SS3 = 480:
     ##  SS_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  2           0.311 0.0362 31.0    0.237    0.385
-    ##  3           0.382 0.0423 31.8    0.296    0.468
+    ##  2           0.311 0.0362 31.0    0.226    0.396
+    ##  3           0.382 0.0423 31.8    0.283    0.482
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 2 estimates 
     ## 
     ## $`pairwise differences of SS_SS2_SS3 | isolation_SS2_SS3`
     ## isolation_SS2_SS3 = 30:
-    ##  2     estimate     SE   df t.ratio p.value
-    ##  2 - 3  -0.1218 0.0486 15.8  -2.505  0.0236
+    ##  contrast estimate     SE   df t.ratio p.value
+    ##  2 - 3     -0.1218 0.0486 15.8 -2.505  0.0236 
     ## 
     ## isolation_SS2_SS3 = 120:
-    ##  2     estimate     SE   df t.ratio p.value
-    ##  2 - 3   0.0687 0.0486 15.8   1.414  0.1769
+    ##  contrast estimate     SE   df t.ratio p.value
+    ##  2 - 3      0.0687 0.0486 15.8  1.414  0.1769 
     ## 
     ## isolation_SS2_SS3 = 480:
-    ##  2     estimate     SE   df t.ratio p.value
-    ##  2 - 3  -0.0710 0.0510 16.8  -1.391  0.1823
+    ##  contrast estimate     SE   df t.ratio p.value
+    ##  2 - 3     -0.0710 0.0510 16.8 -1.391  0.1823 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger
@@ -286,6 +278,8 @@ expected beta-diversity/community variability in each treatment.
 
 ``` r
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
+
+
 round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
@@ -310,19 +304,20 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3),
 
     ## $`emmeans of isolation_SS2_SS3`
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.374 0.0255 16.2    0.320    0.428
-    ##  120                0.347 0.0255 16.2    0.293    0.401
-    ##  480                0.278 0.0266 17.4    0.222    0.334
+    ##  30                 0.374 0.0255 16.2    0.306    0.442
+    ##  120                0.347 0.0255 16.2    0.279    0.415
+    ##  480                0.278 0.0266 17.4    0.208    0.348
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3`
-    ##  1         estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.0272 0.0361 16.2   0.755  0.8434
-    ##  30 - 480    0.0962 0.0369 16.8   2.611  0.0541
-    ##  120 - 480   0.0690 0.0369 16.8   1.872  0.2181
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.0272 0.0361 16.2 0.755   0.8434 
+    ##  30 - 480    0.0962 0.0369 16.8 2.611   0.0541 
+    ##  120 - 480   0.0690 0.0369 16.8 1.872   0.2181 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3, SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
@@ -336,32 +331,33 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3),
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.316 0.0345 14.9    0.243    0.390
-    ##  120                0.353 0.0345 14.9    0.280    0.427
-    ##  480                0.329 0.0376 17.4    0.250    0.409
+    ##  30                 0.316 0.0345 14.9    0.224    0.409
+    ##  120                0.353 0.0345 14.9    0.260    0.446
+    ##  480                0.329 0.0376 17.4    0.230    0.429
     ## 
     ## fish_SS2_SS3 = present:
     ##  isolation_SS2_SS3 emmean     SE   df lower.CL upper.CL
-    ##  30                 0.432 0.0376 17.4    0.352    0.511
-    ##  120                0.340 0.0376 17.4    0.261    0.420
-    ##  480                0.226 0.0376 17.4    0.147    0.305
+    ##  30                 0.432 0.0376 17.4    0.332    0.531
+    ##  120                0.340 0.0376 17.4    0.241    0.440
+    ##  480                0.226 0.0376 17.4    0.127    0.325
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
-    ##  2         estimate     SE   df t.ratio p.value
-    ##  30 - 120   -0.0368 0.0488 14.9  -0.755  0.8444
-    ##  30 - 480   -0.0130 0.0510 16.2  -0.256  0.9922
-    ##  120 - 480   0.0238 0.0510 16.2   0.465  0.9563
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120   -0.0368 0.0488 14.9 -0.755  0.8444 
+    ##  30 - 480   -0.0130 0.0510 16.2 -0.256  0.9922 
+    ##  120 - 480   0.0238 0.0510 16.2  0.465  0.9563 
     ## 
     ## fish_SS2_SS3 = present:
-    ##  2         estimate     SE   df t.ratio p.value
-    ##  30 - 120    0.0913 0.0532 17.4   1.716  0.2805
-    ##  30 - 480    0.2055 0.0532 17.4   3.863  0.0036
-    ##  120 - 480   0.1142 0.0532 17.4   2.147  0.1322
+    ##  contrast  estimate     SE   df t.ratio p.value
+    ##  30 - 120    0.0913 0.0532 17.4  1.716  0.2805 
+    ##  30 - 480    0.2055 0.0532 17.4  3.863  0.0036 
+    ##  120 - 480   0.1142 0.0532 17.4  2.147  0.1322 
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
@@ -375,32 +371,33 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3),
     ## $`emmeans of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
     ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
-    ##  30                 0.287 0.0345 32    0.217    0.357
-    ##  120                0.392 0.0345 32    0.322    0.462
-    ##  480                0.235 0.0345 32    0.165    0.305
+    ##  30                 0.287 0.0345 32    0.200    0.374
+    ##  120                0.392 0.0345 32    0.305    0.479
+    ##  480                0.235 0.0345 32    0.148    0.322
     ## 
     ## SS_SS2_SS3 = 3:
     ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
-    ##  30                 0.461 0.0376 32    0.385    0.538
-    ##  120                0.302 0.0376 32    0.225    0.378
-    ##  480                0.321 0.0405 32    0.238    0.403
+    ##  30                 0.461 0.0376 32    0.366    0.556
+    ##  120                0.302 0.0376 32    0.207    0.396
+    ##  480                0.321 0.0405 32    0.219    0.423
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3 | SS_SS2_SS3`
     ## SS_SS2_SS3 = 2:
-    ##  2         estimate     SE df t.ratio p.value
-    ##  30 - 120   -0.1051 0.0488 32  -2.155  0.1120
-    ##  30 - 480    0.0520 0.0488 32   1.067  0.6482
-    ##  120 - 480   0.1571 0.0488 32   3.221  0.0088
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   -0.1051 0.0488 32 -2.155  0.1120 
+    ##  30 - 480    0.0520 0.0488 32  1.067  0.6482 
+    ##  120 - 480   0.1571 0.0488 32  3.221  0.0088 
     ## 
     ## SS_SS2_SS3 = 3:
-    ##  2         estimate     SE df t.ratio p.value
-    ##  30 - 120    0.1595 0.0532 32   2.999  0.0155
-    ##  30 - 480    0.1405 0.0553 32   2.541  0.0476
-    ##  120 - 480  -0.0191 0.0553 32  -0.345  0.9808
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120    0.1595 0.0532 32  2.999  0.0155 
+    ##  30 - 480    0.1405 0.0553 32  2.541  0.0476 
+    ##  120 - 480  -0.0191 0.0553 32 -0.345  0.9808 
     ## 
     ## Results are averaged over the levels of: fish_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
@@ -414,55 +411,56 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
     ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
-    ##  30                 0.271 0.0488 32   0.1717    0.370
-    ##  120                0.346 0.0488 32   0.2470    0.446
-    ##  480                0.278 0.0488 32   0.1786    0.377
+    ##  30                 0.271 0.0488 32   0.1482    0.394
+    ##  120                0.346 0.0488 32   0.2235    0.469
+    ##  480                0.278 0.0488 32   0.1551    0.401
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
     ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
-    ##  30                 0.303 0.0488 32   0.2032    0.402
-    ##  120                0.437 0.0488 32   0.3380    0.537
-    ##  480                0.192 0.0488 32   0.0924    0.291
+    ##  30                 0.303 0.0488 32   0.1797    0.425
+    ##  120                0.437 0.0488 32   0.3145    0.560
+    ##  480                0.192 0.0488 32   0.0688    0.315
     ## 
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
     ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
-    ##  30                 0.362 0.0488 32   0.2623    0.461
-    ##  120                0.360 0.0488 32   0.2606    0.459
-    ##  480                0.381 0.0573 32   0.2641    0.498
+    ##  30                 0.362 0.0488 32   0.2388    0.484
+    ##  120                0.360 0.0488 32   0.2371    0.483
+    ##  480                0.381 0.0573 32   0.2365    0.525
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
     ##  isolation_SS2_SS3 emmean     SE df lower.CL upper.CL
-    ##  30                 0.561 0.0573 32   0.4440    0.677
-    ##  120                0.243 0.0573 32   0.1267    0.360
-    ##  480                0.261 0.0573 32   0.1439    0.377
+    ##  30                 0.561 0.0573 32   0.4164    0.705
+    ##  120                0.243 0.0573 32   0.0990    0.388
+    ##  480                0.261 0.0573 32   0.1162    0.405
     ## 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3, SS_SS2_SS3`
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 2:
-    ##  3         estimate     SE df t.ratio p.value
-    ##  30 - 120  -0.07533 0.0690 32  -1.092  0.6311
-    ##  30 - 480  -0.00687 0.0690 32  -0.100  0.9995
-    ##  120 - 480  0.06846 0.0690 32   0.993  0.6968
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120  -0.07533 0.0690 32 -1.092  0.6311 
+    ##  30 - 480  -0.00687 0.0690 32 -0.100  0.9995 
+    ##  120 - 480  0.06846 0.0690 32  0.993  0.6968 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 2:
-    ##  3         estimate     SE df t.ratio p.value
-    ##  30 - 120  -0.13478 0.0690 32  -1.955  0.1679
-    ##  30 - 480   0.11089 0.0690 32   1.608  0.3130
-    ##  120 - 480  0.24566 0.0690 32   3.563  0.0035
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120  -0.13478 0.0690 32 -1.955  0.1679 
+    ##  30 - 480   0.11089 0.0690 32  1.608  0.3130 
+    ##  120 - 480  0.24566 0.0690 32  3.563  0.0035 
     ## 
     ## fish_SS2_SS3 = absent, SS_SS2_SS3 = 3:
-    ##  3         estimate     SE df t.ratio p.value
-    ##  30 - 120   0.00173 0.0690 32   0.025  1.0000
-    ##  30 - 480  -0.01923 0.0752 32  -0.256  0.9920
-    ##  120 - 480 -0.02096 0.0752 32  -0.279  0.9897
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   0.00173 0.0690 32  0.025  1.0000 
+    ##  30 - 480  -0.01923 0.0752 32 -0.256  0.9920 
+    ##  120 - 480 -0.02096 0.0752 32 -0.279  0.9897 
     ## 
     ## fish_SS2_SS3 = present, SS_SS2_SS3 = 3:
-    ##  3         estimate     SE df t.ratio p.value
-    ##  30 - 120   0.31735 0.0810 32   3.916  0.0013
-    ##  30 - 480   0.30015 0.0810 32   3.704  0.0024
-    ##  120 - 480 -0.01720 0.0810 32  -0.212  0.9954
+    ##  contrast  estimate     SE df t.ratio p.value
+    ##  30 - 120   0.31735 0.0810 32  3.916  0.0013 
+    ##  30 - 480   0.30015 0.0810 32  3.704  0.0024 
+    ##  120 - 480 -0.01720 0.0810 32 -0.212  0.9954 
     ## 
     ## Degrees-of-freedom method: kenward-roger 
     ## P value adjustment: sidak method for 3 tests
@@ -537,32 +535,33 @@ emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3),
     ## $`emmeans of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
     ##  isolation_SS2_SS3  emmean    SE   df lower.CL upper.CL
-    ##  30                 0.0434 0.556 14.9  -1.1410     1.23
-    ##  120                2.5286 0.556 14.9   1.3442     3.71
-    ##  480                2.3009 0.606 17.4   1.0249     3.58
+    ##  30                 0.0434 0.556 14.9   -1.449     1.54
+    ##  120                2.5286 0.556 14.9    1.036     4.02
+    ##  480                2.3009 0.606 17.4    0.701     3.90
     ## 
     ## fish_SS2_SS3 = present:
     ##  isolation_SS2_SS3  emmean    SE   df lower.CL upper.CL
-    ##  30                 0.9768 0.606 17.4  -0.2991     2.25
-    ##  120               -0.0801 0.606 17.4  -1.3561     1.20
-    ##  480                1.1787 0.606 17.4  -0.0973     2.45
+    ##  30                 0.9768 0.606 17.4   -0.623     2.58
+    ##  120               -0.0801 0.606 17.4   -1.680     1.52
+    ##  480                1.1787 0.606 17.4   -0.421     2.78
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
     ## Confidence level used: 0.95 
+    ## Conf-level adjustment: sidak method for 3 estimates 
     ## 
     ## $`pairwise differences of isolation_SS2_SS3 | fish_SS2_SS3`
     ## fish_SS2_SS3 = absent:
-    ##  2         estimate    SE   df t.ratio p.value
-    ##  30 - 120    -2.485 0.786 14.9  -3.163  0.0192
-    ##  30 - 480    -2.257 0.822 16.2  -2.746  0.0420
-    ##  120 - 480    0.228 0.822 16.2   0.277  0.9901
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120    -2.485 0.786 14.9 -3.163  0.0192 
+    ##  30 - 480    -2.257 0.822 16.2 -2.746  0.0420 
+    ##  120 - 480    0.228 0.822 16.2  0.277  0.9901 
     ## 
     ## fish_SS2_SS3 = present:
-    ##  2         estimate    SE   df t.ratio p.value
-    ##  30 - 120     1.057 0.857 17.4   1.234  0.5502
-    ##  30 - 480    -0.202 0.857 17.4  -0.236  0.9938
-    ##  120 - 480   -1.259 0.857 17.4  -1.469  0.4066
+    ##  contrast  estimate    SE   df t.ratio p.value
+    ##  30 - 120     1.057 0.857 17.4  1.234  0.5502 
+    ##  30 - 480    -0.202 0.857 17.4 -0.236  0.9938 
+    ##  120 - 480   -1.259 0.857 17.4 -1.469  0.4066 
     ## 
     ## Results are averaged over the levels of: SS_SS2_SS3 
     ## Degrees-of-freedom method: kenward-roger 
@@ -607,7 +606,9 @@ box(lwd = 2.5)
 
 #### Observed Environmental Variability
 
-\#\#\#\#Multivariate effect of Environmental Variability
+##### Multivariate effect of Environmental Variability
+
+Getting the distances
 
 ``` r
 env_data_SS2_SS3_st <- decostand(env_data_SS2_SS3, method = "stand", na.rm = TRUE)
@@ -615,12 +616,53 @@ env_data_SS2_SS3_st <- decostand(env_data_SS2_SS3, method = "stand", na.rm = TRU
 env_data_SS2_SS3_dist <- vegdist(env_data_SS2_SS3_st, method = "euclidean", na.rm = TRUE)
 
 betadisper_SS2_SS3 <- betadisper(env_data_SS2_SS3_dist, group = All)
+```
 
+Checking model fit
 
-fit_observed_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
+Variability as a function of treatments
+
+``` r
+fit_env_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
                                isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 
-round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
+resid_env <- simulateResiduals(fit_env_SS2_SS3)
+plot(resid_env)
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+There is clearly some patterns in the residuals that are not being
+accounted for by our model.
+
+Observed community variability as a function of environmental
+variability
+
+``` r
+fit_observed_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
+
+resid_observed_env <- simulateResiduals(fit_observed_SS2_SS3_env)
+plot(resid_observed_env)
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+everything seems ok.
+
+Beta deviation a function of environmental variability
+
+``` r
+fit_deviation_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
+
+resid_deviation_env <- simulateResiduals(fit_deviation_SS2_SS3_env)
+plot(resid_deviation_env)
+```
+
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+everything seems ok.
+
+running anovas for each of those models
+
+``` r
+round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
@@ -636,7 +678,6 @@ round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
     ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3 0.203  2      0.904
 
 ``` r
-fit_observed_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
 round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
 ```
 
@@ -647,15 +688,20 @@ round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
     ## betadisper_SS2_SS3$distances 1.621  1      0.203
 
 ``` r
-fit_deviation_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "Chisq"),3)
 ```
 
     ## Analysis of Deviance Table (Type II Wald chisquare tests)
     ## 
-    ## Response: beta_deviation_SS2_SS3$observed_distances
+    ## Response: beta_deviation_SS2_SS3$deviation_distances
     ##                              Chisq Df Pr(>Chisq)
-    ## betadisper_SS2_SS3$distances 1.621  1      0.203
+    ## betadisper_SS2_SS3$distances 1.319  1      0.251
+
+It seems that there is no evidence of any kind of effect of treatments
+on environmental variabiliy or of environmental variability on community
+variability or beta deviation
+
+Ploting it:
 
 ``` r
 boxplot(betadisper_SS2_SS3$distances~isolation_SS2_SS3*fish_SS2_SS3,
@@ -686,7 +732,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 ``` r
 par(mfrow = c(1,2))
@@ -698,7 +744,7 @@ abline(h = 0, lty = 2, col = "grey50", lwd = 2)
 
 ![](Community-Variability-Analyses_files/figure-gfm/plot_env-1.png)<!-- -->
 
-\#\#\#\#Univariate effect of Environmental Variability
+##### Univariate effect of Environmental Variability
 
 First, we have to built a matrix with all univariate distances, that is,
 how much each observation of each variable differs from its treatment
@@ -769,25 +815,28 @@ uni_anova_env_adjusted_p <- uni_anova_env
 for(i in 1:nrow(uni_anova_env)){
   uni_anova_env_adjusted_p[i,] <- p.adjust(uni_anova_env_adjusted_p[i,], method = "fdr") 
 }
+uni_anova_env_adjusted_p <- round(uni_anova_env_adjusted_p, 3)
 uni_anova_env_adjusted_p
 ```
 
-    ##                           depth conductivity     ph    do turbidity
-    ## fish                  0.8262857    0.5800000 0.4700 0.470 0.4320000
-    ## isolation             0.4445714    0.4445714 0.4272 0.447 0.4272000
-    ## survey                0.3580000    0.4173333 0.1600 0.609 0.4173333
-    ## fish:isolation        0.9780000    0.9780000 0.0880 0.978 0.9780000
-    ## fish:survey           0.7360000    0.7360000 0.7360 0.736 0.7360000
-    ## isolation:survey      0.8288000    0.8288000 0.4640 0.935 0.9040000
-    ## fish:isolation:survey 0.8450000    0.8450000 0.8450 0.320 0.8450000
-    ##                       clorophylla_a phycocyanin    canopy
-    ## fish                         0.9150   0.4700000 0.5800000
-    ## isolation                    0.4272   0.4272000 0.4272000
-    ## survey                       0.3000   0.3573333 0.5234286
-    ## fish:isolation               0.9780   0.9780000 0.2400000
-    ## fish:survey                  0.7360   0.9740000 0.9497143
-    ## isolation:survey             0.8288   0.8288000 0.9350000
-    ## fish:isolation:survey        0.8450   0.8450000 0.8450000
+    ##                       depth conductivity    ph    do turbidity clorophylla_a
+    ## fish                  0.826        0.580 0.470 0.470     0.432         0.915
+    ## isolation             0.445        0.445 0.427 0.447     0.427         0.427
+    ## survey                0.358        0.417 0.160 0.609     0.417         0.300
+    ## fish:isolation        0.978        0.978 0.088 0.978     0.978         0.978
+    ## fish:survey           0.736        0.736 0.736 0.736     0.736         0.736
+    ## isolation:survey      0.829        0.829 0.464 0.935     0.904         0.829
+    ## fish:isolation:survey 0.845        0.845 0.845 0.320     0.845         0.845
+    ##                       phycocyanin canopy
+    ## fish                        0.470  0.580
+    ## isolation                   0.427  0.427
+    ## survey                      0.357  0.523
+    ## fish:isolation              0.978  0.240
+    ## fish:survey                 0.974  0.950
+    ## isolation:survey            0.829  0.935
+    ## fish:isolation:survey       0.845  0.845
+
+It seems like there is no important clear effects.
 
 Plotting it.
 
@@ -822,7 +871,7 @@ for(j in 1:ncol(distances_env_uni)){
 }
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 Lets also check if any if the variability in any of those variables have
 an effect on observed community variability…
@@ -837,18 +886,19 @@ for(i in 1:ncol(distances_env_uni)){
 uni_anova_env_com[,3] <- p.adjust(uni_anova_env_com[,2], method = "fdr") 
 rownames(uni_anova_env_com) <- colnames(env_data_SS2_SS3_st)
 colnames(uni_anova_env_com) <- c("estimate","p","adjust.p")
+uni_anova_env_com <- round(uni_anova_env_com, 3)
 uni_anova_env_com
 ```
 
-    ##                   estimate     p  adjust.p
-    ## depth          0.061860693 0.015 0.1200000
-    ## conductivity   0.001619571 0.935 0.9350000
-    ## ph             0.022181534 0.598 0.6834286
-    ## do             0.023335011 0.519 0.6834286
-    ## turbidity      0.023246876 0.432 0.6834286
-    ## clorophylla_a  0.023786955 0.273 0.6834286
-    ## phycocyanin    0.032000975 0.215 0.6834286
-    ## canopy        -0.016881286 0.574 0.6834286
+    ##               estimate     p adjust.p
+    ## depth            0.062 0.015    0.120
+    ## conductivity     0.002 0.935    0.935
+    ## ph               0.022 0.598    0.683
+    ## do               0.023 0.519    0.683
+    ## turbidity        0.023 0.432    0.683
+    ## clorophylla_a    0.024 0.273    0.683
+    ## phycocyanin      0.032 0.215    0.683
+    ## canopy          -0.017 0.574    0.683
 
 and beta deviation
 
@@ -862,18 +912,21 @@ for(i in 1:ncol(distances_env_uni)){
 uni_anova_env_dev[,3] <- p.adjust(uni_anova_env_dev[,2], method = "fdr") 
 rownames(uni_anova_env_dev) <- colnames(env_data_SS2_SS3_st)
 colnames(uni_anova_env_dev) <- c("estimate","p","adjust.p")
+uni_anova_env_dev <-round(uni_anova_env_dev, 3)
 uni_anova_env_dev
 ```
 
-    ##                  estimate     p  adjust.p
-    ## depth          0.35781642 0.358 0.7160000
-    ## conductivity   0.12249765 0.672 0.7680000
-    ## ph             0.33688171 0.577 0.7680000
-    ## do             0.96495138 0.057 0.2960000
-    ## turbidity     -0.05039154 0.905 0.9050000
-    ## clorophylla_a  0.55212446 0.074 0.2960000
-    ## phycocyanin    0.25382971 0.498 0.7680000
-    ## canopy        -0.58733323 0.130 0.3466667
+    ##               estimate     p adjust.p
+    ## depth            0.358 0.358    0.716
+    ## conductivity     0.122 0.672    0.768
+    ## ph               0.337 0.577    0.768
+    ## do               0.965 0.057    0.296
+    ## turbidity       -0.050 0.905    0.905
+    ## clorophylla_a    0.552 0.074    0.296
+    ## phycocyanin      0.254 0.498    0.768
+    ## canopy          -0.587 0.130    0.347
+
+Again. It seems like there is no important clear effects.
 
 We can plot it.
 
@@ -887,7 +940,7 @@ for(i in 1:ncol(distances_env_uni)){
 }
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 ``` r
 par(mfrow = c(4,2))
@@ -899,4 +952,4 @@ for(i in 1:ncol(distances_env_uni)){
 }
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
+![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->

@@ -9,7 +9,6 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(PredatorIsolationStochasticity)
 ```
 
 
@@ -17,10 +16,13 @@ This is the community variability analyses presented in the main paper.
 
 These are the packages you will need to run this code:
 ```{r 3, message=FALSE, warning=FALSE}
+library(PredatorIsolationStochasticity)
+
 library(lme4) # Version 1.1-23
 library(car) # Version 3.0-7
 library(emmeans) # Version 1.4.8
 library(vegan) # Version 2.5-6
+library(DHARMa) # Version 0.3.3.0
 ```
  
 
@@ -35,7 +37,7 @@ data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3,
 ```
 
 Computing observed and expected distances to centroid, and beta-deviation.
-```{r computing_betas, message=FALSE, warning=FALSE}
+```{r computing_betas, message=FALSE, warning=FALSE, cache = TRUE}
 beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = All, times = 10000,
                                       transform = NULL, dist = "bray", fixedmar="both",
                                       shuffle = "both", method = "quasiswap", seed = 2,
@@ -45,24 +47,29 @@ beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = All, times = 1000
 
 
 Looking at residual plots for observed, expected distances to centroids and deviations.
-```{r checking_distribution, dpi = 150, fig.height=3, fig.width=3}
+```{r checking distribution, dpi = 150, fig.height=5, fig.width=10}
 fit_observed_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$observed_distances~fish_SS2_SS3*
                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-plot(fit_observed_SS2_SS3_G)
-qqnorm(resid(fit_observed_SS2_SS3_G, type = "pearson"))
-qqline(resid(fit_observed_SS2_SS3_G, type = "pearson"))
+
+resid_observed <- simulateResiduals(fit_observed_SS2_SS3_G)
+plot(resid_observed)
+
 
 fit_expected_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*
-                                 isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
-plot(fit_expected_SS2_SS3_G)
-qqnorm(resid(fit_expected_SS2_SS3_G, type = "pearson"))
-qqline(resid(fit_expected_SS2_SS3_G, type = "pearson"))
+                                 isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), 
+                               control = lmerControl(optimizer = c("bobyqa"), restart_edge = TRUE, boundary.tol = 1e-10))
+
+
+resid_expected <- simulateResiduals(fit_expected_SS2_SS3_G)
+plot(resid_expected)
+
 
 fit_deviation_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*
-                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), REML = F)
-plot(fit_deviation_SS2_SS3_G)
-qqnorm(resid(fit_deviation_SS2_SS3_G, type = "pearson"))
-qqline(resid(fit_deviation_SS2_SS3_G, type = "pearson"))
+                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+
+resid_deviation <- simulateResiduals(fit_deviation_SS2_SS3_G)
+plot(resid_deviation)
+
 ```
 Residual plots are not perfect, but they also does not seem too bad.
 
@@ -73,6 +80,7 @@ Running ANOVA table for observed distances to group centroids, or observed beta-
 ```{r running_observed}
 fit_observed_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$observed_distances~fish_SS2_SS3*
                                isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+
 round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
 emmeans(fit_observed_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3),
         adjust = "sidak")
@@ -120,6 +128,8 @@ box(lwd = 2.5)
 Running ANOVA table for expected distances to group centroids, or expected beta-diversity/community variability in each treatment.
 ```{r running_expected, message=FALSE, warning=FALSE}
 fit_expected_SS2_SS3 <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3), control = lmerControl(optimizer = "nlminbwrap"))
+
+
 round(Anova(fit_expected_SS2_SS3, test.statistic = "Chisq"),3)
 
 emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3),
@@ -217,29 +227,64 @@ box(lwd = 2.5)
 
 #### Observed Environmental Variability
 
-####Multivariate effect of Environmental Variability
-```{r}
+##### Multivariate effect of Environmental Variability
+
+Getting the distances
+```{r, dpi = 150, fig.height=5, fig.width=10}
 env_data_SS2_SS3_st <- decostand(env_data_SS2_SS3, method = "stand", na.rm = TRUE)
 
 env_data_SS2_SS3_dist <- vegdist(env_data_SS2_SS3_st, method = "euclidean", na.rm = TRUE)
 
 betadisper_SS2_SS3 <- betadisper(env_data_SS2_SS3_dist, group = All)
-
-
-fit_observed_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
-                               isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
-
-round(Anova(fit_observed_SS2_SS3, test.statistic = "Chisq"),3)
-
-
-fit_observed_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
-
-fit_deviation_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
-round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
 ```
 
 
+Checking model fit
+
+Variability as a function of treatments
+```{r, dpi = 150, fig.height=5, fig.width=10}
+fit_env_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
+                               isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
+
+resid_env <- simulateResiduals(fit_env_SS2_SS3)
+plot(resid_env)
+```
+There is clearly some patterns in the residuals that are not being accounted for by our model.
+
+
+Observed community variability as a function of environmental variability
+```{r, dpi = 150, fig.height=5, fig.width=10}
+fit_observed_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
+
+resid_observed_env <- simulateResiduals(fit_observed_SS2_SS3_env)
+plot(resid_observed_env)
+```
+everything seems ok.
+
+
+Beta deviation a function of environmental variability
+```{r, dpi = 150, fig.height=5, fig.width=10}
+fit_deviation_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
+
+resid_deviation_env <- simulateResiduals(fit_deviation_SS2_SS3_env)
+plot(resid_deviation_env)
+```
+everything seems ok.
+
+
+running anovas for each of those models
+```{r, dpi = 150, fig.height=5, fig.width=10}
+round(Anova(fit_env_SS2_SS3, test.statistic = "Chisq"),3)
+
+round(Anova(fit_observed_SS2_SS3_env, test.statistic = "Chisq"),3)
+
+round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "Chisq"),3)
+```
+It seems that there is no evidence of any kind of effect of treatments on environmental variabiliy or of environmental variability on community variability or beta deviation
+
+
+
+Ploting it:
 ```{r, dpi = 150, fig.height=5, fig.width=5}
 boxplot(betadisper_SS2_SS3$distances~isolation_SS2_SS3*fish_SS2_SS3,
         outline = F, ylab = "Distance to Centroid (Environmental Variability)", xlab = "",
@@ -279,7 +324,8 @@ abline(h = 0, lty = 2, col = "grey50", lwd = 2)
 ```
 
 
-####Univariate effect of Environmental Variability
+
+##### Univariate effect of Environmental Variability
 
 First, we have to built a matrix with all univariate distances, that is, how much each observation of each variable differs from its treatment mean.
 ```{r}
@@ -320,8 +366,13 @@ uni_anova_env_adjusted_p <- uni_anova_env
 for(i in 1:nrow(uni_anova_env)){
   uni_anova_env_adjusted_p[i,] <- p.adjust(uni_anova_env_adjusted_p[i,], method = "fdr") 
 }
+uni_anova_env_adjusted_p <- round(uni_anova_env_adjusted_p, 3)
 uni_anova_env_adjusted_p
 ```
+It seems like there is no important clear effects.
+
+
+
 
 Plotting it.
 ```{r, dpi = 150, fig.height=15, fig.width=7.5}
@@ -359,7 +410,7 @@ for(j in 1:ncol(distances_env_uni)){
 
 
 Lets also check if any if the variability in any of those variables have an effect on observed community variability...
-```{r}
+```{r, message=FALSE, warning=FALSE}
 uni_anova_env_com <- data.frame(matrix(NA, nrow = ncol(distances_env_uni), ncol = 3))
 for(i in 1:ncol(distances_env_uni)){
   fit <- lmer(beta_deviation_SS2_SS3$observed_distances ~ distances_env_uni[,i] + (1|ID_SS2_SS3))
@@ -369,11 +420,12 @@ for(i in 1:ncol(distances_env_uni)){
 uni_anova_env_com[,3] <- p.adjust(uni_anova_env_com[,2], method = "fdr") 
 rownames(uni_anova_env_com) <- colnames(env_data_SS2_SS3_st)
 colnames(uni_anova_env_com) <- c("estimate","p","adjust.p")
+uni_anova_env_com <- round(uni_anova_env_com, 3)
 uni_anova_env_com
 ```
 
 and beta deviation
-```{r}
+```{r, message=FALSE, warning=FALSE}
 uni_anova_env_dev <- data.frame(matrix(NA, nrow = ncol(distances_env_uni), ncol = 3))
 for(i in 1:ncol(distances_env_uni)){
   fit <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ distances_env_uni[,i] + (1|ID_SS2_SS3))
@@ -383,8 +435,13 @@ for(i in 1:ncol(distances_env_uni)){
 uni_anova_env_dev[,3] <- p.adjust(uni_anova_env_dev[,2], method = "fdr") 
 rownames(uni_anova_env_dev) <- colnames(env_data_SS2_SS3_st)
 colnames(uni_anova_env_dev) <- c("estimate","p","adjust.p")
+uni_anova_env_dev <-round(uni_anova_env_dev, 3)
 uni_anova_env_dev
 ```
+Again. It seems like there is no important clear effects.
+
+
+
 
 We can plot it.
 ```{r, dpi = 150, fig.height=15, fig.width=7.5}
