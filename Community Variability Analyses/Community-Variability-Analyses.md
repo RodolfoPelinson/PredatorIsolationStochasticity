@@ -52,7 +52,7 @@ resid_observed <- simulateResiduals(fit_observed_SS2_SS3_G)
 plot(resid_observed)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/checking%20distribution-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/checking distribution-1.png" width="980" height="490" style="display: block; margin: auto;" />
 
 ``` r
 fit_expected_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$expected_distances~fish_SS2_SS3*
@@ -67,7 +67,7 @@ resid_expected <- simulateResiduals(fit_expected_SS2_SS3_G)
 plot(resid_expected)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/checking%20distribution-2.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/checking distribution-2.png" width="980" height="490" style="display: block; margin: auto;" />
 
 ``` r
 fit_deviation_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$deviation_distances~fish_SS2_SS3*
@@ -77,7 +77,7 @@ resid_deviation <- simulateResiduals(fit_deviation_SS2_SS3_G)
 plot(resid_deviation)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/checking%20distribution-3.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/checking distribution-3.png" width="980" height="490" style="display: block; margin: auto;" />
 Residual plots are not perfect, but they also does not seem too bad.
 
 #### Observed Community Variability
@@ -269,7 +269,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/plot_observed-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/plot_observed-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Expected Community Variability
 
@@ -499,7 +499,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/plot_expected-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/plot_expected-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Beta-Deviation
 
@@ -602,7 +602,7 @@ abline(h = 0, lty = 2, lwd = 2, col = "grey50")
 box(lwd = 2.5)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/plot_deviation-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/plot_deviation-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Observed Environmental Variability
 
@@ -630,7 +630,7 @@ resid_env <- simulateResiduals(fit_env_SS2_SS3)
 plot(resid_env)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png" width="980" height="490" style="display: block; margin: auto;" />
 There is clearly some patterns in the residuals that are not being
 accounted for by our model.
 
@@ -644,7 +644,7 @@ resid_observed_env <- simulateResiduals(fit_observed_SS2_SS3_env)
 plot(resid_observed_env)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-3-1.png" width="980" height="490" style="display: block; margin: auto;" />
 everything seems ok.
 
 Beta deviation a function of environmental variability
@@ -656,7 +656,7 @@ resid_deviation_env <- simulateResiduals(fit_deviation_SS2_SS3_env)
 plot(resid_deviation_env)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-4-1.png" width="980" height="490" style="display: block; margin: auto;" />
 everything seems ok.
 
 running anovas for each of those models
@@ -735,7 +735,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 ``` r
 par(mfrow = c(1,2))
@@ -745,7 +745,7 @@ plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, 
 abline(h = 0, lty = 2, col = "grey50", lwd = 2)
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/plot_env-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/plot_env-1.png" width="980" height="490" style="display: block; margin: auto;" />
 
 ##### Univariate effect of Environmental Variability
 
@@ -874,7 +874,7 @@ for(j in 1:ncol(distances_env_uni)){
 }
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-10-1.png" width="980" height="1960" style="display: block; margin: auto;" />
 
 Lets also check if any if the variability in any of those variables have
 an effect on observed community variability…
@@ -943,7 +943,7 @@ for(i in 1:ncol(distances_env_uni)){
 }
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-1.png" width="980" height="1960" style="display: block; margin: auto;" />
 
 ``` r
 par(mfrow = c(4,2))
@@ -955,4 +955,4 @@ for(i in 1:ncol(distances_env_uni)){
 }
 ```
 
-![](Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-2.png" width="980" height="1960" style="display: block; margin: auto;" />

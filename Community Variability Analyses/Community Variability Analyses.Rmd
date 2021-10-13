@@ -47,7 +47,7 @@ beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = All, times = 1000
 
 
 Looking at residual plots for observed, expected distances to centroids and deviations.
-```{r checking distribution, dpi = 150, fig.height=5, fig.width=10}
+```{r checking distribution, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 fit_observed_SS2_SS3_G <- lmer(beta_deviation_SS2_SS3$observed_distances~fish_SS2_SS3*
                                  isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 
@@ -92,7 +92,7 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3),
 It seems that the effect of isolation is dependent on the presence or absence of fish. When fish is absent, there is no effect of isolation. When it is present, there is a negative effect of isolation.
 
 Plotting it:
-```{r plot_observed, dpi = 150, fig.height=5, fig.width=5}
+```{r plot_observed, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 boxplot(beta_deviation_SS2_SS3$observed_distances~isolation_SS2_SS3*fish_SS2_SS3,
         outline = F, ylab = "Distance to Centroid (Observed)", xlab = "",
         at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
@@ -145,7 +145,7 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_
 Patterns are similar to those observed for the observed distances to centroid.
 
 Plotting it:
-```{r plot_expected, dpi = 150, fig.height=5, fig.width=5}
+```{r plot_expected, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 boxplot(beta_deviation_SS2_SS3$expected_distances~isolation_SS2_SS3*fish_SS2_SS3,
         outline = F, ylab = "Distance to Centroid (Expected)", xlab = "",
         at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
@@ -192,7 +192,7 @@ Beta deviation seems to increase with isolation, but only in fishless ponds.
 
 
 Plotting it:
-```{r plot_deviation, dpi = 150, fig.height=5, fig.width=5}
+```{r plot_deviation, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 boxplot(beta_deviation_SS2_SS3$deviation_distances~isolation_SS2_SS3*fish_SS2_SS3,
         outline = F, ylab = "Beta-Deviation", xlab = "", at = c(1,2,3,5,6,7),
         ylim = c(-2,10), lwd = 1.5, col = "transparent", xaxt="n")
@@ -242,7 +242,7 @@ betadisper_SS2_SS3 <- betadisper(env_data_SS2_SS3_dist, group = All)
 Checking model fit
 
 Variability as a function of treatments
-```{r, dpi = 150, fig.height=5, fig.width=10}
+```{r, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 fit_env_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
                                isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
 
@@ -253,7 +253,7 @@ There is clearly some patterns in the residuals that are not being accounted for
 
 
 Observed community variability as a function of environmental variability
-```{r, dpi = 150, fig.height=5, fig.width=10}
+```{r, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 fit_observed_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
 
 resid_observed_env <- simulateResiduals(fit_observed_SS2_SS3_env)
@@ -263,7 +263,7 @@ everything seems ok.
 
 
 Beta deviation a function of environmental variability
-```{r, dpi = 150, fig.height=5, fig.width=10}
+```{r, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 fit_deviation_SS2_SS3_env <- lmer(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances + (1|ID_SS2_SS3))
 
 resid_deviation_env <- simulateResiduals(fit_deviation_SS2_SS3_env)
@@ -288,7 +288,7 @@ It seems that there is no evidence of any kind of effect of treatments on enviro
 
 
 Ploting it:
-```{r, dpi = 150, fig.height=5, fig.width=5}
+```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 boxplot(betadisper_SS2_SS3$distances~isolation_SS2_SS3*fish_SS2_SS3,
         outline = F, ylab = "Distance to Centroid (Environmental Variability)", xlab = "",
         at = c(1,2,3,5,6,7),ylim = c(0,5), lwd = 1.5, col = "transparent", xaxt="n")
@@ -318,7 +318,7 @@ box(lwd = 2.5)
 ```
 
 
-```{r plot_env, dpi = 150, fig.height=5, fig.width=10}
+```{r plot_env, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 par(mfrow = c(1,2))
 plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Distance to Centroid (Observed Comm. Variability)", xlab = "Distance to Centroid (Environmental Variability)")
 
@@ -378,7 +378,7 @@ It seems like there is no important clear effects.
 
 
 Plotting it.
-```{r, dpi = 150, fig.height=15, fig.width=7.5}
+```{r, dpi = 150, fig.height=15, fig.width=7.5, out.height = 1960, out.width = 980, fig.align = "center"}
 par(mfrow = c(4,2))
 for(j in 1:ncol(distances_env_uni)){
   boxplot(distances_env_uni[,j]~isolation_SS2_SS3*fish_SS2_SS3,
@@ -447,7 +447,7 @@ Again. It seems like there is no important clear effects.
 
 
 We can plot it.
-```{r, dpi = 150, fig.height=15, fig.width=7.5}
+```{r, dpi = 150, fig.height=15, fig.width=7.5, out.height = 1960, out.width = 980, fig.align = "center"}
 par(mfrow = c(4,2))
 for(i in 1:ncol(distances_env_uni)){
   plot(beta_deviation_SS2_SS3$observed_distances ~ distances_env_uni[,i],
