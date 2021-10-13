@@ -3,6 +3,8 @@ title: "Gamma Diversity Analyses"
 author: "Rodolfo Pelinson"
 date: "19/10/2020"
 output: github_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}

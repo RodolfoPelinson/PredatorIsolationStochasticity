@@ -110,7 +110,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 ```
 
 
-Ploting two surveys sseparetely
+Ploting two surveys separetely
 ```{r, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 par(mfrow = c(1,2))
 boxplot(com_SS2_SS3_abundance[SS_SS2_SS3 == "2"]~isolation_SS2*fish_SS2,

@@ -243,7 +243,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 #box(lwd = 2.5)
 ```
 
-Ploting two surveys sseparetely
+Ploting two surveys separetely
 
 ``` r
 par(mfrow = c(1,2))
@@ -607,7 +607,7 @@ Ploting two surveys together
 
 ``` r
 boxplot(com_SS2_SS3_non_predators_abundance~isolation_SS2_SS3*fish_SS2_SS3,
-        outline = F, ylab = "Abundance (Predators)", xlab = "",
+        outline = F, ylab = "Abundance (Non-Predators)", xlab = "",
         at = c(1,2,3,5,6,7),ylim = c(0,1400), lwd = 1.5, col = "transparent", xaxt="n")
 mylevels <- levels(All)
 levelProportions <- summary(All)/length(com_SS2_SS3_non_predators_abundance)
@@ -644,7 +644,7 @@ Ploting two surveys sseparetely
 ``` r
 par(mfrow = c(1,2))
 boxplot(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "2"]~isolation_SS2*fish_SS2,
-        outline = F, ylab = "Abundance (Predators)", xlab = "",
+        outline = F, ylab = "Abundance (Non-Predators)", xlab = "",
         at = c(1,2,3,5,6,7),ylim = c(0,1400), lwd = 1.5, col = "transparent", xaxt="n", main = "Second Survey")
 mylevels <- levels(fish_isolation_SS2)
 levelProportions <- summary(fish_isolation_SS2)/length(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "2"])
@@ -673,7 +673,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 
 
 boxplot(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "3"]~isolation_SS3*fish_SS3,
-        outline = F, ylab = "Abundance (Predators)", xlab = "",
+        outline = F, ylab = "Abundance (Non-Predators)", xlab = "",
         at = c(1,2,3,5,6,7),ylim = c(0,1400), lwd = 1.5, col = "transparent", xaxt="n", main = "Third Survey")
 mylevels <- levels(fish_isolation_SS3)
 levelProportions <- summary(fish_isolation_SS3)/length(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "2"])
