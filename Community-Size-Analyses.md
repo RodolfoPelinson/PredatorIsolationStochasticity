@@ -690,6 +690,8 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 #box(lwd = 2.5)
 ```
 
+ 
+
 #### Herbivores and Detritivores VS Predators
 
 Because we saw that community size increases with isolation, and we know

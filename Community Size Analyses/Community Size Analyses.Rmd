@@ -405,6 +405,7 @@ axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0
 axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
 #box(lwd = 2.5)
 ```
+\ 
 
 
 
@@ -462,5 +463,5 @@ title(ylab = "Proportion of Abundance", cex.lab = 1.25, line = 3)
 title(main = "Third Survey", cex.lab = 1.25, line = 2)
 ```
 
-It seems that herbivores and detritivores are indeed responsible for the patterns observed in community size. More importantly, this effect is stronger in more isolated ponds.
+It seems that herbivores and detritivores are indeed responsible for the patterns observed in community size. More importantly, this effect is stronger in more isolated ponds. 
 
