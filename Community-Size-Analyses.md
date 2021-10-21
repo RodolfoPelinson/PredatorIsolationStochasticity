@@ -724,7 +724,7 @@ title(ylab = "Proportion of Abundance", cex.lab = 1.25, line = 3)
 title(main = "Second Survey", cex.lab = 1.25, line = 2)
 ```
 
-<img src="Community-Size-Analyses_files/figure-gfm/unnamed-chunk-7-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Community-Size-Analyses_files/figure-gfm/barplot1-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 Third Survey
 
@@ -751,7 +751,7 @@ title(ylab = "Proportion of Abundance", cex.lab = 1.25, line = 3)
 title(main = "Third Survey", cex.lab = 1.25, line = 2)
 ```
 
-<img src="Community-Size-Analyses_files/figure-gfm/unnamed-chunk-8-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Community-Size-Analyses_files/figure-gfm/barplot2-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 It seems that herbivores and detritivores are indeed responsible for the
 patterns observed in community size. More importantly, this effect is

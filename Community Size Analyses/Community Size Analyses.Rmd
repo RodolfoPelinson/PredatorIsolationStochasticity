@@ -416,7 +416,7 @@ Because we saw that community size increases with isolation, and we know from pr
 
 
 First for the second Survey
-```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
+```{r barplot1, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 #Second Survey
 non_pred_barplot_SS2 <- tapply(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "2"], interaction(fish_SS2, isolation_SS2), sum)
 non_pred_SS2 <- tapply(com_SS2_SS3_predators_abundance[SS_SS2_SS3 == "2"], interaction(isolation_SS2,fish_SS2), sum)
@@ -440,7 +440,7 @@ title(main = "Second Survey", cex.lab = 1.25, line = 2)
 ```
 
 Third Survey
-```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
+```{r barplot2, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 #Third Survey
 non_pred_barplot_SS3 <- tapply(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "3"], interaction(fish_SS3, isolation_SS3), sum)
 non_pred_SS3 <- tapply(com_SS2_SS3_predators_abundance[SS_SS2_SS3 == "3"], interaction(fish_SS3, isolation_SS3), sum)
