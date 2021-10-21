@@ -1,0 +1,8 @@
+base
+PredatorIsolationStochasticity
+Matrix
+lme4
+emmeans
+carData
+car
+DHARMa

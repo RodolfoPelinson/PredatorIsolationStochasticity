@@ -221,11 +221,14 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 abline(h = 0, lty = 2, lwd = 2, col = "grey50")
 box(lwd = 2.5)
 ```
+\ 
+\ 
+\ 
 
 
 
 
-#### Observed Environmental Variability
+### Observed Environmental Variability
 
 ##### Multivariate effect of Environmental Variability
 
@@ -241,7 +244,7 @@ betadisper_SS2_SS3 <- betadisper(env_data_SS2_SS3_dist, group = All)
 
 Checking model fit
 
-Variability as a function of treatments
+Environmental Variability as a function of treatments
 ```{r, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 fit_env_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
                                isolation_SS2_SS3*SS_SS2_SS3 + (1|ID_SS2_SS3))
@@ -249,7 +252,7 @@ fit_env_SS2_SS3 <- lmer(betadisper_SS2_SS3$distances~fish_SS2_SS3*
 resid_env <- simulateResiduals(fit_env_SS2_SS3)
 plot(resid_env)
 ```
-There is clearly some patterns in the residuals that are not being accounted for by our model.
+There seem to be some patterns in the residuals that are not being accounted for by this model. Anyway Even if there is something causing some pattern in community variability, it seem to not be related to our treatments.
 
 
 Observed community variability as a function of environmental variability

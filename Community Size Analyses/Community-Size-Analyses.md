@@ -105,24 +105,6 @@ round(Anova(mix_model_NB, test.statistic = "Chisq"),3)
     ## ---
     ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-``` r
-round(Anova(mix_model_P, test.statistic = "Chisq"),3)
-```
-
-    ## Analysis of Deviance Table (Type II Wald chisquare tests)
-    ## 
-    ## Response: com_SS2_SS3_abundance
-    ##                                              Chisq Df Pr(>Chisq)    
-    ## fish_SS2_SS3                                 0.075  1      0.785    
-    ## isolation_SS2_SS3                            1.714  2      0.424    
-    ## SS_SS2_SS3                                2129.984  1     <2e-16 ***
-    ## fish_SS2_SS3:isolation_SS2_SS3               1.907  2      0.385    
-    ## fish_SS2_SS3:SS_SS2_SS3                    160.134  1     <2e-16 ***
-    ## isolation_SS2_SS3:SS_SS2_SS3               507.770  2     <2e-16 ***
-    ## fish_SS2_SS3:isolation_SS2_SS3:SS_SS2_SS3  149.790  2     <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
 Now pairwise differences:
 
 ``` r
@@ -704,3 +686,79 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 ``` r
 #box(lwd = 2.5)
 ```
+
+#### Herbivores and Detritivores VS Predators
+
+Because we saw that community size increases with isolation, and we know
+from previous work that herbivores and detritivores are positively
+affected by isolation, we checked if herbivores and detritivores are
+indeed responsible for this increase.
+
+First for the second Survey
+
+``` r
+#Second Survey
+non_pred_barplot_SS2 <- tapply(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "2"], interaction(fish_SS2, isolation_SS2), sum)
+non_pred_SS2 <- tapply(com_SS2_SS3_predators_abundance[SS_SS2_SS3 == "2"], interaction(isolation_SS2,fish_SS2), sum)
+
+matrix_barplot_SS2 <- matrix(c(non_pred_SS2,non_pred_barplot_SS2), byrow = TRUE, ncol = 6, nrow = 2)
+
+total_barplot_SS2 <- colSums(matrix_barplot_SS2)
+
+percentage_barplot_SS2 <- matrix_barplot_SS2
+percentage_barplot_SS2[1,] <- percentage_barplot_SS2[1,]/total_barplot_SS2
+percentage_barplot_SS2[2,] <- percentage_barplot_SS2[2,]/total_barplot_SS2
+
+
+barplot(percentage_barplot_SS2, space = c(0,0.5,0.5,1,0.5,0.5), xaxt="n", yaxt="n", col = c("lightgoldenrod2", "chartreuse4"))
+axis(1,at = c(0.5,2,3.5,5.5,7,8.5), labels =rep(c("30 m","120 m","480 m"),2), tick = T, cex.axis = 0.9, gap.axis = 0)
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1.1, at =c(2,7), line = 1.5, tick = F )
+axis(2, cex.axis = 1.2, gap.axis = 0, line = -0.5, tick = FALSE, at = c(0.0,0.2,0.4,0.6,0.8,1), labels = c("0%","20%","40%","60%","80%","100%"))
+axis(2, cex.axis = 1.2, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE, at = c(0.0,0.2,0.4,0.6,0.8,1))
+title(ylab = "Proportion of Abundance", cex.lab = 2, line = 3)
+title(main = "Second Survey", cex.lab = 1.25, line = 2)
+```
+
+![](Community-Size-Analyses_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+Third Survey
+
+``` r
+#Third Survey
+non_pred_barplot_SS3 <- tapply(com_SS2_SS3_non_predators_abundance[SS_SS2_SS3 == "3"], interaction(fish_SS3, isolation_SS3), sum)
+non_pred_SS3 <- tapply(com_SS2_SS3_predators_abundance[SS_SS2_SS3 == "3"], interaction(fish_SS3, isolation_SS3), sum)
+
+matrix_barplot_SS3 <- matrix(c(non_pred_SS3,non_pred_barplot_SS3), byrow = TRUE, ncol = 6, nrow = 2)
+
+total_barplot_SS3 <- colSums(matrix_barplot_SS3)
+
+percentage_barplot_SS3 <- matrix_barplot_SS3
+percentage_barplot_SS3[1,] <- percentage_barplot_SS3[1,]/total_barplot_SS3
+percentage_barplot_SS3[2,] <- percentage_barplot_SS3[2,]/total_barplot_SS3
+
+barplot(matrix_barplot_SS3)
+```
+
+![](Community-Size-Analyses_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+``` r
+barplot(percentage_barplot_SS3)
+```
+
+![](Community-Size-Analyses_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
+
+``` r
+barplot(percentage_barplot_SS3, space = c(0,0.5,0.5,1,0.5,0.5), xaxt="n", yaxt="n", col = c("lightgoldenrod2", "chartreuse4"))
+axis(1,at = c(0.5,2,3.5,5.5,7,8.5), labels =rep(c("30 m","120 m","480 m"),2), tick = T, cex.axis = 0.9, gap.axis = 0)
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1.1, at =c(2,7), line = 1.5, tick = F )
+axis(2, cex.axis = 1.2, gap.axis = 0, line = -0.5, tick = FALSE, at = c(0.0,0.2,0.4,0.6,0.8,1), labels = c("0%","20%","40%","60%","80%","100%"))
+axis(2, cex.axis = 1.2, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE, at = c(0.0,0.2,0.4,0.6,0.8,1))
+title(ylab = "Proportion of Abundance", cex.lab = 2, line = 3)
+title(main = "Third Survey", cex.lab = 1.25, line = 2)
+```
+
+![](Community-Size-Analyses_files/figure-gfm/unnamed-chunk-8-3.png)<!-- -->
+
+It seems that herbivores and detritivores are indeed responsible for the
+patterns observed in community size. More importantly, this effect is
+stronger in more isolated ponds.
