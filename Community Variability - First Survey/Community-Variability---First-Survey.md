@@ -16,7 +16,8 @@ devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 These are the packages you will need to run this code:
 
 ``` r
-library(Pelinson.et.al.2020B)
+library(PredatorIsolationStochasticity)
+
 library(lme4) # Version 1.1-23
 library(car) # Version 3.0-7
 library(emmeans) # Version 1.4.8
@@ -88,7 +89,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Variability---First-Survey_files/figure-gfm/7-1.png)<!-- -->
+<img src="Community-Variability---First-Survey_files/figure-gfm/unnamed-chunk-1-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Expected Community Variability
 
@@ -167,7 +168,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick
 box(lwd = 2.5)
 ```
 
-![](Community-Variability---First-Survey_files/figure-gfm/9-1.png)<!-- -->
+<img src="Community-Variability---First-Survey_files/figure-gfm/unnamed-chunk-2-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Beta-Deviation
 
@@ -219,4 +220,4 @@ abline(h = 0, lty = 2, lwd = 2, col = "grey50")
 box(lwd = 2.5)
 ```
 
-![](Community-Variability---First-Survey_files/figure-gfm/11-1.png)<!-- -->
+<img src="Community-Variability---First-Survey_files/figure-gfm/unnamed-chunk-3-1.png" width="490" height="490" style="display: block; margin: auto;" />

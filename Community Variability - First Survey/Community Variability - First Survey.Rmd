@@ -19,7 +19,8 @@ devtools::install_github("RodolfoPelinson/Pelinson.et.al.2020B")
 
 These are the packages you will need to run this code:
 ```{r 3, message=FALSE, warning=FALSE}
-library(Pelinson.et.al.2020B)
+library(PredatorIsolationStochasticity)
+
 library(lme4) # Version 1.1-23
 library(car) # Version 3.0-7
 library(emmeans) # Version 1.4.8
@@ -50,7 +51,7 @@ round(Anova(fit_observed_SS1, test.statistic = "F"),3)
 No effect of treatments.
 
 Plotting it:
-```{r 7, dpi = 150, fig.height=5, fig.width=5}
+```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 fish_isolation_SS1 <- factor(fish_isolation_SS1, levels = c("030 absent","120 absent", "480 absent","030 present","120 present", "480 present"))
 
 boxplot(beta_deviation_SS1$observed_distances~isolation_SS1*fish_SS1, outline = F, ylab = "Distance to Centroid (Observed)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
@@ -89,7 +90,7 @@ emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "sidak")
 There is an increase in expected distance to centroid from intermediate to high isolation.
 
 Plotting it:
-```{r 9, dpi = 150, fig.height=5, fig.width=5}
+```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 fish_isolation_SS1 <- factor(fish_isolation_SS1, levels = c("030 absent","120 absent", "480 absent","030 present","120 present", "480 present"))
 
 boxplot(beta_deviation_SS1$expected_distances~isolation_SS1*fish_SS1, outline = F, ylab = "Distance to Centroid (Expected)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(0,1), lwd = 1.5, col = "transparent", xaxt="n")
@@ -125,7 +126,7 @@ round(Anova(fit_deviation_SS1, test.statistic = "F"),3)
 No significant effect of treatments.
 
 Plotting it:
-```{r 11, dpi = 150, fig.height=5, fig.width=5}
+```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
 boxplot(beta_deviation_SS1$deviation_distances~isolation_SS1*fish_SS1, outline = F, ylab = "Distance to Centroid (deviation)", xlab = "", at = c(1,2,3,5,6,7),ylim = c(-2,10), lwd = 1.5, col = "transparent", xaxt="n")
 mylevels <- levels(fish_isolation_SS1)
 levelProportions <- summary(fish_isolation_SS1)/length(beta_deviation_SS1$deviation_distances)
