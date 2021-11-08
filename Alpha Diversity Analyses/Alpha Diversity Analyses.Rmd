@@ -9,7 +9,6 @@ editor_options:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(PredatorIsolationStochasticity)
 ```
 
 
@@ -17,6 +16,7 @@ These are the analyses of alpha diversity for the whole communities and separate
 
 These are the packages you will need to run this code:
 ```{r loading_packages, warning = F, message = F}
+library(PredatorIsolationStochasticity)
 library(lme4) # Version 1.1-23
 library(emmeans) # Version 1.4.8
 library(car) # Version 3.0-7
@@ -25,18 +25,8 @@ library(DHARMa) # Version 0.3.3.0
 
 
 ### Whole Community
-First, lets load the necessary data:
-```{r loading_data}
-data(com_SS2_SS3_richness,
-     isolation_SS2_SS3,
-     fish_SS2_SS3,
-     SS_SS2_SS3,
-     ID_SS2_SS3,
-     All)
-```
 
-
-Now, lets check what probability distribution should we choose using the most complex model we have:
+First, lets check what probability distribution should we choose using the most complex model we have:
 ```{r checking_distribution, dpi=300, fig.height=5, fig.width=10, out.height = 490, out.width = 980}
 mix_model_G <- lmer(com_SS2_SS3_richness~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 +
                       (1|ID_SS2_SS3))

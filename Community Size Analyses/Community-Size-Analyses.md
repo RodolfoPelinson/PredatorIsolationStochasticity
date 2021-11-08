@@ -10,6 +10,7 @@ non-predatory insects.
 These are the packages you will need to run this code:
 
 ``` r
+library(PredatorIsolationStochasticity)
 library(lme4) # Version 1.1-23
 library(emmeans) # Version 1.4.8
 library(car) # Version 3.0-7
@@ -18,19 +19,8 @@ library(DHARMa) # Version 0.3.3.0
 
 ### Whole Community
 
-First, lets load the necessary data:
-
-``` r
-data(com_SS2_SS3_abundance,
-     isolation_SS2_SS3,
-     fish_SS2_SS3,
-     SS_SS2_SS3,
-     ID_SS2_SS3,
-     All)
-```
-
-Now, lets check what probability distribution should we choose using the
-most complex model we have:
+First, lets check what probability distribution should we choose using
+the most complex model we have:
 
 ``` r
 mix_model_G <- lmer(com_SS2_SS3_abundance~fish_SS2_SS3*isolation_SS2_SS3*SS_SS2_SS3 + 
