@@ -67,94 +67,122 @@ round(Anova(mix_model_richness_NB, test.statistic = "Chisq"),3)
 It seems like there is only an effect of the presence of fish on species richness.
 
 Lets plot it:
-```{r, dpi = 150, fig.height=5, fig.width=5, out.height = 490, out.width = 490, fig.align = "center"}
+```{r, dpi = 150, fig.height=4, fig.width=4, out.height = 490, out.width = 490, fig.align = "center"}
+
+par(cex = 0.75, mar = c(4,4,0.1,0.1))
 
 boxplot(com_SS2_SS3_richness~isolation_SS2_SS3*fish_SS2_SS3,
-        outline = F, ylab = "Richness", xlab = "",
-        at = c(1,2,3,5,6,7),ylim = c(5,16), lwd = 1.5, col = "transparent", xaxt="n")
+        outline = F, ylab = "", xlab = "",
+        at = c(1,2,3,5,6,7),ylim = c(5,16), lwd = 1.5, col = "transparent", xaxt="n", yaxt="n")
 mylevels <- levels(All)
-levelProportions <- summary(All)/length(com_SS2_SS3_richness)
-col <- c(rep("sienna3",3), rep("dodgerblue3",3), rep("grey70",6))
-bg <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
-pch <- c(15,16,17,15,16,17,22,21,24,22,21,24)
+#levelProportions <- summary(All)/length(com_SS2_SS3_richness)
+col <- c(rep("sienna3",3), rep("dodgerblue3",3),rep("sienna3",3), rep("dodgerblue3",3))
+bg <- c(rep("transparent",3), rep("transparent",3),rep("sienna3",3), rep("dodgerblue3",3))
+pch <- c(22,21,24,22,21,24,15,16,17,15,16,17)
 for(i in 1:length(mylevels)){
-  
+
   x<- c(1,2,3,5,6,7,1,2,3,5,6,7)[i]
   thislevel <- mylevels[i]
   thisvalues <- com_SS2_SS3_richness[All==thislevel]
-  
+
   # take the x-axis indices and add a jitter, proportional to the N in each level
-  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
-  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3) 
-  
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=0.3)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 1.5)
+
 }
 boxplot(com_SS2_SS3_richness~isolation_SS2_SS3*fish_SS2_SS3,
         add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7),
-        lwd = 1.5, xaxt="n")
-axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8,
-     at =c(1,2,3,5,6,7))
-axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
+        lwd = 1.5, xaxt="n", yaxt="n")
+
+axis(1,labels = c("30","120", "480","30","120", "480"), cex.axis = 1.1,
+     at =c(1,2,3,5,6,7), gap.axis = -10)
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, tick = F )
+axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
+axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
+
+title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 
 ```
 
 Ploting two surveys separetely
-```{r, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
-par(mfrow = c(1,2))
+```{r, dpi = 150, fig.height=4, fig.width=4, out.height = 490, out.width = 490, fig.align = "center"}
+par(cex = 0.75, mar = c(4,4,1.5,0.1))
+
+
 boxplot(com_SS2_SS3_richness[SS_SS2_SS3 == "2"]~isolation_SS2*fish_SS2,
-        outline = F, ylab = "Richness", xlab = "",
-        at = c(1,2,3,5,6,7),ylim = c(5,16), lwd = 1.5, col = "transparent", xaxt="n", main = "Second Survey")
+        outline = F, ylab = "", xlab = "",
+        at = c(1,2,3,5,6,7),ylim = c(5,16), lwd = 1.5, col = "transparent", xaxt="n",  yaxt="n")
 mylevels <- levels(fish_isolation_SS2)
-levelProportions <- summary(fish_isolation_SS2)/length(com_SS2_SS3_richness[SS_SS2_SS3 == "2"])
+#levelProportions <- summary(fish_isolation_SS2)/length(com_SS2_SS3_richness[SS_SS2_SS3 == "2"])
+col <- rep(c("sienna3", "dodgerblue3"),3)
+bg <- rep(c("transparent", "transparent"),3)
+pch <- c(22,22,21,21,24,24) #o outro é 22,21,24
+for(i in 1:length(mylevels)){
+
+  x<- c(1,5,2,6,3,7)[i]
+  thislevel <- mylevels[i]
+  thisvalues <- com_SS2_SS3_richness[SS_SS2_SS3 == "2"][fish_isolation_SS2==thislevel]
+
+  # take the x-axis indices and add a jitter, proportional to the N in each level
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=0.3)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 1.5)
+
+}
+boxplot(com_SS2_SS3_richness[SS_SS2_SS3 == "2"]~isolation_SS2*fish_SS2,
+        add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7),
+        lwd = 1.5, xaxt="n", yaxt="n")
+
+axis(1,labels = c("30","120", "480","30","120", "480"), cex.axis = 1.1,
+     at =c(1,2,3,5,6,7), gap.axis = -10)
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, tick = F )
+axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
+axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
+
+title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
+
+title(main = "Second Survey", cex.lab = 1.3, line = 0.5)
+```
+
+
+```{r, dpi = 150, fig.height=4, fig.width=4, out.height = 490, out.width = 490, fig.align = "center"}
+par(cex = 0.75, mar = c(4,4,1.5,0.1))
+
+boxplot(com_SS2_SS3_richness[SS_SS2_SS3 == "3"]~isolation_SS3*fish_SS3,
+        outline = F, ylab = "", xlab = "",
+        at = c(1,2,3,5,6,7),ylim = c(5,16), lwd = 1.5, col = "transparent", xaxt="n", yaxt="n")
+mylevels <- levels(fish_isolation_SS3)
+#levelProportions <- summary(fish_isolation_SS3)/length(com_SS2_SS3_richness[SS_SS2_SS3 == "2"])
 col <- rep(c("sienna3", "dodgerblue3"),3)
 bg <- rep(c("sienna3", "dodgerblue3"),3)
 pch <- c(15,15,16,16,17,17) #o outro é 22,21,24
 for(i in 1:length(mylevels)){
-  
-  x<- c(1,5,2,6,3,7)[i]
-  thislevel <- mylevels[i]
-  thisvalues <- com_SS2_SS3_richness[SS_SS2_SS3 == "2"][fish_isolation_SS2==thislevel]
-  
-  # take the x-axis indices and add a jitter, proportional to the N in each level
-  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
-  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3) 
-  
-}
-boxplot(com_SS2_SS3_richness[SS_SS2_SS3 == "2"]~isolation_SS2*fish_SS2,
-        add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7),
-        lwd = 1.5, xaxt="n")
-axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8,
-     at =c(1,2,3,5,6,7))
-axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
-#box(lwd = 2.5)
 
-
-
-boxplot(com_SS2_SS3_richness[SS_SS2_SS3 == "3"]~isolation_SS3*fish_SS3,
-        outline = F, ylab = "Richness", xlab = "",
-        at = c(1,2,3,5,6,7),ylim = c(5,16), lwd = 1.5, col = "transparent", xaxt="n", main = "Third Survey")
-mylevels <- levels(fish_isolation_SS3)
-levelProportions <- summary(fish_isolation_SS3)/length(com_SS2_SS3_richness[SS_SS2_SS3 == "2"])
-col <- rep(c("grey70", "grey70"),3)
-bg <- rep(c("sienna3", "dodgerblue3"),3)
-pch <- c(22,22,21,21,24,24) #o outro é 22,21,24
-for(i in 1:length(mylevels)){
-  
   x<- c(1,5,2,6,3,7)[i]
   thislevel <- mylevels[i]
   thisvalues <- com_SS2_SS3_richness[SS_SS2_SS3 == "3"][fish_isolation_SS3==thislevel]
-  
+
   # take the x-axis indices and add a jitter, proportional to the N in each level
-  myjitter <- jitter(rep(x, length(thisvalues)), amount=levelProportions[i]/0.8)
-  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 3) 
-  
+  myjitter <- jitter(rep(x, length(thisvalues)), amount=0.3)
+  points(myjitter, thisvalues, pch=pch[i], col=col[i], bg = bg[i] , cex = 1.5, lwd = 1.5)
+
 }
 boxplot(com_SS2_SS3_richness[SS_SS2_SS3 == "3"]~isolation_SS3*fish_SS3,
         add = T, col = "transparent", outline = F,at = c(1,2,3,5,6,7),
-        lwd = 1.5, xaxt="n")
-axis(1,labels = c("30 m","120 m", "480 m","30 m","120 m", "480 m"), cex.axis = 0.8,
-     at =c(1,2,3,5,6,7))
-axis(1,labels = c("Fishless","Fish"), cex.axis = 1, at =c(2,6), line = 1.5, tick = F )
-#box(lwd = 2.5)
+        lwd = 1.5, xaxt="n", yaxt="n")
+
+axis(1,labels = c("30","120", "480","30","120", "480"), cex.axis = 1.1,
+     at =c(1,2,3,5,6,7), gap.axis = -10)
+axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, tick = F )
+axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
+axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
+
+title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
+
+title(main = "Third Survey", cex.lab = 1.3, line = 0.5)
 
 ```
+
 
