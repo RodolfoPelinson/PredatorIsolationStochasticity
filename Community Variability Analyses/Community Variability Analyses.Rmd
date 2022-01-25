@@ -12,15 +12,19 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+```{r, echo = FALSE}
+devtools::load_all()
+```
+
+
 This is the community variability analyses presented in the main paper.
 
 These are the packages you will need to run this code:
 ```{r 3, message=FALSE, warning=FALSE}
-library(PredatorIsolationStochasticity)
 library(lme4) # Version 1.1-23
 library(car) # Version 3.0-7
 library(emmeans) # Version 1.4.8
-library(vegan) # Version 2.5-6
+library(vegan) # Version 2.5-7
 library(DHARMa) # Version 0.3.3.0
 ```
  
@@ -100,7 +104,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Community Variability", cex.lab = 1.3, line = 3)
+title(ylab = "Community variability", cex.lab = 1.3, line = 3)
 title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
@@ -145,7 +149,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Expected Community Variability", cex.lab = 1.3, line = 3)
+title(ylab = "Expected community variability", cex.lab = 1.3, line = 3)
 title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
@@ -190,7 +194,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Beta-Deviation", cex.lab = 1.3, line = 2)
+title(ylab = "Beta-deviation", cex.lab = 1.3, line = 2)
 
 ```
 
@@ -301,8 +305,8 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
 
-title(ylab = "Community Variability", cex.lab = 1.3, line = 3)
-title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
+title(ylab = "Community variability", cex.lab = 1.3, line = 3)
+title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 
 ```
 
@@ -365,8 +369,8 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
 
-title(ylab = "Expected Community Variability", cex.lab = 1.3, line = 3)
-title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
+title(ylab = "Expected community variability", cex.lab = 1.3, line = 3)
+title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 
 ```
 
@@ -423,7 +427,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Beta-Deviation", cex.lab = 1.3, line = 2)
+title(ylab = "Beta-deviation", cex.lab = 1.3, line = 2)
 
 ```
 \ 
@@ -529,16 +533,16 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
 
-title(ylab = "Environmental Variability", cex.lab = 1.3, line = 3)
-title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
+title(ylab = "Environmental variability", cex.lab = 1.3, line = 3)
+title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
 
 ```{r plot_env, dpi = 150, fig.height=5, fig.width=10, out.height = 490, out.width = 980, fig.align = "center"}
 par(mfrow = c(1,2))
-plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Distance to Centroid (Observed Comm. Variability)", xlab = "Distance to Centroid (Environmental Variability)")
+plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Distance to centroid (Observed comm. variability)", xlab = "Distance to Centroid (Environmental variability)")
 
-plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Beta Deviation", xlab = "Distance to Centroid (Environmental Variability)")
+plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Beta Deviation", xlab = "Distance to centroid (environmental variability)")
 abline(h = 0, lty = 2, col = "grey50", lwd = 2)
 ```
 
@@ -668,16 +672,16 @@ We can plot it.
 par(mfrow = c(4,2))
 for(i in 1:ncol(distances_env_uni)){
   plot(beta_deviation_SS2_SS3$observed_distances ~ distances_env_uni[,i],
-       pch = 16, ylab = "Observed Comm. Variability",
-       xlab = "Environmental Variability", main = paste(colnames(distances_env_uni)[i]))
+       pch = 16, ylab = "Observed Comm. variability",
+       xlab = "Environmental variability", main = paste(colnames(distances_env_uni)[i]))
   
 }
 
 par(mfrow = c(4,2))
 for(i in 1:ncol(distances_env_uni)){
   plot(beta_deviation_SS2_SS3$deviation_distances ~ distances_env_uni[,i],
-       pch = 16, ylab = "Beta Deviation",
-       xlab = "Environmental Variability", main = paste(colnames(distances_env_uni)[i]))
+       pch = 16, ylab = "Beta-deviation",
+       xlab = "Environmental variability", main = paste(colnames(distances_env_uni)[i]))
   
 }
 ```

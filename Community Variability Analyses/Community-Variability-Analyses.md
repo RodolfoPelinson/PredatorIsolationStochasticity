@@ -3,16 +3,20 @@ Community Variability Analyses
 Rodolfo Pelinson
 20/10/2020
 
+    ## Error in get(genname, envir = envir) : 
+    ##   objeto 'testthat_print' não encontrado
+
+    ## Loading PredatorIsolationStochasticity
+
 This is the community variability analyses presented in the main paper.
 
 These are the packages you will need to run this code:
 
 ``` r
-library(PredatorIsolationStochasticity)
 library(lme4) # Version 1.1-23
 library(car) # Version 3.0-7
 library(emmeans) # Version 1.4.8
-library(vegan) # Version 2.5-6
+library(vegan) # Version 2.5-7
 library(DHARMa) # Version 0.3.3.0
 ```
 
@@ -111,11 +115,11 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Community Variability", cex.lab = 1.3, line = 3)
+title(ylab = "Community variability", cex.lab = 1.3, line = 3)
 title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-1-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Expected Community Variability
 
@@ -196,11 +200,11 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Expected Community Variability", cex.lab = 1.3, line = 3)
+title(ylab = "Expected community variability", cex.lab = 1.3, line = 3)
 title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-2-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-3-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 #### Beta-Deviation
 
@@ -258,10 +262,10 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Beta-Deviation", cex.lab = 1.3, line = 2)
+title(ylab = "Beta-deviation", cex.lab = 1.3, line = 2)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-3-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-4-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 ### Whole community for the last two surveys.
 
@@ -516,8 +520,8 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
 
-title(ylab = "Community Variability", cex.lab = 1.3, line = 3)
-title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
+title(ylab = "Community variability", cex.lab = 1.3, line = 3)
+title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
 <img src="Community-Variability-Analyses_files/figure-gfm/plot_observed-1.png" width="490" height="490" style="display: block; margin: auto;" />
@@ -756,8 +760,8 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
 
-title(ylab = "Expected Community Variability", cex.lab = 1.3, line = 3)
-title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
+title(ylab = "Expected community variability", cex.lab = 1.3, line = 3)
+title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
 <img src="Community-Variability-Analyses_files/figure-gfm/plot_expected-1.png" width="490" height="490" style="display: block; margin: auto;" />
@@ -868,7 +872,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Beta-Deviation", cex.lab = 1.3, line = 2)
+title(ylab = "Beta-deviation", cex.lab = 1.3, line = 2)
 ```
 
 <img src="Community-Variability-Analyses_files/figure-gfm/plot_deviation-1.png" width="490" height="490" style="display: block; margin: auto;" />
@@ -900,7 +904,7 @@ resid_env <- simulateResiduals(fit_env_SS2_SS3)
 plot(resid_env)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-5-1.png" width="980" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png" width="980" height="490" style="display: block; margin: auto;" />
 There seem to be some patterns in the residuals that are not being
 accounted for by this model. Anyway Even if there is something causing
 some pattern in community variability, it seem to not be related to our
@@ -916,7 +920,7 @@ resid_observed_env <- simulateResiduals(fit_observed_SS2_SS3_env)
 plot(resid_observed_env)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-6-1.png" width="980" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-7-1.png" width="980" height="490" style="display: block; margin: auto;" />
 everything seems ok.
 
 Beta deviation a function of environmental variability
@@ -928,7 +932,7 @@ resid_deviation_env <- simulateResiduals(fit_deviation_SS2_SS3_env)
 plot(resid_deviation_env)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-7-1.png" width="980" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-8-1.png" width="980" height="490" style="display: block; margin: auto;" />
 everything seems ok.
 
 running anovas for each of those models
@@ -1011,17 +1015,17 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
 
-title(ylab = "Environmental Variability", cex.lab = 1.3, line = 3)
-title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
+title(ylab = "Environmental variability", cex.lab = 1.3, line = 3)
+title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-9-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-10-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 ``` r
 par(mfrow = c(1,2))
-plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Distance to Centroid (Observed Comm. Variability)", xlab = "Distance to Centroid (Environmental Variability)")
+plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Distance to centroid (Observed comm. variability)", xlab = "Distance to Centroid (Environmental variability)")
 
-plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Beta Deviation", xlab = "Distance to Centroid (Environmental Variability)")
+plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Beta Deviation", xlab = "Distance to centroid (environmental variability)")
 abline(h = 0, lty = 2, col = "grey50", lwd = 2)
 ```
 
@@ -1154,7 +1158,7 @@ for(j in 1:ncol(distances_env_uni)){
 }
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-13-1.png" width="980" height="1960" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-14-1.png" width="980" height="1960" style="display: block; margin: auto;" />
 
 Lets also check if any if the variability in any of those variables have
 an effect on observed community variability…
@@ -1217,22 +1221,22 @@ We can plot it.
 par(mfrow = c(4,2))
 for(i in 1:ncol(distances_env_uni)){
   plot(beta_deviation_SS2_SS3$observed_distances ~ distances_env_uni[,i],
-       pch = 16, ylab = "Observed Comm. Variability",
-       xlab = "Environmental Variability", main = paste(colnames(distances_env_uni)[i]))
+       pch = 16, ylab = "Observed Comm. variability",
+       xlab = "Environmental variability", main = paste(colnames(distances_env_uni)[i]))
   
 }
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-16-1.png" width="980" height="1960" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-17-1.png" width="980" height="1960" style="display: block; margin: auto;" />
 
 ``` r
 par(mfrow = c(4,2))
 for(i in 1:ncol(distances_env_uni)){
   plot(beta_deviation_SS2_SS3$deviation_distances ~ distances_env_uni[,i],
-       pch = 16, ylab = "Beta Deviation",
-       xlab = "Environmental Variability", main = paste(colnames(distances_env_uni)[i]))
+       pch = 16, ylab = "Beta-deviation",
+       xlab = "Environmental variability", main = paste(colnames(distances_env_uni)[i]))
   
 }
 ```
 
-<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-16-2.png" width="980" height="1960" style="display: block; margin: auto;" />
+<img src="Community-Variability-Analyses_files/figure-gfm/unnamed-chunk-17-2.png" width="980" height="1960" style="display: block; margin: auto;" />

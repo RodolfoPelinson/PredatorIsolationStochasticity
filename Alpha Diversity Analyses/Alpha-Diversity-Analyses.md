@@ -3,6 +3,11 @@ Alpha Diversity Analyses
 Rodolfo Pelinson
 16/10/2020
 
+    ## Error in get(genname, envir = envir) : 
+    ##   objeto 'testthat_print' não encontrado
+
+    ## Loading PredatorIsolationStochasticity
+
 These are the analyses of alpha diversity for the whole communities and
 separately to predatory and non-predatory insects. These results are not
 shown in the main paper.
@@ -10,7 +15,6 @@ shown in the main paper.
 These are the packages you will need to run this code:
 
 ``` r
-library(PredatorIsolationStochasticity)
 library(lme4) # Version 1.1-23
 library(emmeans) # Version 1.4.8
 library(car) # Version 3.0-7
@@ -138,11 +142,11 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "Local richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 ```
 
-<img src="Alpha-Diversity-Analyses_files/figure-gfm/unnamed-chunk-1-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Alpha-Diversity-Analyses_files/figure-gfm/unnamed-chunk-2-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 Ploting two surveys separetely
 
@@ -179,13 +183,13 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "Local richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 
 title(main = "Second Survey", cex.lab = 1.3, line = 0.5)
 ```
 
-<img src="Alpha-Diversity-Analyses_files/figure-gfm/unnamed-chunk-2-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Alpha-Diversity-Analyses_files/figure-gfm/unnamed-chunk-3-1.png" width="490" height="490" style="display: block; margin: auto;" />
 
 ``` r
 par(cex = 0.75, mar = c(4,4,1.5,0.1))
@@ -219,10 +223,10 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "Local richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 
 title(main = "Third Survey", cex.lab = 1.3, line = 0.5)
 ```
 
-<img src="Alpha-Diversity-Analyses_files/figure-gfm/unnamed-chunk-3-1.png" width="490" height="490" style="display: block; margin: auto;" />
+<img src="Alpha-Diversity-Analyses_files/figure-gfm/unnamed-chunk-4-1.png" width="490" height="490" style="display: block; margin: auto;" />

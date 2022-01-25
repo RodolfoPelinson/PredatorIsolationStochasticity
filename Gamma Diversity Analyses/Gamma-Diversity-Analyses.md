@@ -77,7 +77,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Gamma", cex.lab = 1.3, line = 3)
+title(ylab = "Treatment richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Treatment)", cex.lab = 1.3, line = 1.75)
 title(main = "First Survey", cex.lab = 1.3, line = 0.5)
 ```
@@ -146,7 +146,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.1, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Gamma", cex.lab = 1.3, line = 3)
+title(ylab = "Treatment richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Treatment)", cex.lab = 1.3, line = 1.75)
 title(main = "Second Survey", cex.lab = 1.3, line = 0.5)
 ```
@@ -216,7 +216,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.1, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Gamma", cex.lab = 1.3, line = 3)
+title(ylab = "Treatment richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Treatment)", cex.lab = 1.3, line = 1.75)
 title(main = "Third Survey", cex.lab = 1.3, line = 0.5)
 ```

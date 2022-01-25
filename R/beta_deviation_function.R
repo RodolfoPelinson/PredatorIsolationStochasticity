@@ -29,6 +29,8 @@ beta_deviation <- function(com, method = "quasiswap", dist = "bray", fixedmar="b
     set.seed(seed)
   }
 
+  if(is.null(strata)==FALSE){strata <- as.integer(strata)}
+
   #Generating null communities
   #It uses permatswap function in vegan to generate null communities. See help file from permatswap() for more information on the arguments of this function
   nm <- permatswap(com, method = method, fixedmar=fixedmar, shuffle = shuffle,

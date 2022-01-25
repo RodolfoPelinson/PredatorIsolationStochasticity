@@ -12,11 +12,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+```{r, echo = FALSE}
+devtools::load_all()
+```
+
 These are the analyses of alpha diversity for the whole communities and separately to predatory and non-predatory insects. These results are not shown in the main paper.
 
 These are the packages you will need to run this code:
 ```{r loading_packages, warning = F, message = F}
-library(PredatorIsolationStochasticity)
 library(lme4) # Version 1.1-23
 library(emmeans) # Version 1.4.8
 library(car) # Version 3.0-7
@@ -90,7 +93,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "Local richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 
 ```
@@ -129,7 +132,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "Local richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 
 title(main = "Second Survey", cex.lab = 1.3, line = 0.5)
@@ -168,7 +171,7 @@ axis(1,labels = c("Fishless","Fish"), cex.axis = 1.3, at =c(2,6), line = 1.5, ti
 axis(2, cex.axis = 0.8, gap.axis = 0, line = -0.5, tick = FALSE)
 axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 
-title(ylab = "Alpha", cex.lab = 1.3, line = 3)
+title(ylab = "Local richness", cex.lab = 1.3, line = 3)
 title(ylab = "(Species per Pond)", cex.lab = 1.3, line = 1.75)
 
 title(main = "Third Survey", cex.lab = 1.3, line = 0.5)
