@@ -4,6 +4,8 @@
 # PredatorIsolationStochasticity
 
 <!-- badges: start -->
+
+[![DOI](https://zenodo.org/badge/304638200.svg)](https://zenodo.org/badge/latestdoi/304638200)
 <!-- badges: end -->
 
 The goal of `PredatorIsolationStochasticity` is to walk the user through

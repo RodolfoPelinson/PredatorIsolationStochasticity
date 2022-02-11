@@ -15,7 +15,8 @@ knitr::opts_chunk$set(
 
 # PredatorIsolationStochasticity
 
-<!-- badges: start -->
+<!-- badges: start --> 
+[![DOI](https://zenodo.org/badge/304638200.svg)](https://zenodo.org/badge/latestdoi/304638200)
 <!-- badges: end -->
 
 The goal of `PredatorIsolationStochasticity` is to walk the user through the data analyses shown in **Pelinson et al. 2020 "Spatial community variability: Interactive effects of predators and isolation on stochastic community assembly"**.
