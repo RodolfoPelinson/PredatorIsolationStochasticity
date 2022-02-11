@@ -1,0 +1,24 @@
+community_data.csv
+
+A dataset containing the recorded abundances of each taxa in each of the three surveys. It also contains pond IDs and treatments (fish and isolation).
+_______________________________________________________________________________
+
+
+trait_data.csv
+
+A dataset containing the genus, family and order of each sampled taxa. It also contains the throphic category of each taxa and total abundances in each surveys.
+_______________________________________________________________________________
+
+
+environmental_data.csv
+
+A dataset containing information on the environmental variables measured in each of the three surveys. The exception is canopy cover, which was measured only once. It also contains pond IDs and treatments (fish and isolation).
+
+depth - Average depth (cm) of each pond
+conductivity - Water conductivity (µS/cm) of each pond
+ph - Water pH in each pond
+do - Dissolved Oxygen (mg/L) in each pond
+turbidity - Water turbidity (NTU) in each pond
+clorophylla_a - Clorophyll-a (RFU) values in each pond
+phycocyanin - Phycocyanin (RFU) values in each pond
+canopy - canopy cover value (%) (from four different measurements) in each pond. Measured only in the last survey.
