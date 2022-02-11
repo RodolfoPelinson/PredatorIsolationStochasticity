@@ -1,11 +1,11 @@
-Gamma Diversity Analyses
+Treatment Richness
 ================
 Rodolfo Pelinson
 19/10/2020
 
-These are the analyses of gamma diversity for the whole communities
-(shown in the main paper) and separately to predatory and non-predatory
-insects.
+    ## i Loading PredatorIsolationStochasticity
+
+These are the analyses of the total number of species in each treatment.
 
 These are the packages you will need to run this code:
 
@@ -16,8 +16,8 @@ library(vegan) # Version 2.5-6
 
 #### First Survey
 
-First we get the estimated gamma diversity for each treatment for a
-sample size of four ponds.
+First we get the estimated total estimated number of species in each
+treatment for a sample size of four ponds.
 
 First we computed the number of species in each treatment for a similar
 number of sampled ponds and its respective 95% confidence interval
@@ -82,14 +82,14 @@ title(ylab = "(Species per Treatment)", cex.lab = 1.3, line = 1.75)
 title(main = "First Survey", cex.lab = 1.3, line = 0.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/4-1.png)<!-- -->
+![](Treatment-Richness_files/figure-gfm/4-1.png)<!-- -->
 
 It does not seem to be any important differences among treatments.
 
 #### Second Survey
 
-First we get the estimated gamma diversity for each treatment for a
-sample size of four ponds.
+First we get the estimated total estimated number of species in each
+treatment for a sample size of four ponds.
 
 First we computed the number of species in each treatment for a similar
 number of sampled ponds and its respective 95% confidence interval
@@ -151,14 +151,14 @@ title(ylab = "(Species per Treatment)", cex.lab = 1.3, line = 1.75)
 title(main = "Second Survey", cex.lab = 1.3, line = 0.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/6-1.png)<!-- -->
+![](Treatment-Richness_files/figure-gfm/6-1.png)<!-- -->
 
 It does not seem to be any important differences among treatments.
 
 #### Third Survey
 
-First we get the estimated gamma diversity for each treatment for a
-sample size of four ponds.
+First we get the estimated total estimated number of species in each
+treatment for a sample size of four ponds.
 
 First we computed the number of species in each treatment for a similar
 number of sampled ponds and its respective 95% confidence interval
@@ -221,7 +221,7 @@ title(ylab = "(Species per Treatment)", cex.lab = 1.3, line = 1.75)
 title(main = "Third Survey", cex.lab = 1.3, line = 0.5)
 ```
 
-![](Gamma-Diversity-Analyses_files/figure-gfm/8-1.png)<!-- -->
+![](Treatment-Richness_files/figure-gfm/8-1.png)<!-- -->
 
-It seems that there is a higher gamma diversity in the intermediate
+It seems that there is a higher number of species in the intermediate
 isolation treatment for fishless ponds.

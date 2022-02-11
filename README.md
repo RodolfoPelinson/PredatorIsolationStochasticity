@@ -4,7 +4,6 @@
 # PredatorIsolationStochasticity
 
 <!-- badges: start -->
-
 <!-- badges: end -->
 
 The goal of `PredatorIsolationStochasticity` is to walk the user through
@@ -19,11 +18,11 @@ DOI: <https://doi.org/10.1101/2020.12.22.423949>
 [Community
 size](https://github.com/RodolfoPelinson/PredatorIsolationStochasticity/blob/master/Community%20Size%20Analyses/Community-Size-Analyses.md)
 
-[Local
+[Pond (local)
 richness](https://github.com/RodolfoPelinson/PredatorIsolationStochasticity/blob/master/Alpha%20Diversity%20Analyses/Alpha-Diversity-Analyses.md)
 
 [Treatment
-richness](https://github.com/RodolfoPelinson/PredatorIsolationStochasticity/blob/master/Gamma%20Diversity%20Analyses/Gamma-Diversity-Analyses.md)
+richness](https://github.com/RodolfoPelinson/PredatorIsolationStochasticity/blob/master/Treatment%20Richness/Gamma-Diversity-Analyses.md)
 
 [Community
 variability](https://github.com/RodolfoPelinson/PredatorIsolationStochasticity/blob/master/Community%20Variability%20Analyses/Community-Variability-Analyses.md)
