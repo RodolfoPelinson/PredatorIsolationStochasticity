@@ -41,6 +41,8 @@ beta_deviation_SS1 <- beta_deviation(com_SS1, strata = fish_isolation_SS1, times
                                       shuffle = "both", method = "quasiswap", seed = 2, group = fish_isolation_SS1) 
 
 ```
+\ 
+\ 
 
 
 #### Observed Community Variability
@@ -65,6 +67,8 @@ resid_deviation <- simulateResiduals(fit_deviation_SS1_G)
 plot(resid_deviation)
 ```
 Everything seems ok.
+\ 
+\ 
 
 
 Running ANOVA table for observed distances to group centroids, or observed beta-diversity/community variability in each treatment.
@@ -119,6 +123,8 @@ round(Anova(fit_expected_SS1, test.statistic = "F"),3)
 emmeans(fit_expected_SS1, list(pairwise ~ isolation_SS1), adjust = "sidak")
 ```
 There is an increase in expected distance to centroid from intermediate to high isolation.
+\ 
+\ 
 
 Plotting it:
 ```{r, dpi = 150, fig.height=4, fig.width=4, out.height = 490, out.width = 490, fig.align = "center"}
@@ -152,6 +158,8 @@ axis(2, cex.axis = 0.8, gap.axis = 0, line = 0, tick = TRUE, labels = FALSE)
 title(ylab = "Expected community variability", cex.lab = 1.3, line = 3)
 title(ylab = "(Distance to Centroid)", cex.lab = 1.3, line = 1.75)
 ```
+\ 
+\ 
 
 
 #### Beta-Deviation
@@ -213,6 +221,8 @@ First loading data
 #data(com_SS2_SS3, All, fish_SS2_SS3, isolation_SS2_SS3, SS_SS2_SS3, ID_SS2_SS3,
 #     fish_isolation_SS2_SS3)
 ```
+\ 
+\ 
 
 Computing observed and expected distances to centroid, and beta-deviation.
 ```{r computing_betas, message=FALSE, warning=FALSE, cache = TRUE}
@@ -222,6 +232,8 @@ beta_deviation_SS2_SS3 <- beta_deviation(com_SS2_SS3, strata = All, times = 1000
                                       group = All) 
 
 ```
+\ 
+\ 
 
 
 Looking at residual plots for observed, expected distances to centroids and deviations.
@@ -250,6 +262,8 @@ plot(resid_deviation)
 
 ```
 Residual plots are not perfect, but they also don't seem too bad.
+\ 
+\ 
 
 
 #### Observed Community Variability
@@ -268,6 +282,8 @@ emmeans(fit_observed_SS2_SS3, list(pairwise ~ SS_SS2_SS3|isolation_SS2_SS3),
         adjust = "sidak")
 ```
 It seems that the effect of isolation is dependent on the presence or absence of fish. When fish is absent, there is no effect of isolation. When it is present, there is a negative effect of isolation.
+\ 
+\ 
 
 Plotting it:
 ```{r plot_observed, dpi = 150, fig.height=4, fig.width=4, out.height = 490, out.width = 490, fig.align = "center"}
@@ -330,8 +346,10 @@ emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|SS_SS2_SS3),
 emmeans(fit_expected_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3|SS_SS2_SS3),
         adjust = "sidak")
 ```
-
 Patterns are similar to those observed for the observed distances to centroid.
+\ 
+\ 
+
 
 Plotting it:
 ```{r plot_expected, dpi = 150, fig.height=4, fig.width=4, out.height = 490, out.width = 490, fig.align = "center"}
@@ -373,6 +391,8 @@ title(ylab = "Expected community variability", cex.lab = 1.3, line = 3)
 title(ylab = "(Distance to centroid)", cex.lab = 1.3, line = 1.75)
 
 ```
+\ 
+\ 
 
 
 
@@ -387,8 +407,9 @@ round(Anova(fit_deviation_SS2_SS3, test.statistic = "Chisq"),3)
 emmeans(fit_deviation_SS2_SS3, list(pairwise ~ isolation_SS2_SS3|fish_SS2_SS3),
         adjust = "sidak")
 ```
-
 Beta deviation seems to increase with isolation, but only in fishless ponds.
+\ 
+\ 
 
 
 Plotting it:
@@ -449,6 +470,8 @@ env_data_SS2_SS3_dist <- vegdist(env_data_SS2_SS3_st, method = "euclidean", na.r
 
 betadisper_SS2_SS3 <- betadisper(env_data_SS2_SS3_dist, group = All)
 ```
+\ 
+\ 
 
 
 Checking model fit
@@ -462,6 +485,8 @@ resid_env <- simulateResiduals(fit_env_SS2_SS3)
 plot(resid_env)
 ```
 There seem to be some patterns in the residuals that are not being accounted for by this model. Anyway Even if there is something causing some pattern in community variability, it seem to not be related to our treatments.
+\ 
+\ 
 
 
 Observed community variability as a function of environmental variability
@@ -472,6 +497,8 @@ resid_observed_env <- simulateResiduals(fit_observed_SS2_SS3_env)
 plot(resid_observed_env)
 ```
 everything seems ok.
+\ 
+\ 
 
 
 Beta deviation a function of environmental variability
@@ -482,6 +509,8 @@ resid_deviation_env <- simulateResiduals(fit_deviation_SS2_SS3_env)
 plot(resid_deviation_env)
 ```
 everything seems ok.
+\ 
+\ 
 
 
 running anovas for each of those models
@@ -496,6 +525,8 @@ anova_deviation_env <- round(Anova(fit_deviation_SS2_SS3_env, test.statistic = "
 anova_deviation_env
 ```
 It seems that there is no evidence of any kind of effect of treatments on environmental variabiliy or of environmental variability on community variability or beta deviation
+\ 
+\ 
 
 
 
@@ -545,6 +576,8 @@ plot(beta_deviation_SS2_SS3$observed_distances ~ betadisper_SS2_SS3$distances, p
 plot(beta_deviation_SS2_SS3$deviation_distances ~ betadisper_SS2_SS3$distances, pch = 16, ylab = "Beta Deviation", xlab = "Distance to centroid (environmental variability)")
 abline(h = 0, lty = 2, col = "grey50", lwd = 2)
 ```
+\ 
+\ 
 
 
 
@@ -569,6 +602,8 @@ for(i in 1:ncol(env_data_SS2_SS3_st)){
 }
 colnames(distances_env_uni) <- colnames(env_data_SS2_SS3_st)
 ```
+\ 
+\ 
 
 
 Now we can run ANOVAS for each environmental variable
@@ -582,6 +617,8 @@ rownames(uni_anova_env) <- c("fish", "isolation", "survey", "fish:isolation", "f
 colnames(uni_anova_env) <- colnames(distances_env_uni)
 uni_anova_env
 ```
+\ 
+\ 
 
 Because we are blindly looking for an effect without previous hypothesis for specific variables, it is important to correct p values of each main and interactive effect for multiple comparisons.
 ```{r}
@@ -593,6 +630,8 @@ uni_anova_env_adjusted_p <- round(uni_anova_env_adjusted_p, 3)
 uni_anova_env_adjusted_p
 ```
 It seems like there is no important clear effects.
+\ 
+\ 
 
 
 
@@ -629,6 +668,8 @@ for(j in 1:ncol(distances_env_uni)){
 }
 
 ```
+\ 
+\ 
 
 
 
@@ -663,6 +704,8 @@ uni_anova_env_dev <-round(uni_anova_env_dev, 3)
 uni_anova_env_dev
 ```
 Again. It seems like there is no important clear effects.
+\ 
+\ 
 
 
 
